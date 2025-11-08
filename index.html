@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Code - Sesli Python IDE</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- CodeMirror -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/monokai.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
+    
+    <style>
+        :root {
+            --dark-bg: #1A181B;
+            --accent-gold: #D7BB56;
+            --text-light: #EEECEE;
+            --gray-900: #111827;
+        }
+
+        /* CodeMirror Özelleştirme */
+        .CodeMirror {
+            background-color: var(--dark-bg) !important;
+            color: var(--text-light) !important;
+            border-radius: 0.5rem;
+            min-height: 400px;
+            font-size: 16px;
+            line-height: 1.6;
+            font-family: 'Fira Code', 'Consolas', monospace;
+        }
+        
+        .CodeMirror-gutters {
+            background-color: var(--dark-bg) !important;
+            border-right: 1px solid #333;
+        }
+        
+        .CodeMirror-linenumber {
+            color: #666 !important;
+        }
+        
+        .CodeMirror-cursor {
+            border-left: 2px solid var(--accent-gold) !important;
+        }
+
+        /* Tema Renkleri */
+        .accent-color {
+            color: var(--accent-gold);
+        }
+        
+        .bg-accent {
+            background-color: var(--accent-gold);
+        }
+
+        /* Mikrofon Butonu Animasyonları */
+        .voice-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .voice-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(215, 187, 86, 0.6);
+        }
+        
+        .voice-btn.listening {
+            animation: pulse-grow 1.2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-grow {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 10px rgba(215, 187, 86, 0.5);
+            }
+            50% {
+                transform: scale(1.08);
+                box-shadow: 0 0 30px rgba(215, 187, 86, 1);
+            }
+        }
+
+        /* Terminal Çıktı Stili */
+        #terminalOutput {
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .CodeMirror {
+                min-height: 300px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+
+    <!-- Ana Konteyner -->
+    <div id="app" class="max-w-7xl mx-auto p-4 md:p-8">
+        
+        <!-- Başlık Bölümü -->
+        <header class="text-center mb-8">
+            <h1 class="text-5xl font-bold mb-2">
+                <span class="accent-color">Be My Code</span>
+            </h1>
+            <p class="text-gray-400 text-lg">
+                Görme Engelli Bireyler İçin Gemini AI Destekli Python IDE
+            </p>
+        </header>
+
+        <!-- Kod Editör Bölümü -->
+        <section class="mb-6">
+            <div class="bg-[#1A181B] rounded-xl shadow-2xl p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-semibold accent-color flex items-center gap-2">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                        Python Editör
+                    </h2>
+                    <button id="runCodeBtn" class="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-5 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.26a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Çalıştır
+                    </button>
+                </div>
+                <textarea id="codeEditor" class="hidden"></textarea>
+            </div>
+        </section>
+
+        <!-- Sesli Komut Kontrol Paneli -->
+        <section class="mb-6">
+            <div class="bg-gray-800 rounded-xl shadow-lg p-6">
+                <div class="flex flex-col items-center space-y-5">
+                    
+                    <!-- Mikrofon Butonu -->
+                    <button id="voiceCommandBtn" class="voice-btn w-24 h-24 rounded-full bg-accent text-gray-900 flex items-center justify-center shadow-2xl focus:outline-none focus:ring-4 focus:ring-[#D7BB56]/60" aria-label="Sesli komut">
+                        <svg id="micIcon" class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"></path>
+                            <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"></path>
+                        </svg>
+                        <svg id="loaderIcon" class="w-12 h-12 animate-spin hidden" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Durum Mesajları -->
+                    <div class="text-center space-y-2">
+                        <p id="statusMessage" class="text-lg font-medium text-gray-300">
+                            Başlamak için mikrofona tıklayın (Ctrl+M)
+                        </p>
+                        <p id="ttsStatus" class="text-sm text-gray-500">
+                            Sesli geri bildirim hazır
+                        </p>
+                    </div>
+                    
+                    <!-- Hızlı Komut Butonları -->
+                    <div class="flex flex-wrap justify-center gap-3 pt-3">
+                        <button onclick="App.simulateCommand('for döngüsü yaz')" class="quick-cmd-btn">
+                            For Döngüsü
+                        </button>
+                        <button onclick="App.simulateCommand('string değişken tanımla isim')" class="quick-cmd-btn">
+                            String Değişken
+                        </button>
+                        <button onclick="App.simulateCommand('print fonksiyonu yaz Merhaba Dünya')" class="quick-cmd-btn">
+                            Print Yaz
+                        </button>
+                        <button onclick="App.simulateCommand('kodu sesli oku')" class="quick-cmd-btn">
+                            Kodu Oku
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Terminal Çıktı Bölümü -->
+        <section>
+            <div class="bg-[#1A181B] rounded-xl shadow-2xl p-6">
+                <div class="flex items-center gap-2 mb-4">
+                    <svg class="w-6 h-6 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm3.293 1.293a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 01-1.414-1.414L7.586 10 5.293 7.707a1 1 0 010-1.414zM11 12a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path>
+                    </svg>
+                    <h2 class="text-2xl font-semibold text-red-400">Terminal</h2>
+                </div>
+                <pre id="terminalOutput" class="bg-gray-900 text-green-400 p-4 rounded-lg overflow-auto min-h-[120px] max-h-[400px]">Uygulama başlatıldı. Kodu çalıştırmak için 'Çalıştır' butonuna basın.</pre>
+            </div>
+        </section>
+
+    </div>
+
+    <style>
+        .quick-cmd-btn {
+            @apply text-sm px-4 py-2 rounded-full border border-[#D7BB56]/50 text-[#D7BB56] hover:bg-[#D7BB56]/10 transition-all duration-200;
+        }
+    </style>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const appId = typeof __app_id === 'undefined' ? 'default-app-id' : __app_id;
+        const firebaseConfig = typeof __firebase_config === 'undefined' ? null : JSON.parse(__firebase_config);
+        const initialAuthToken = typeof __initial_auth_token === 'undefined' ? null : __initial_auth_token;
+
+        let db, auth, userId;
+
+        if (firebaseConfig) {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                setLogLevel('error');
+
+                globalThis.db = db;
+                globalThis.auth = auth;
+
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        console.log("Firebase Auth Ready. User ID:", userId);
+                        globalThis.userId = userId;
+                    } else {
+                        try {
+                            if (initialAuthToken) {
+                                const userCredential = await signInWithCustomToken(auth, initialAuthToken);
+                                userId = userCredential.user.uid;
+                                console.log("Custom Token Sign-In. User ID:", userId);
+                            } else {
+                                const userCredential = await signInAnonymously(auth);
+                                userId = userCredential.user.uid;
+                                console.log("Anonymous Sign-In. User ID:", userId);
+                            }
+                            globalThis.userId = userId;
+                        } catch (error) {
+                            console.error("Firebase Auth Error:", error);
+                            userId = crypto.randomUUID();
+                            globalThis.userId = userId;
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error("Firebase Init Error:", error);
+            }
+        }
+    </script>
+    
+    <script>
+        // ==========================================
+        // BE MY CODE - Ana Uygulama Modülü
+        // ==========================================
+
+        const App = (() => {
+            // Konfigürasyon
+            const CONFIG = {
+                GEMINI_API_KEY: "AIzaSyCMAcbLrhsR8EqUfOgr7SmKTvPTeQU0ZkQ",
+                TEXT_MODEL: 'gemini-2.5-flash-preview-09-2025',
+                TTS_MODEL: 'gemini-2.5-flash-preview-tts',
+                SYSTEM_PROMPT: String.raw`Sen görme engelli bir öğrenci için çalışan, sadece saf Python kodları üreten bir asistansın. Kodları açıklama, yorum veya ek metin olmadan, sadece kod bloğu olarak döndür. Kullanıcının komutunu Python 3.8+ uyumlu kodla yerine getir. Örneğin, 'for döngüsü yaz' komutuna karşılık 'for i in range(10):\n    print(i)' gibi yanıt ver. Cevabın tamamen saf Python kodu olmalıdır.`,
+                DEFAULT_CODE: "# Sesli komutunuzu bekliyorum: 'for döngüsü yaz' veya 'print yaz'"
+            };
+
+            // State
+            const state = {
+                editor: null,
+                recognition: null,
+                isListening: false
+            };
+
+            // DOM Elements
+            const elements = {
+                statusMessage: document.getElementById('statusMessage'),
+                ttsStatus: document.getElementById('ttsStatus'),
+                voiceCommandBtn: document.getElementById('voiceCommandBtn'),
+                terminalOutput: document.getElementById('terminalOutput'),
+                micIcon: document.getElementById('micIcon'),
+                loaderIcon: document.getElementById('loaderIcon'),
+                runCodeBtn: document.getElementById('runCodeBtn')
+            };
+
+            // ==========================================
+            // Yardımcı Fonksiyonlar
+            // ==========================================
+
+            const Utils = {
+                base64ToArrayBuffer(base64) {
+                    const binaryString = globalThis.atob(base64);
+                    const len = binaryString.length;
+                    const bytes = new Uint8Array(len);
+                    for (let i = 0; i < len; i++) {
+                        bytes[i] = binaryString.codePointAt(i);
+                    }
+                    return bytes.buffer;
+                },
+
+                writeString(view, offset, string) {
+                    for (let i = 0; i < string.length; i++) {
+                        view.setUint8(offset + i, string.codePointAt(i));
+                    }
+                },
+
+                pcmToWav(pcm16, sampleRate) {
+                    const numChannels = 1;
+                    const bytesPerSample = 2;
+                    const blockAlign = numChannels * bytesPerSample;
+                    const byteRate = sampleRate * blockAlign;
+                    const dataSize = pcm16.length * bytesPerSample;
+                    const buffer = new ArrayBuffer(44 + dataSize);
+                    const view = new DataView(buffer);
+
+                    let offset = 0;
+
+                    this.writeString(view, offset, 'RIFF'); offset += 4;
+                    view.setUint32(offset, 36 + dataSize, true); offset += 4;
+                    this.writeString(view, offset, 'WAVE'); offset += 4;
+
+                    this.writeString(view, offset, 'fmt '); offset += 4;
+                    view.setUint32(offset, 16, true); offset += 4;
+                    view.setUint16(offset, 1, true); offset += 2;
+                    view.setUint16(offset, numChannels, true); offset += 2;
+                    view.setUint32(offset, sampleRate, true); offset += 4;
+                    view.setUint32(offset, byteRate, true); offset += 4;
+                    view.setUint16(offset, blockAlign, true); offset += 2;
+                    view.setUint16(offset, 16, true); offset += 2;
+
+                    this.writeString(view, offset, 'data'); offset += 4;
+                    view.setUint32(offset, dataSize, true);
+
+                    const pcmBytes = new Uint8Array(buffer, 44);
+                    const pcmView = new DataView(pcmBytes.buffer);
+                    for (let i = 0; i < pcm16.length; i++) {
+                        pcmView.setInt16(i * bytesPerSample, pcm16[i], true);
+                    }
+
+                    return new Blob([buffer], { type: 'audio/wav' });
+                },
+
+                async fetchWithRetry(url, options, maxRetries = 5) {
+                    for (let i = 0; i < maxRetries; i++) {
+                        try {
+                            const response = await fetch(url, options);
+                            if (response.ok) {
+                                return response;
+                            } else if (response.status === 429 && i < maxRetries - 1) {
+                                const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                                console.warn(`API Rate Limit. Retrying in ${Math.round(delay / 1000)}s...`);
+                                await new Promise(resolve => setTimeout(resolve, delay));
+                            } else {
+                                throw new Error(`API Error: HTTP ${response.status} - ${response.statusText}`);
+                            }
+                        } catch (error) {
+                            if (i === maxRetries - 1) throw error;
+                            const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                            console.error(`Fetch Error: ${error.message}. Retrying in ${Math.round(delay / 1000)}s...`);
+                            await new Promise(resolve => setTimeout(resolve, delay));
+                        }
+                    }
+                }
+            };
+
+            // ==========================================
+            // UI Yönetimi
+            // ==========================================
+
+            const UI = {
+                setStatus(message, isLoading = false, isError = false) {
+                    elements.statusMessage.textContent = message;
+                    elements.statusMessage.classList.remove('text-gray-300', 'text-red-500', 'accent-color');
+                    elements.micIcon.classList.toggle('hidden', isLoading);
+                    elements.loaderIcon.classList.toggle('hidden', !isLoading);
+                    
+                    if (isError) {
+                        elements.statusMessage.classList.add('text-red-500');
+                    } else if (isLoading) {
+                        elements.statusMessage.classList.add('accent-color');
+                    } else {
+                        elements.statusMessage.classList.add('text-gray-300');
+                    }
+                },
+
+                setTTSStatus(message, isActive = false) {
+                    elements.ttsStatus.textContent = message;
+                    elements.ttsStatus.classList.toggle('accent-color', isActive);
+                    elements.ttsStatus.classList.toggle('text-gray-500', !isActive);
+                },
+
+                updateTerminal(output) {
+                    elements.terminalOutput.textContent = output;
+                },
+
+                appendTerminal(output) {
+                    elements.terminalOutput.textContent += output;
+                }
+            };
+
+            // ==========================================
+            // Gemini API İşlemleri
+            // ==========================================
+
+            const GeminiAPI = {
+                async generateCode(prompt) {
+                    // API anahtarı kontrolü
+                    if (!CONFIG.GEMINI_API_KEY || CONFIG.GEMINI_API_KEY === "") {
+                        const errorMsg = "Gemini API anahtarı yapılandırılmamış. Lütfen API anahtarınızı ekleyin.";
+                        UI.setStatus(`HATA: ${errorMsg}`, false, true);
+                        await this.speak("API anahtarı bulunamadı. Lütfen kodda GEMINI_API_KEY değerini ayarlayın.");
+                        return null;
+                    }
+
+                    UI.setStatus('Kod üretiliyor...', true);
+                    
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${CONFIG.TEXT_MODEL}:generateContent?key=${CONFIG.GEMINI_API_KEY}`;
+                    
+                    const payload = {
+                        contents: [{ parts: [{ text: prompt }] }],
+                        systemInstruction: { parts: [{ text: CONFIG.SYSTEM_PROMPT }] },
+                        config: { temperature: 0.1 }
+                    };
+
+                    try {
+                        const response = await Utils.fetchWithRetry(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        
+                        const result = await response.json();
+                        const generatedText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                        if (generatedText) {
+                            UI.setStatus('Kod başarıyla oluşturuldu.', false);
+                            return generatedText.trim();
+                        } else {
+                            throw new Error("API'den geçerli kod yanıtı alınamadı.");
+                        }
+                    } catch (error) {
+                        console.error("Code Generation Error:", error);
+                        UI.setStatus(`HATA: Kod üretilemedi. ${error.message}`, false, true);
+                        await this.speak(`Üzgünüm, kod üretilirken bir hata oluştu.`);
+                        return null;
+                    }
+                },
+
+                async speak(text, voiceName = "Kore") {
+                    if (!text || text.length === 0) return;
+                    
+                    // API anahtarı kontrolü - TTS için
+                    if (!CONFIG.GEMINI_API_KEY || CONFIG.GEMINI_API_KEY === "") {
+                        console.warn("Gemini API anahtarı yapılandırılmamış. TTS devre dışı.");
+                        UI.setTTSStatus("API anahtarı eksik - Ses özelliği devre dışı", false);
+                        return;
+                    }
+                    
+                    UI.setTTSStatus("Sesli geri bildirim oluşturuluyor...", true);
+                    
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${CONFIG.TTS_MODEL}:generateContent?key=${CONFIG.GEMINI_API_KEY}`;
+                    
+                    const payload = {
+                        contents: [{ parts: [{ text: text }] }],
+                        generationConfig: {
+                            responseModalities: ["AUDIO"],
+                            speechConfig: {
+                                voiceConfig: {
+                                    prebuiltVoiceConfig: { voiceName: voiceName }
+                                }
+                            }
+                        }
+                    };
+                    
+                    try {
+                        const response = await Utils.fetchWithRetry(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        
+                        const result = await response.json();
+                        const part = result?.candidates?.[0]?.content?.parts?.[0];
+                        const audioData = part?.inlineData?.data;
+                        const mimeType = part?.inlineData?.mimeType;
+
+                        if (audioData && mimeType?.startsWith("audio/")) {
+                            const match = mimeType.match(/rate=(\d+)/);
+                            const sampleRate = match ? Number.parseInt(match[1], 10) : 24000;
+                            
+                            const pcmData = Utils.base64ToArrayBuffer(audioData);
+                            const pcm16 = new Int16Array(pcmData);
+                            const wavBlob = Utils.pcmToWav(pcm16, sampleRate);
+                            const audioUrl = URL.createObjectURL(wavBlob);
+                            
+                            const audio = new Audio(audioUrl);
+                            
+                            await new Promise((resolve) => {
+                                audio.onended = () => {
+                                    URL.revokeObjectURL(audioUrl);
+                                    resolve();
+                                };
+                                audio.onerror = (e) => {
+                                    console.error("Audio playback error:", e);
+                                    UI.setTTSStatus("Ses çalınırken hata oluştu.");
+                                    URL.revokeObjectURL(audioUrl);
+                                    resolve();
+                                };
+                                
+                                // Ses çalma denemesi
+                                audio.play().catch(e => {
+                                    console.error("Audio play error:", e);
+                                    
+                                    // Kullanıcı etkileşimi gerekiyorsa
+                                    if (e.name === 'NotAllowedError') {
+                                        UI.setTTSStatus("Ses çalma izni gerekli. Lütfen sayfayla etkileşimde bulunun.");
+                                        console.warn('Ses çalmak için kullanıcı etkileşimi gerekli. Butona tıklayın veya klavye kullanın.');
+                                    } else {
+                                        UI.setTTSStatus("Ses çalma hatası: " + e.message);
+                                    }
+                                    URL.revokeObjectURL(audioUrl);
+                                    resolve();
+                                });
+                            });
+                        } else {
+                            console.error("TTS API'den ses verisi alınamadı.");
+                            UI.setTTSStatus("Ses verisi boş geldi.");
+                        }
+                    } catch (error) {
+                        console.error("TTS API Error:", error);
+                        UI.setTTSStatus(`TTS Hatası: ${error.message}`);
+                    } finally {
+                        UI.setTTSStatus("Sesli geri bildirim hazır", false);
+                    }
+                }
+            };
+
+            // ==========================================
+            // Kod İşlemleri
+            // ==========================================
+
+            const CodeHandler = {
+                speakCode(code) {
+                    if (!code || code.trim() === "") {
+                        GeminiAPI.speak("Editörde okunacak kod bulunmamaktadır.");
+                        return;
+                    }
+                    
+                    let speakableCode = code
+                        .replaceAll(/\n/g, ". Yeni Satır. ")
+                        .replaceAll(/#/g, "Yorum. ")
+                        .replaceAll(/=/g, " eşittir ")
+                        .replaceAll(/!=/g, " eşit değildir ")
+                        .replaceAll(/==/g, " eşittir ")
+                        .replaceAll(/:/g, ". İki nokta. ")
+                        .replaceAll(/\(/g, " parantez aç ")
+                        .replaceAll(/\)/g, " parantez kapat ")
+                        .replaceAll(/\[/g, " köşeli parantez aç ")
+                        .replaceAll(/\]/g, " köşeli parantez kapat ")
+                        .replaceAll(/'/g, " tırnak ")
+                        .replaceAll(/"/g, " çift tırnak ");
+
+                    GeminiAPI.speak(`Şu anki kod: ${speakableCode}`);
+                },
+
+                runSimulatedCode() {
+                    const code = state.editor.getValue();
+                    UI.updateTerminal(`>>> KOD ÇALIŞTIRILIYOR...\n`);
+                    GeminiAPI.speak("Kod çalıştırılıyor. Lütfen terminal çıktısını bekleyin.");
+                    
+                    try {
+                        const printMatches = [...code.matchAll(/print\s*\((.*?)\)/g)];
+                        
+                        let simulatedOutput = "";
+                        if (printMatches.length > 0) {
+                            simulatedOutput += ">>> Simüle Edilmiş Çıktı:\n";
+                            printMatches.forEach((match) => {
+                                let content = match[1].trim().replace(/['"]/g, '');
+                                if (content.startsWith('f')) content = content.substring(1);
+                                if (content.length > 50) content = content.substring(0, 50) + "... (kesildi)";
+                                simulatedOutput += `${content}\n`;
+                            });
+                        } else {
+                            simulatedOutput += ">>> Kodda 'print' ifadesi bulunamadı. Çıktı yok.\n";
+                        }
+                        
+                        UI.appendTerminal(simulatedOutput);
+                        GeminiAPI.speak("Kod çalıştırma simülasyonu tamamlandı. Terminal çıktısı hazırdır.");
+                    } catch (e) {
+                        UI.appendTerminal(`HATA: Simülasyon sırasında hata oluştu. ${e.message}`);
+                        GeminiAPI.speak("Simülasyon hatası oluştu. Kodunuzda bir problem olabilir.");
+                    }
+                }
+            };
+
+            // ==========================================
+            // Ses Tanıma
+            // ==========================================
+
+            const VoiceRecognition = {
+                setup() {
+                    // Tarayıcı kontrolü
+                    if (!('webkitSpeechRecognition' in globalThis)) {
+                        const errorMsg = "HATA: Tarayıcınız Web Speech API'yi desteklemiyor. Lütfen Chrome veya Edge kullanın.";
+                        UI.setStatus(errorMsg, false, true);
+                        elements.voiceCommandBtn.disabled = true;
+                        console.error(errorMsg);
+                        return;
+                    }
+
+                    // HTTPS kontrolü
+                    if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+                        console.warn('⚠️ Güvenlik uyarısı: Mikrofon erişimi için HTTPS önerilir.');
+                    }
+
+                    state.recognition = new webkitSpeechRecognition();
+                    state.recognition.continuous = false;
+                    state.recognition.interimResults = false;
+                    state.recognition.lang = 'tr-TR';
+                    
+                    state.recognition.onstart = () => {
+                        state.isListening = true;
+                        elements.voiceCommandBtn.classList.add('listening');
+                        UI.setStatus('🎤 Dinleniyor... Lütfen konuşun.', false);
+                        console.log('Mikrofon aktif - Dinleme başladı');
+                    };
+                    
+                    state.recognition.onend = () => {
+                        state.isListening = false;
+                        elements.voiceCommandBtn.classList.remove('listening');
+                        UI.setStatus('Mikrofon kapalı. Tekrar tıklayın (Ctrl+M).', false);
+                        console.log('Dinleme sona erdi');
+                    };
+                    
+                    state.recognition.onerror = (event) => {
+                        state.isListening = false;
+                        elements.voiceCommandBtn.classList.remove('listening');
+                        console.error('Speech Recognition Error:', event.error);
+                        
+                        let errorMsg = '';
+                        switch(event.error) {
+                            case 'not-allowed':
+                            case 'permission-denied':
+                                errorMsg = 'Mikrofon izni reddedildi. Lütfen tarayıcı ayarlarından mikrofon erişimine izin verin.';
+                                break;
+                            case 'no-speech':
+                                errorMsg = 'Ses algılanamadı. Lütfen tekrar deneyin.';
+                                break;
+                            case 'audio-capture':
+                                errorMsg = 'Mikrofon bulunamadı veya kullanılabilir değil.';
+                                break;
+                            case 'network':
+                                errorMsg = 'Ağ hatası. İnternet bağlantınızı kontrol edin.';
+                                break;
+                            case 'aborted':
+                                errorMsg = 'Dinleme iptal edildi.';
+                                break;
+                            default:
+                                errorMsg = `Ses tanıma hatası: ${event.error}`;
+                        }
+                        
+                        UI.setStatus(errorMsg, false, true);
+                        console.error('Hata detayı:', errorMsg);
+                    };
+                    
+                    state.recognition.onresult = async (event) => {
+                        const transcript = event.results[0][0].transcript;
+                        const confidence = event.results[0][0].confidence;
+                        
+                        console.log('Tanınan metin:', transcript, '| Güven skoru:', confidence);
+                        UI.setStatus(`✓ Tanınan: "${transcript}"`, false);
+                        
+                        if (transcript.toLowerCase().includes("kodu sesli oku") || transcript.toLowerCase().includes("kodu oku")) {
+                            CodeHandler.speakCode(state.editor.getValue());
+                        } else if (transcript.toLowerCase().includes("kodu çalıştır") || transcript.toLowerCase().includes("çalıştır")) {
+                            CodeHandler.runSimulatedCode();
+                        } else {
+                            const code = await GeminiAPI.generateCode(transcript);
+                            if (code) {
+                                state.editor.setValue(state.editor.getValue().trim() + "\n" + code);
+                                state.editor.refresh();
+                                GeminiAPI.speak(`Kodunuz başarıyla eklendi.`);
+                            }
+                        }
+                    };
+
+                    console.log('✓ Ses tanıma sistemi hazır');
+                },
+
+                toggle() {
+                    if (!state.recognition) {
+                        UI.setStatus('Ses tanıma başlatılamadı.', false, true);
+                        return;
+                    }
+
+                    if (state.isListening) {
+                        state.recognition.stop();
+                        console.log('Kullanıcı dinlemeyi durdurdu');
+                    } else {
+                        try {
+                            state.recognition.start();
+                            console.log('Mikrofon başlatılıyor...');
+                        } catch (error) {
+                            console.error('Mikrofon başlatma hatası:', error);
+                            UI.setStatus('Mikrofon başlatılamadı. Sayfayı yenileyin ve tekrar deneyin.', false, true);
+                        }
+                    }
+                }
+            };
+
+            // ==========================================
+            // Başlatma
+            // ==========================================
+
+            function init() {
+                const codeEditorElement = document.getElementById('codeEditor');
+                state.editor = CodeMirror.fromTextArea(codeEditorElement, {
+                    lineNumbers: true,
+                    mode: "python",
+                    theme: "monokai",
+                    indentUnit: 4,
+                    tabSize: 4,
+                    extraKeys: {
+                        "Ctrl-M": () => VoiceRecognition.toggle(),
+                        "Cmd-M": () => VoiceRecognition.toggle(),
+                        "F5": () => CodeHandler.runSimulatedCode(),
+                        "Ctrl-R": () => CodeHandler.speakCode(state.editor.getValue()),
+                    }
+                });
+                state.editor.setValue(CONFIG.DEFAULT_CODE);
+                globalThis.editor = state.editor;
+
+                elements.voiceCommandBtn.addEventListener('click', () => VoiceRecognition.toggle());
+                elements.runCodeBtn.addEventListener('click', () => CodeHandler.runSimulatedCode());
+                
+                VoiceRecognition.setup();
+
+                // API anahtarı kontrolü ve uyarı
+                if (!CONFIG.GEMINI_API_KEY || CONFIG.GEMINI_API_KEY === "") {
+                    UI.setStatus('⚠️ API anahtarı eksik - AI özellikleri devre dışı', false, true);
+                    UI.setTTSStatus('API anahtarı yapılandırılmadı', false);
+                    console.warn('%c⚠️ GEMINI API ANAHTARI EKSİK', 'color: #D7BB56; font-size: 16px; font-weight: bold;');
+                    console.warn('Kod üretme ve sesli geri bildirim özellikleri için Gemini API anahtarı gereklidir.');
+                    console.warn('API anahtarını CONFIG.GEMINI_API_KEY değişkenine ekleyin.');
+                }
+            }
+
+            // ==========================================
+            // Keyboard Shortcuts
+            // ==========================================
+
+            function setupKeyboardShortcuts() {
+                document.addEventListener('keydown', (event) => {
+                    if ((event.ctrlKey || event.metaKey) && event.key === 'm') {
+                        event.preventDefault();
+                        VoiceRecognition.toggle();
+                    }
+                    if (event.key === 'F5') {
+                        event.preventDefault();
+                        CodeHandler.runSimulatedCode();
+                    }
+                    if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
+                        event.preventDefault();
+                        CodeHandler.speakCode(state.editor.getValue());
+                    }
+                });
+            }
+
+            // ==========================================
+            // Public API
+            // ==========================================
+
+            return {
+                init,
+                setupKeyboardShortcuts,
+                simulateCommand: async (command) => {
+                    if (command.toLowerCase().includes("kodu oku")) {
+                        CodeHandler.speakCode(state.editor.getValue());
+                    } else {
+                        UI.setStatus(`Simüle Komut: "${command}" - Kod üretiliyor...`, true);
+                        const code = await GeminiAPI.generateCode(command);
+                        if (code) {
+                            state.editor.setValue(state.editor.getValue().trim() + "\n\n" + code);
+                            state.editor.refresh();
+                            GeminiAPI.speak(`Kodunuz başarıyla eklendi.`);
+                        }
+                    }
+                }
+            };
+        })();
+
+        // ==========================================
+        // Uygulama Başlat
+        // ==========================================
+
+        globalThis.onload = () => {
+            App.init();
+            App.setupKeyboardShortcuts();
+        };
+
+        globalThis.App = App;
+        
+    </script>
+</body>
+</html>

@@ -1,118 +1,132 @@
-# Be My Code - Görme Engelli Bireyler için Kod Yazma Asistan Programı
+# 🎤 Be My Code
 
-## Proje Hakkında
-TÜBİTAK 2209-A Üniversite Öğrencileri Araştırma Projeleri Destekleme Programı kapsamında geliştirilen, görme engelli bireylerin Python kod yazmasını ses komutları ile sağlayan yapay zeka destekli IDE.
+Görme engelli bireyler için tasarlanmış, sesli komutlarla Python kod yazan AI destekli bir eğitim platformu.
 
-**Proje Sahibi:** Erol Işıldak  
-**Danışman:** Öğr. Gör. Gülsüm KEMERLİ  
-**Proje Ortağı:** Harun Efe Akkan  
-**Kurum:** Nuh Naci Yazgan Üniversitesi
+## ✨ Özellikler
 
-## Özellikler
-- 🎤 Sesli komutlarla kod yazma
-- 🔊 Coqui-XTTS v2 ile profesyonel Türkçe seslendirme
-- 📁 Sol panel dosya yöneticisi
-- 💻 Entegre terminal
-- 🤖 AI destekli kod önerileri
-- 📖 Yazılan kodları sesli okuma
-- 🔗 Dosyalar arası referans sistemi
+- 🎙️ **Sesli Komut Desteği**: Türkçe ses tanıma ile kod yazın
+- 🤖 **Gemini AI Entegrasyonu**: Doğal dille Python kodu üretin
+- 🔊 **Sesli Geri Bildirim**: Text-to-Speech ile kodunuzu dinleyin
+- ⌨️ **Klavye Kısayolları**: Hızlı erişim için kısayollar
+- 🎨 **Erişilebilir Tasarım**: Yüksek kontrast ve büyük fontlar
 
-## Teknolojiler
-- Python 3.8+
-- PyQt5/Tkinter (GUI)
-- Coqui-XTTS v2 (Text-to-Speech)
-- SpeechRecognition (Ses tanıma)
-- Transformers (NLP)
-- OpenAI API (Kod önerileri - opsiyonel)
+## 🚀 Kurulum
 
-## Kurulum
+### 1. Depoyu Klonlayın
 
-### Otomatik Kurulum (Önerilen)
 ```bash
-# Kurulum scriptini çalıştırılabilir yap
-chmod +x install.sh
-
-# Kurulumu başlat
-./install.sh
+git clone https://github.com/eisildak/be_my_code.git
+cd be_my_code
 ```
 
-### Manuel Kurulum
-```bash
-# Sanal ortam oluştur
-python3 -m venv venv
-source venv/bin/activate  # macOS/Linux
-# venv\Scripts\activate  # Windows
+### 2. Gemini API Anahtarı Alın
 
-# Bağımlılıkları yükle
-pip install -r requirements.txt
+1. [Google AI Studio](https://makersuite.google.com/app/apikey) adresine gidin
+2. "Create API Key" butonuna tıklayın
+3. API anahtarınızı kopyalayın
 
-# macOS için PyAudio gereksinimleri
-brew install portaudio
+### 3. API Anahtarını Yapılandırın
+
+`index.html` dosyasını açın ve şu satırı bulun (yaklaşık 263. satır):
+
+```javascript
+const CONFIG = {
+    GEMINI_API_KEY: "",  // ← Buraya API anahtarınızı yapıştırın
+    // ...
+};
 ```
 
-## Kullanım
+API anahtarınızı tırnak işaretleri arasına yapıştırın:
 
-### Hızlı Başlatma
-```bash
-# Başlatma scriptini kullan
-./run.sh
+```javascript
+const CONFIG = {
+    GEMINI_API_KEY: "YOUR_API_KEY_HERE",
+    // ...
+};
 ```
 
-### Manuel Başlatma
-```bash
-# Sanal ortamı aktif et
-source venv/bin/activate
+### 4. Uygulamayı Çalıştırın
 
-# Uygulamayı başlat
-python src/main.py
+```bash
+# Python 3 ile basit HTTP sunucu
+python3 -m http.server 8000
+
+# veya Node.js varsa
+npx http-server -p 8000
 ```
 
-## Sesli Komut Örnekleri
-- "for döngüsü yaz"
-- "while döngüsü oluştur"
-- "string değişken tanımla"
-- "kodu oku"
-- "satır 5'i oku"
-- "yeni dosya oluştur"
+Tarayıcınızda `http://localhost:8000` adresini açın.
 
-## 📊 Proje İstatistikleri
+## 🎯 Kullanım
 
-- **Toplam Dosya**: 25
-- **Kod Satırı**: ~1,607 (sadece Python)
-- **Modül Sayısı**: 6
-- **Desteklenen Komut**: 12 tür
-- **Sürüm**: 1.0.0
+### Klavye Kısayolları
 
-## 📚 Dokümantasyon
+- **Ctrl+M** / **Cmd+M**: Mikrofonu aç/kapat
+- **F5**: Kodu çalıştır (simülasyon)
+- **Ctrl+R** / **Cmd+R**: Kodu sesli oku
 
-- 📖 [QUICKSTART.md](QUICKSTART.md) - Hızlı başlangıç kılavuzu
-- 📖 [ARCHITECTURE.md](ARCHITECTURE.md) - Mimari ve teknik detaylar
-- 📖 [DEVELOPER.md](DEVELOPER.md) - Geliştirici notları
-- 📖 [TESTING.md](TESTING.md) - Test senaryoları
-- 📖 [CHANGELOG.md](CHANGELOG.md) - Sürüm geçmişi
+### Sesli Komut Örnekleri
+
+- `"for döngüsü yaz"`
+- `"print fonksiyonu yaz Merhaba Dünya"`
+- `"string değişken tanımla isim"`
+- `"if else koşulu yaz"`
+- `"kodu sesli oku"`
+- `"kodu çalıştır"`
+
+### Hızlı Komut Butonları
+
+Arayüzde bulunan hızlı komut butonlarına tıklayarak örnek komutları deneyebilirsiniz.
+
+## 🛠️ Teknolojiler
+
+- **Frontend**: HTML5, Tailwind CSS, CodeMirror
+- **AI**: Google Gemini API (Text & TTS)
+- **Ses Tanıma**: Web Speech API (Chrome/Edge)
+- **Database**: Firebase (isteğe bağlı)
+
+## 📋 Sistem Gereksinimleri
+
+- Modern web tarayıcısı (Chrome, Edge önerilir)
+- Mikrofon erişimi
+- İnternet bağlantısı (API çağrıları için)
+
+## 🔒 Güvenlik Notu
+
+⚠️ **ÖNEMLİ**: API anahtarınızı asla public repository'lere commit etmeyin!
+
+Üretim ortamı için:
+- Environment variables kullanın
+- Backend API ile API anahtarını saklayın
+- `.gitignore` dosyasına API anahtarlarını ekleyin
 
 ## 🤝 Katkıda Bulunma
 
-Bu proje TÜBİTAK 2209-A kapsamında eğitim amaçlı geliştirilmiştir.
-Sorularınız için lütfen proje danışmanı ile iletişime geçin.
+1. Fork edin
+2. Feature branch oluşturun (`git checkout -b feature/amazing-feature`)
+3. Commit edin (`git commit -m 'feat: Add amazing feature'`)
+4. Push edin (`git push origin feature/amazing-feature`)
+5. Pull Request açın
+
+## 📝 Lisans
+
+Bu proje MIT lisansı altında lisanslanmıştır.
+
+## 👨‍💻 Geliştirici
+
+**eisildak**
+- GitHub: [@eisildak](https://github.com/eisildak)
+
+## 🙏 Teşekkürler
+
+- Google Gemini AI ekibine
+- Açık kaynak toplulığuna
+- Tüm katkıda bulunanlara
 
 ## 📞 İletişim
 
-**Proje Sahibi**: Erol Işıldak  
-**Danışman**: Öğr. Gör. Gülsüm KEMERLİ  
-**Proje Ortağı**: Harun Efe Akkan  
-**Kurum**: Nuh Naci Yazgan Üniversitesi
-
-## 📄 Lisans
-
-MIT License - Eğitim amaçlı geliştirilmiştir.
+Sorularınız veya önerileriniz için GitHub Issues kullanabilirsiniz.
 
 ---
 
-<div align="center">
-
-**"Teknoloji, herkes için erişilebilir olmalıdır"** 🌟
-
-TÜBİTAK 2209-A | Nuh Naci Yazgan Üniversitesi | 2025
-
-</div>
+**Not**: Bu uygulama eğitim amaçlıdır. Üretim ortamında kullanmadan önce güvenlik ve performans testleri yapılmalıdır.
