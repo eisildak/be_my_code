@@ -17,17 +17,24 @@ class GeminiCodeGenerator:
     def __init__(self, api_key: Optional[str] = None):
         """
         Args:
-            api_key: Gemini API anahtarı (opsiyonel, .env'den alınabilir)
+            api_key: Gemini API anahtarı (opsiyonel, environment'tan alınabilir)
         """
         self.model = None
         self.api_key = api_key
         
         # API key kontrolü
         if not api_key:
-            # .env'den oku
-            from dotenv import load_dotenv
-            load_dotenv()
+            # Environment variable'dan oku (Vercel için)
             api_key = os.getenv('GEMINI_API_KEY')
+            
+            # Eğer hala yoksa .env'den dene (lokal development için)
+            if not api_key:
+                try:
+                    from dotenv import load_dotenv
+                    load_dotenv()
+                    api_key = os.getenv('GEMINI_API_KEY')
+                except:
+                    pass
         
         if api_key:
             try:
