@@ -10,19 +10,34 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-# Modülleri ekle
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
+# Modülleri ekle (api klasöründen)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, current_dir)
 
-from modules.nlp_processor import NLPProcessor
-from modules.code_analyzer import CodeAnalyzer
-from modules.logger import setup_logger
+try:
+    from modules.nlp_processor import NLPProcessor
+    from modules.code_analyzer import CodeAnalyzer
+    from modules.logger import setup_logger
+    
+    logger = setup_logger()
+    nlp = NLPProcessor()
+    analyzer = CodeAnalyzer()
+except Exception as e:
+    print(f"Module import error: {e}")
+    # Fallback: basit NLP
+    class SimpleNLP:
+        def process_command(self, command, context=""):
+            return None
+    nlp = SimpleNLP()
+    analyzer = None
+    
+    import logging
+    logger = logging.getLogger(__name__)
 
-app = Flask(__name__)
+app = Flask(__name__, 
+            template_folder='../templates',
+            static_folder='../static')
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'be_my_code_secret_key_2025')
-
-logger = setup_logger()
-nlp = NLPProcessor()
-analyzer = CodeAnalyzer()
 
 # Workspace dizini
 WORKSPACE_DIR = Path('/tmp') / "BeMyCode_Workspace"
