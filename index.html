@@ -410,40 +410,49 @@
                     if (!CONFIG.GEMINI_API_KEY || CONFIG.GEMINI_API_KEY === "") {
                         const errorMsg = "Gemini API anahtarı yapılandırılmamış. Lütfen API anahtarınızı ekleyin.";
                         UI.setStatus(`HATA: ${errorMsg}`, false, true);
-                        await this.speak("API anahtarı bulunamadı. Lütfen kodda GEMINI_API_KEY değerini ayarlayın.");
+                        console.error('❌ API anahtarı eksik!');
                         return null;
                     }
 
-                    UI.setStatus('Kod üretiliyor...', true);
+                    console.log('🚀 Kod üretme isteği:', prompt);
+                    UI.setStatus('⏳ Kod üretiliyor...', true);
                     
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${CONFIG.TEXT_MODEL}:generateContent?key=${CONFIG.GEMINI_API_KEY}`;
                     
                     const payload = {
                         contents: [{ parts: [{ text: prompt }] }],
                         systemInstruction: { parts: [{ text: CONFIG.SYSTEM_PROMPT }] },
-                        config: { temperature: 0.1 }
+                        generationConfig: { temperature: 0.1 }
                     };
 
                     try {
+                        console.log('📡 API çağrısı yapılıyor...');
                         const response = await Utils.fetchWithRetry(apiUrl, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(payload)
                         });
                         
+                        console.log('📥 API yanıtı alındı, işleniyor...');
                         const result = await response.json();
+                        console.log('📦 API yanıt objesi:', result);
+                        
                         const generatedText = result.candidates?.[0]?.content?.parts?.[0]?.text;
 
                         if (generatedText) {
-                            UI.setStatus('Kod başarıyla oluşturuldu.', false);
+                            console.log('✅ Kod başarıyla üretildi:', generatedText.substring(0, 100));
+                            UI.setStatus('✓ Kod başarıyla oluşturuldu.', false);
                             return generatedText.trim();
                         } else {
+                            console.error('❌ API yanıtında kod bulunamadı');
+                            console.error('API yanıtı:', JSON.stringify(result, null, 2));
                             throw new Error("API'den geçerli kod yanıtı alınamadı.");
                         }
                     } catch (error) {
-                        console.error("Code Generation Error:", error);
-                        UI.setStatus(`HATA: Kod üretilemedi. ${error.message}`, false, true);
-                        await this.speak(`Üzgünüm, kod üretilirken bir hata oluştu.`);
+                        console.error("❌ Kod Üretme Hatası:", error);
+                        console.error("Hata detayı:", error.message);
+                        console.error("Stack trace:", error.stack);
+                        UI.setStatus(`❌ HATA: ${error.message}`, false, true);
                         return null;
                     }
                 },
@@ -453,11 +462,12 @@
                     
                     // API anahtarı kontrolü - TTS için
                     if (!CONFIG.GEMINI_API_KEY || CONFIG.GEMINI_API_KEY === "") {
-                        console.warn("Gemini API anahtarı yapılandırılmamış. TTS devre dışı.");
+                        console.warn("⚠️ Gemini API anahtarı yapılandırılmamış. TTS devre dışı.");
                         UI.setTTSStatus("API anahtarı eksik - Ses özelliği devre dışı", false);
                         return;
                     }
                     
+                    console.log('🔊 TTS isteği:', text.substring(0, 50) + '...');
                     UI.setTTSStatus("Sesli geri bildirim oluşturuluyor...", true);
                     
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${CONFIG.TTS_MODEL}:generateContent?key=${CONFIG.GEMINI_API_KEY}`;
@@ -475,64 +485,79 @@
                     };
                     
                     try {
+                        console.log('📡 TTS API çağrısı yapılıyor...');
                         const response = await Utils.fetchWithRetry(apiUrl, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(payload)
                         });
                         
+                        console.log('📥 TTS yanıtı alındı');
                         const result = await response.json();
                         const part = result?.candidates?.[0]?.content?.parts?.[0];
                         const audioData = part?.inlineData?.data;
                         const mimeType = part?.inlineData?.mimeType;
 
                         if (audioData && mimeType?.startsWith("audio/")) {
+                            console.log('🎵 Ses verisi bulundu, işleniyor...');
+                            console.log('Mime type:', mimeType);
+                            
                             const match = mimeType.match(/rate=(\d+)/);
                             const sampleRate = match ? Number.parseInt(match[1], 10) : 24000;
+                            console.log('Sample rate:', sampleRate);
                             
                             const pcmData = Utils.base64ToArrayBuffer(audioData);
                             const pcm16 = new Int16Array(pcmData);
                             const wavBlob = Utils.pcmToWav(pcm16, sampleRate);
                             const audioUrl = URL.createObjectURL(wavBlob);
                             
+                            console.log('🎧 Ses çalınıyor...');
                             const audio = new Audio(audioUrl);
                             
                             await new Promise((resolve) => {
                                 audio.onended = () => {
+                                    console.log('✅ Ses çalma tamamlandı');
                                     URL.revokeObjectURL(audioUrl);
                                     resolve();
                                 };
                                 audio.onerror = (e) => {
-                                    console.error("Audio playback error:", e);
-                                    UI.setTTSStatus("Ses çalınırken hata oluştu.");
+                                    console.error("❌ Ses çalma hatası:", e);
+                                    console.error("Hata detayı:", audio.error);
+                                    UI.setTTSStatus("Ses çalınırken hata: " + (audio.error?.message || 'Bilinmeyen hata'));
                                     URL.revokeObjectURL(audioUrl);
                                     resolve();
                                 };
                                 
-                                // Ses çalma denemesi
                                 audio.play().catch(e => {
-                                    console.error("Audio play error:", e);
+                                    console.error("❌ Audio.play() hatası:", e);
+                                    console.error("Hata adı:", e.name);
+                                    console.error("Hata mesajı:", e.message);
                                     
-                                    // Kullanıcı etkileşimi gerekiyorsa
                                     if (e.name === 'NotAllowedError') {
-                                        UI.setTTSStatus("Ses çalma izni gerekli. Lütfen sayfayla etkileşimde bulunun.");
-                                        console.warn('Ses çalmak için kullanıcı etkileşimi gerekli. Butona tıklayın veya klavye kullanın.');
+                                        UI.setTTSStatus("⚠️ Ses izni gerekli. Sayfayla etkileşimde bulunun.");
+                                        console.warn('💡 İpucu: Bir butona tıklayın veya klavye kullanın');
+                                    } else if (e.name === 'NotSupportedError') {
+                                        UI.setTTSStatus("❌ Ses formatı desteklenmiyor");
                                     } else {
-                                        UI.setTTSStatus("Ses çalma hatası: " + e.message);
+                                        UI.setTTSStatus("❌ Ses hatası: " + e.message);
                                     }
                                     URL.revokeObjectURL(audioUrl);
                                     resolve();
                                 });
                             });
                         } else {
-                            console.error("TTS API'den ses verisi alınamadı.");
-                            UI.setTTSStatus("Ses verisi boş geldi.");
+                            console.error("❌ TTS API'den ses verisi alınamadı");
+                            console.error("API yanıtı:", JSON.stringify(result, null, 2));
+                            UI.setTTSStatus("Ses verisi alınamadı");
                         }
                     } catch (error) {
-                        console.error("TTS API Error:", error);
+                        console.error("❌ TTS API Hatası:", error);
+                        console.error("Hata detayı:", error.message);
                         UI.setTTSStatus(`TTS Hatası: ${error.message}`);
                     } finally {
-                        UI.setTTSStatus("Sesli geri bildirim hazır", false);
+                        setTimeout(() => {
+                            UI.setTTSStatus("Sesli geri bildirim hazır", false);
+                        }, 2000);
                     }
                 }
             };
