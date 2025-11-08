@@ -680,34 +680,64 @@
                     };
                     
                     state.recognition.onresult = async (event) => {
+                        console.log('📥 onresult triggered, toplam sonuç sayısı:', event.results.length);
+                        
+                        // Tüm sonuçları logla
+                        for (let i = 0; i < event.results.length; i++) {
+                            const result = event.results[i];
+                            const transcript = result[0].transcript;
+                            const isFinal = result.isFinal;
+                            console.log(`  [${i}] ${isFinal ? 'FINAL' : 'ara'}: "${transcript}"`);
+                        }
+                        
                         const last = event.results.length - 1;
                         const result = event.results[last];
                         const transcript = result[0].transcript;
                         const isFinal = result.isFinal;
                         const confidence = result[0].confidence;
                         
-                        // Ara sonuç göster
+                        // Ara sonuç - sadece göster, işlem yapma
                         if (!isFinal) {
-                            console.log('📝 Ara sonuç:', transcript);
+                            console.log('📝 Ara sonuç (işlem yapılmıyor):', transcript);
                             UI.setStatus(`🎤 Dinleniyor: "${transcript}..."`, false);
-                            return;
+                            return; // ÖNEMLİ: Ara sonuçta işlem yapma
                         }
                         
-                        // Final sonuç
-                        console.log('✅ FINAL SONUÇ:', transcript);
-                        console.log('📊 Güven skoru:', (confidence * 100).toFixed(1) + '%');
-                        UI.setStatus(`✓ Tanındı: "${transcript}" (${(confidence * 100).toFixed(0)}%)`, false);
+                        // FINAL SONUÇ - İşleme geç
+                        console.log('✅ FINAL SONUÇ ALINDI:', transcript);
+                        console.log('📊 Güven skoru:', confidence);
+                        console.log('🔄 İşleme başlıyor...');
                         
-                        if (transcript.toLowerCase().includes("kodu sesli oku") || transcript.toLowerCase().includes("kodu oku")) {
+                        UI.setStatus(`✓ Tanındı: "${transcript}" - İşleniyor...`, false);
+                        
+                        const lowerTranscript = transcript.toLowerCase().trim();
+                        console.log('🔍 Lowercase metin:', lowerTranscript);
+                        
+                        // Komut kontrolü
+                        if (lowerTranscript.includes("kodu oku") || lowerTranscript.includes("sesli oku")) {
+                            console.log('▶️ Komut: Kodu Oku');
                             CodeHandler.speakCode(state.editor.getValue());
-                        } else if (transcript.toLowerCase().includes("kodu çalıştır") || transcript.toLowerCase().includes("çalıştır")) {
+                        } else if (lowerTranscript.includes("çalıştır") || lowerTranscript.includes("kodu çalıştır")) {
+                            console.log('▶️ Komut: Kodu Çalıştır');
                             CodeHandler.runSimulatedCode();
                         } else {
+                            console.log('▶️ Komut: Kod Üret');
+                            console.log('📤 Gemini API\'ye gönderiliyor:', transcript);
+                            
+                            UI.setStatus(`⏳ "${transcript}" için kod üretiliyor...`, true);
                             const code = await GeminiAPI.generateCode(transcript);
+                            
                             if (code) {
-                                state.editor.setValue(state.editor.getValue().trim() + "\n" + code);
+                                console.log('✅ Kod başarıyla üretildi:', code.substring(0, 50) + '...');
+                                const currentCode = state.editor.getValue().trim();
+                                const newCode = currentCode + "\n\n" + code;
+                                state.editor.setValue(newCode);
                                 state.editor.refresh();
-                                GeminiAPI.speak(`Kodunuz başarıyla eklendi.`);
+                                UI.setStatus(`✓ Kod eklendi: "${transcript}"`, false);
+                                await GeminiAPI.speak(`Kodunuz başarıyla eklendi.`);
+                            } else {
+                                console.error('❌ Kod üretilemedi');
+                                UI.setStatus(`❌ Kod üretilemedi`, false, true);
                             }
                         }
                     };
