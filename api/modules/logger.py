@@ -19,14 +19,25 @@ def setup_logger(name="be_my_code", log_file=None):
     Returns:
         logging.Logger: Yapılandırılmış logger
     """
-    # Log dizinini oluştur
-    log_dir = Path(__file__).parent.parent.parent / "logs"
-    log_dir.mkdir(exist_ok=True)
+    # Vercel serverless environment check
+    is_serverless = os.getenv('VERCEL') or os.getenv('AWS_LAMBDA_FUNCTION_NAME')
     
-    # Log dosyası adı
-    if log_file is None:
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        log_file = log_dir / f"be_my_code_{timestamp}.log"
+    # Log dizinini oluştur (sadece yazılabilir ortamlarda)
+    if not is_serverless:
+        try:
+            log_dir = Path(__file__).parent.parent.parent / "logs"
+            log_dir.mkdir(exist_ok=True)
+            
+            # Log dosyası adı
+            if log_file is None:
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                log_file = log_dir / f"be_my_code_{timestamp}.log"
+        except (OSError, PermissionError):
+            # Read-only filesystem, sadece console'a log
+            log_file = None
+    else:
+        # Serverless ortam, dosya loglama yok
+        log_file = None
     
     # Logger'ı oluştur
     logger = logging.getLogger(name)
@@ -45,18 +56,21 @@ def setup_logger(name="be_my_code", log_file=None):
         datefmt='%Y-%m-%d %H:%M:%S'
     )
     
-    # File handler
-    file_handler = logging.FileHandler(log_file, encoding='utf-8')
-    file_handler.setLevel(logging.DEBUG)
-    file_handler.setFormatter(formatter)
+    # File handler (sadece log dosyası varsa)
+    if log_file:
+        try:
+            file_handler = logging.FileHandler(log_file, encoding='utf-8')
+            file_handler.setLevel(logging.DEBUG)
+            file_handler.setFormatter(formatter)
+            logger.addHandler(file_handler)
+        except (OSError, IOError):
+            # Dosya oluşturulamadıysa sadece console'a log
+            pass
     
-    # Console handler
+    # Console handler (her zaman ekle)
     console_handler = logging.StreamHandler()
     console_handler.setLevel(logging.INFO)
     console_handler.setFormatter(formatter)
-    
-    # Handler'ları ekle
-    logger.addHandler(file_handler)
     logger.addHandler(console_handler)
     
     return logger
