@@ -352,9 +352,18 @@ def list_files():
 @app.route('/health')
 def health():
     """Health check endpoint"""
+    import os
+    
+    # Environment variable kontrolü
+    api_key_exists = os.getenv('GEMINI_API_KEY') is not None
+    api_key_length = len(os.getenv('GEMINI_API_KEY', ''))
+    
     return jsonify({
         'status': 'healthy',
-        'gemini_available': gemini is not None
+        'gemini_available': gemini is not None,
+        'api_key_exists': api_key_exists,
+        'api_key_length': api_key_length,
+        'gemini_object': str(type(gemini)) if gemini else None
     })
 
 # Vercel için
