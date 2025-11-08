@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+*.env.local
+
+# Logs
+*.log
+logs/
+
+# TTS Model Cache
+tts_cache/
+.cache/
+
+# Audio files
+*.wav
+*.mp3
+!assets/reference_audio/*.wav
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+temp/
+output/
+user_projects/

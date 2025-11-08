@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Code - Sesli Python IDE</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header - Proje Bilgileri -->
+        <header>
+            <div class="header-content">
+                <div>
+                    <h1>🎤 Be My Code - Sesli Python IDE</h1>
+                    <div class="project-info">
+                        <p><strong>Görme Engelli Bireyler için Kod Yazma Asistanı</strong></p>
+                        <p>📚 TÜBİTAK 2209-A Projesi | 👨‍💻 Proje Sahibi: <strong>Erol Işıldak</strong> | 👩‍🏫 Danışman: <strong>Öğr. Gör. Gülsüm KEMERLİ</strong> | 🤝 Proje Ortağı: <strong>Harun Efe Akkan</strong></p>
+                    </div>
+                </div>
+                <div class="status">
+                    <span id="status-indicator" class="status-dot"></span>
+                    <span id="status-text">Hazır</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Ana İçerik -->
+        <div class="main-content">
+            <!-- Sol Panel: Dosya Yöneticisi -->
+            <aside class="sidebar">
+                <h3>📁 Dosyalar</h3>
+                <button id="new-file-btn" class="btn">➕ Yeni Dosya</button>
+                <div id="file-list"></div>
+            </aside>
+
+            <!-- Orta Panel: Kod Editörü -->
+            <main class="editor-section">
+                <div class="editor-header">
+                    <input type="text" id="filename" placeholder="untitled.py" value="untitled.py">
+                    <div class="editor-controls">
+                        <button id="save-btn" class="btn btn-success">💾 Kaydet (Ctrl+S)</button>
+                        <button id="run-btn" class="btn btn-primary">▶️ Çalıştır (F5)</button>
+                    </div>
+                </div>
+                
+                <textarea id="code-editor"></textarea>
+                
+                <div class="terminal-section">
+                    <h3>📺 Terminal Çıktısı</h3>
+                    <div id="terminal-output"></div>
+                    <button id="clear-terminal-btn" class="btn btn-secondary">🗑️ Temizle</button>
+                </div>
+            </main>
+
+            <!-- Sağ Panel: Sesli Kontroller -->
+            <aside class="voice-panel">
+                <h3>🎤 Sesli Komutlar</h3>
+                
+                <div class="voice-controls">
+                    <button id="mic-btn" class="btn btn-large btn-primary" title="Mikrofon (Ctrl+M veya Cmd+M)">
+                        🎤 Mikrofon
+                    </button>
+                    <p class="keyboard-hint">⌨️ Kısayol: <strong>Ctrl+M</strong> veya <strong>Cmd+M</strong></p>
+                    <div id="listening-indicator" class="listening-indicator">
+                        <span class="pulse"></span>
+                        <span>Dinleniyor...</span>
+                    </div>
+                </div>
+
+                <div class="voice-status">
+                    <p id="voice-command-text">Komut bekleniyor...</p>
+                </div>
+
+                <div class="command-list">
+                    <h4>📋 Hızlı Komutlar</h4>
+                    <ul>
+                        <li><strong>1. Komut:</strong> Alt satıra geç</li>
+                        <li><strong>2. Komut:</strong> Kodu çalıştır</li>
+                        <li><strong>3. Komut:</strong> 1. satırı oku</li>
+                        <li><strong>4. Komut:</strong> Terminal çıktısını oku</li>
+                        <li><strong>5. Komut:</strong> Komut listesini oku</li>
+                    </ul>
+                    
+                    <h4>🤖 AI Komutları (Gemini)</h4>
+                    <ul>
+                        <li>"isim değişkeni oluştur"</li>
+                        <li>"1'den 10'a kadar yazdır"</li>
+                        <li>"kullanıcıdan yaş al"</li>
+                        <li>"faktöriyel fonksiyonu yaz"</li>
+                    </ul>
+                </div>
+
+                <div class="settings">
+                    <h4>⚙️ Ayarlar</h4>
+                    <label>
+                        <input type="checkbox" id="auto-speak" checked>
+                        Otomatik Sesli Geri Bildirim
+                    </label>
+                    <label>
+                        <input type="checkbox" id="gemini-mode" checked>
+                        Gemini AI Modu
+                    </label>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="{{ url_for('static', filename='js/editor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/voice.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/tts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
