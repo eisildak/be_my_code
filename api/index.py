@@ -48,6 +48,81 @@ def index():
     """Ana sayfa"""
     return render_template('index.html')
 
+@app.route('/api/generate_conversation_code', methods=['POST'])
+def generate_conversation_code():
+    """Konuşma tabanlı kod üretimi - Gemini sürekli konuşarak yönlendirir"""
+    try:
+        data = request.get_json()
+        user_input = data.get('user_input', '')
+        context = data.get('context', '')
+        prompt = data.get('prompt', '')
+        
+        if not user_input:
+            return jsonify({'success': False, 'error': 'Kullanıcı girişi boş'})
+        
+        # Gemini'ye özel prompt
+        conversation_prompt = f"""Kullanıcı sana şunu söyledi: "{user_input}"
+Sen ona şu soruyu sormuştun: "{prompt}"
+
+Şimdi:
+1. Kullanıcının isteğini anla
+2. Python kodu üret (sadece kod, yorum satırı yok)
+3. Kısa bir açıklama cümlesi oluştur (Türkçe, konuşma dilinde)
+
+Mevcut kod:
+{context}
+
+Yanıt formatı:
+CODE: [Python kodu buraya]
+EXPLANATION: [Türkçe açıklama buraya, örnek: "Tamam, değişken oluşturdum" veya "Döngü eklendi"]
+"""
+        
+        # Gemini ile kod üret
+        if nlp.gemini:
+            try:
+                response = nlp.gemini.generate_content(conversation_prompt)
+                response_text = response.text
+                
+                # CODE ve EXPLANATION kısımlarını ayır
+                code_part = ''
+                explanation_part = ''
+                
+                if 'CODE:' in response_text and 'EXPLANATION:' in response_text:
+                    parts = response_text.split('EXPLANATION:')
+                    code_part = parts[0].replace('CODE:', '').strip()
+                    explanation_part = parts[1].strip()
+                    
+                    # Kod bloğu temizle
+                    if '```python' in code_part:
+                        code_part = code_part.split('```python')[1].split('```')[0].strip()
+                    elif '```' in code_part:
+                        code_part = code_part.split('```')[1].split('```')[0].strip()
+                else:
+                    # Fallback: tüm yanıtı kod olarak al
+                    code_part = response_text.strip()
+                    explanation_part = "Kod eklendi"
+                
+                return jsonify({
+                    'success': True,
+                    'code': code_part,
+                    'explanation': explanation_part
+                })
+            except Exception as e:
+                print(f"Gemini hatası: {e}")
+                return jsonify({
+                    'success': False,
+                    'error': f'Gemini hatası: {str(e)}'
+                })
+        else:
+            return jsonify({
+                'success': False,
+                'error': 'Gemini mevcut değil'
+            })
+            
+    except Exception as e:
+        print(f"Genel hata: {e}")
+        return jsonify({'success': False, 'error': str(e)})
+
 @app.route('/api/process_command', methods=['POST'])
 def process_command():
     """Sesli komutu işle"""

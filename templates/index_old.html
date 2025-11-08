@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Code - Sesli Python IDE</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header - Proje Bilgileri -->
+        <header>
+            <div class="header-content">
+                <div>
+                    <h1>🎤 Be My Code - Sesli Python IDE</h1>
+                    <div class="project-info">
+                        <p><strong>Görme Engelli Bireyler için Kod Yazma Asistanı</strong></p>
+                        <p>📚 TÜBİTAK 2209-A Projesi | 👨‍💻 Proje Sahibi: <strong>Erol Işıldak</strong> | 👩‍🏫 Danışman: <strong>Öğr. Gör. Gülsüm KEMERLİ</strong> | 🤝 Proje Ortağı: <strong>Harun Efe Akkan</strong></p>
+                    </div>
+                </div>
+                <div class="status">
+                    <span id="status-indicator" class="status-dot"></span>
+                    <span id="status-text">Hazır</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Ana İçerik -->
+        <div class="main-content">
+            <!-- Sol Panel: Dosya Yöneticisi -->
+            <aside class="sidebar">
+                <h3>📁 Dosyalar</h3>
+                <button id="new-file-btn" class="btn">➕ Yeni Dosya</button>
+                <div id="file-list"></div>
+            </aside>
+
+            <!-- Orta Panel: Kod Editörü -->
+            <main class="editor-section">
+                <div class="editor-header">
+                    <input type="text" id="filename" placeholder="untitled.py" value="untitled.py">
+                    <div class="editor-controls">
+                        <button id="save-btn" class="btn btn-success">💾 Kaydet (Ctrl+S)</button>
+                        <button id="run-btn" class="btn btn-primary">▶️ Çalıştır (F5)</button>
+                    </div>
+                </div>
+                
+                <textarea id="code-editor"></textarea>
+                
+                        <div class="terminal-panel">
+            <div class="panel-header">
+                <h3>� Terminal Çıktısı</h3>
+            </div>
+            <div id="terminal-output" class="terminal-output">
+                <div class="terminal-line info">Terminal hazır...</div>
+            </div>
+        </div>
+            </main>
+
+            <!-- Sağ Panel: Sesli Kontroller -->
+            <aside class="voice-panel">
+                <h3>🎤 Sesli Komutlar</h3>
+                
+                                    <div class="sidebar">
+            <div class="voice-controls">
+                <h3>🎤 Gemini Asistan</h3>
+                
+                <div class="voice-status">
+                    <div class="listening-indicator" id="listening-indicator">
+                        <span class="pulse"></span>
+                    </div>
+                    <p id="voice-command-text">🤖 Başlatılıyor...</p>
+                </div>
+                
+                <button id="mic-btn" class="btn btn-primary mic-btn" title="Ctrl+M veya Cmd+M">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                        <line x1="12" y1="19" x2="12" y2="23"></line>
+                        <line x1="8" y1="23" x2="16" y2="23"></line>
+                    </svg>
+                    Konuşmaya Başla
+                </button>
+
+                <div class="info-box" style="margin-top: 20px; padding: 15px; background: rgba(215, 187, 86, 0.1); border-left: 3px solid var(--primary-gold); border-radius: 5px;">
+                    <h4 style="margin: 0 0 10px 0; color: var(--primary-gold);">💬 Nasıl Çalışır?</h4>
+                    <ol style="margin: 0; padding-left: 20px; color: var(--primary-light); font-size: 14px;">
+                        <li>Gemini size ne yazmak istediğinizi sorar</li>
+                        <li>Siz Türkçe söylersiniz (örn: "değişken oluştur")</li>
+                        <li>Gemini kodu yazar ve editöre ekler</li>
+                        <li>Tekrar sorar, konuşma devam eder</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="{{ url_for('static', filename='js/editor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/voice.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/tts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
