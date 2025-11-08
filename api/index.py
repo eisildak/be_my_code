@@ -14,6 +14,13 @@ from pathlib import Path
 current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, current_dir)
 
+# Gemini API key'i environment'tan al
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+print(f"🔑 GEMINI_API_KEY bulundu mu? {GEMINI_API_KEY is not None}")
+if GEMINI_API_KEY:
+    print(f"🔑 API Key uzunluğu: {len(GEMINI_API_KEY)} karakter")
+    print(f"🔑 API Key başlangıcı: {GEMINI_API_KEY[:15]}...")
+
 try:
     from modules.nlp_processor import NLPProcessor
     from modules.gemini_code_generator import GeminiCodeGenerator
@@ -21,11 +28,31 @@ try:
     from modules.logger import setup_logger
     
     logger = setup_logger()
+    
+    # Gemini'yi direkt başlat
+    gemini = None
+    if GEMINI_API_KEY:
+        try:
+            print("🤖 Gemini başlatılıyor...")
+            gemini = GeminiCodeGenerator(api_key=GEMINI_API_KEY)
+            if gemini.is_available():
+                print("✅ Gemini başarıyla başlatıldı!")
+            else:
+                print("⚠️ Gemini başlatıldı ama kullanılamıyor")
+                gemini = None
+        except Exception as e:
+            print(f"❌ Gemini başlatma hatası: {e}")
+            gemini = None
+    else:
+        print("⚠️ GEMINI_API_KEY bulunamadı")
+    
     nlp = NLPProcessor()
     analyzer = CodeAnalyzer()
-    gemini = nlp.gemini if hasattr(nlp, 'gemini') else None
+    
 except Exception as e:
-    print(f"Module import error: {e}")
+    print(f"❌ Module import error: {e}")
+    import traceback
+    traceback.print_exc()
     # Fallback
     gemini = None
     analyzer = None
