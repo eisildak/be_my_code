@@ -16,10 +16,18 @@ sys.path.insert(0, current_dir)
 
 # Gemini API key'i environment'tan al
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
-print(f"🔑 GEMINI_API_KEY bulundu mu? {GEMINI_API_KEY is not None}")
+
+# Debug logları sakla
+DEBUG_LOGS = []
+
+def log_debug(message):
+    DEBUG_LOGS.append(message)
+    print(message)
+
+log_debug(f"🔑 GEMINI_API_KEY bulundu mu? {GEMINI_API_KEY is not None}")
 if GEMINI_API_KEY:
-    print(f"🔑 API Key uzunluğu: {len(GEMINI_API_KEY)} karakter")
-    print(f"🔑 API Key başlangıcı: {GEMINI_API_KEY[:15]}...")
+    log_debug(f"🔑 API Key uzunluğu: {len(GEMINI_API_KEY)} karakter")
+    log_debug(f"🔑 API Key başlangıcı: {GEMINI_API_KEY[:15]}...")
 
 try:
     from modules.nlp_processor import NLPProcessor
@@ -33,26 +41,36 @@ try:
     gemini = None
     if GEMINI_API_KEY:
         try:
-            print("🤖 Gemini başlatılıyor...")
+            log_debug("🤖 Gemini başlatılıyor...")
             gemini = GeminiCodeGenerator(api_key=GEMINI_API_KEY)
-            if gemini.is_available():
-                print("✅ Gemini başarıyla başlatıldı!")
+            log_debug(f"🤖 Gemini nesnesi oluşturuldu: {type(gemini)}")
+            
+            if hasattr(gemini, 'is_available'):
+                is_avail = gemini.is_available()
+                log_debug(f"🤖 Gemini.is_available(): {is_avail}")
+                if is_avail:
+                    log_debug("✅ Gemini başarıyla başlatıldı!")
+                else:
+                    log_debug("⚠️ Gemini başlatıldı ama kullanılamıyor")
+                    gemini = None
             else:
-                print("⚠️ Gemini başlatıldı ama kullanılamıyor")
-                gemini = None
+                log_debug("⚠️ Gemini.is_available() metodu yok")
+                
         except Exception as e:
-            print(f"❌ Gemini başlatma hatası: {e}")
+            log_debug(f"❌ Gemini başlatma hatası: {e}")
+            import traceback
+            log_debug(f"❌ Traceback: {traceback.format_exc()}")
             gemini = None
     else:
-        print("⚠️ GEMINI_API_KEY bulunamadı")
+        log_debug("⚠️ GEMINI_API_KEY bulunamadı")
     
     nlp = NLPProcessor()
     analyzer = CodeAnalyzer()
     
 except Exception as e:
-    print(f"❌ Module import error: {e}")
+    log_debug(f"❌ Module import error: {e}")
     import traceback
-    traceback.print_exc()
+    log_debug(f"❌ Traceback: {traceback.format_exc()}")
     # Fallback
     gemini = None
     analyzer = None
@@ -348,6 +366,15 @@ def list_files():
             'success': False,
             'error': str(e)
         })
+
+@app.route('/debug')
+def debug():
+    """Debug bilgileri"""
+    return jsonify({
+        'logs': DEBUG_LOGS,
+        'gemini_type': str(type(gemini)),
+        'gemini_is_none': gemini is None
+    })
 
 @app.route('/health')
 def health():
