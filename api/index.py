@@ -16,19 +16,18 @@ sys.path.insert(0, current_dir)
 
 try:
     from modules.nlp_processor import NLPProcessor
+    from modules.gemini_code_generator import GeminiCodeGenerator
     from modules.code_analyzer import CodeAnalyzer
     from modules.logger import setup_logger
     
     logger = setup_logger()
     nlp = NLPProcessor()
     analyzer = CodeAnalyzer()
+    gemini = nlp.gemini if hasattr(nlp, 'gemini') else None
 except Exception as e:
     print(f"Module import error: {e}")
-    # Fallback: basit NLP
-    class SimpleNLP:
-        def process_command(self, command, context=""):
-            return None
-    nlp = SimpleNLP()
+    # Fallback
+    gemini = None
     analyzer = None
     
     import logging
@@ -78,9 +77,9 @@ EXPLANATION: [Türkçe açıklama buraya, örnek: "Tamam, değişken oluşturdum
 """
         
         # Gemini ile kod üret
-        if nlp.gemini:
+        if gemini:
             try:
-                response = nlp.gemini.generate_content(conversation_prompt)
+                response = gemini.generate_content(conversation_prompt)
                 response_text = response.text
                 
                 # CODE ve EXPLANATION kısımlarını ayır
@@ -288,7 +287,7 @@ def health():
     """Health check endpoint"""
     return jsonify({
         'status': 'healthy',
-        'gemini_available': nlp.gemini is not None if hasattr(nlp, 'gemini') else False
+        'gemini_available': gemini is not None
     })
 
 # Vercel için
