@@ -8,75 +8,57 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <h1>🎤 Be My Code - Gemini Asistan</h1>
-            <p class="subtitle">
-                TÜBİTAK 2209-A Projesi | 
-                Erol Işıldak | 
-                Danışman: Gülsüm KEMERLİ | 
-                Proje Ortağı: Harun Efe Akkan
-            </p>
-            <p class="hint">⌨️ Kısayol: Ctrl+M veya Cmd+M ile mikrofonu açabilirsiniz</p>
-        </header>
-
-        <div class="workspace">
-            <!-- Sol Panel - Gemini Asistan -->
-            <aside class="sidebar" aria-label="Gemini Asistan">
-                <div class="voice-controls">
-                    <h3>🤖 Gemini Asistan</h3>
-                    
-                    <div class="voice-status">
-                        <div class="listening-indicator" id="listening-indicator">
-                            <span class="pulse"></span>
-                        </div>
-                        <p id="voice-command-text">🤖 Başlatılıyor...</p>
-                    </div>
-                    
-                    <button id="mic-btn" class="btn btn-primary mic-btn" title="Ctrl+M veya Cmd+M">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
-                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                            <line x1="12" y1="19" x2="12" y2="23"></line>
-                            <line x1="8" y1="23" x2="16" y2="23"></line>
-                        </svg>
-                        Konuşmaya Başla
-                    </button>
-
-                    <div class="info-box">
-                        <h4>💬 Nasıl Çalışır?</h4>
-                        <ol>
-                            <li>Gemini size ne yazmak istediğinizi sorar</li>
-                            <li>Siz Türkçe söylersiniz (örn: "değişken oluştur")</li>
-                            <li>Gemini kodu yazar ve editöre ekler</li>
-                            <li>Konuşma devam eder, sürekli sorar</li>
-                        </ol>
-                    </div>
-                </div>
-            </aside>
-
-            <!-- Orta Panel - Kod Editörü -->
-            <main class="main-content">
-                <div class="editor-panel">
-                    <div class="panel-header">
-                        <h3>📝 Kod Editörü</h3>
-                        <span id="status-text" class="status info">Hazır</span>
-                    </div>
-                    
-                    <textarea id="code-editor" placeholder="# Gemini size ne yazmak istediğinizi soracak...&#10;# Mikrofon butonuna basın ve konuşun"></textarea>
-                </div>
-
-                <!-- Terminal -->
-                <div class="terminal-panel">
-                    <div class="panel-header">
-                        <h3>💻 Terminal Çıktısı</h3>
-                    </div>
-                    <div id="terminal-output" class="terminal-output">
-                        <div class="terminal-line info">Terminal hazır...</div>
-                    </div>
-                </div>
-            </main>
+        <!-- Ana Kod Editörü - Tam Ekran -->
+        <div class="main-editor">
+            <div class="editor-header">
+                <h2>📝 Python Kod Editörü</h2>
+                <span id="status-text" class="status info">Hazır</span>
+            </div>
+            <textarea id="code-editor" placeholder="# Gemini size ne yazmak istediğinizi soracak...&#10;# Kod otomatik olarak çalıştırılacak"></textarea>
         </div>
+
+        <!-- Sağ Üst - Gemini Asistan (Küçük) -->
+        <aside class="assistant-panel" aria-label="Gemini Asistan">
+            <div class="assistant-content">
+                <h4>🤖 Gemini</h4>
+                
+                <div class="voice-status-mini">
+                    <div class="listening-indicator" id="listening-indicator">
+                        <span class="pulse"></span>
+                    </div>
+                    <p id="voice-command-text">Başlatılıyor...</p>
+                </div>
+                
+                <button id="mic-btn" class="btn-mic-mini" title="Ctrl+M">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                        <line x1="12" y1="19" x2="12" y2="23"></line>
+                        <line x1="8" y1="23" x2="16" y2="23"></line>
+                    </svg>
+                </button>
+
+                <div class="info-mini">
+                    <small>💬 Gemini sorar → Siz cevaplarsınız → Kod yazılır ve çalıştırılır</small>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Alt - Terminal -->
+        <div class="terminal-bottom">
+            <div class="terminal-header">
+                <h3>� Terminal Çıktısı</h3>
+                <button id="clear-terminal-btn" class="btn-clear-mini">🗑️</button>
+            </div>
+            <div id="terminal-output" class="terminal-output">
+                <div class="terminal-line info">Terminal hazır...</div>
+            </div>
+        </div>
+
+        <!-- Footer - Proje Bilgisi (Çok Küçük) -->
+        <footer class="footer-mini">
+            <small>TÜBİTAK 2209-A | Erol Işıldak | Danışman: Gülsüm KEMERLİ | Proje Ortağı: Harun Efe Akkan</small>
+        </footer>
     </div>
 
     <!-- Scripts -->

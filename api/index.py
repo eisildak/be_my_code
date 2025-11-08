@@ -122,6 +122,46 @@ EXPLANATION: [Türkçe açıklama buraya, örnek: "Tamam, değişken oluşturdum
         print(f"Genel hata: {e}")
         return jsonify({'success': False, 'error': str(e)})
 
+@app.route('/api/analyze_error', methods=['POST'])
+def analyze_error():
+    """Gemini ile hata analizi ve öneri"""
+    try:
+        data = request.get_json()
+        code = data.get('code', '')
+        error = data.get('error', '')
+        
+        if not gemini or not code or not error:
+            return jsonify({'success': False})
+        
+        prompt = f"""Python kodunda hata var. Türkçe olarak:
+1. Hatanın ne olduğunu kısaca açıkla
+2. Nasıl düzeltileceğini söyle
+
+Kod:
+{code}
+
+Hata:
+{error}
+
+Yanıt formatı (maksimum 2-3 cümle):
+[Kısa Türkçe açıklama ve öneri]
+"""
+        
+        try:
+            response = gemini.generate_content(prompt)
+            suggestion = response.text.strip()
+            
+            return jsonify({
+                'success': True,
+                'suggestion': suggestion
+            })
+        except Exception as e:
+            print(f"Gemini error analysis failed: {e}")
+            return jsonify({'success': False})
+            
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)})
+
 @app.route('/api/process_command', methods=['POST'])
 def process_command():
     """Sesli komutu işle"""

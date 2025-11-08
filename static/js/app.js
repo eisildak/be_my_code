@@ -46,6 +46,12 @@ class BeMyCodeApp {
             }
         });
         
+        // Terminal temizle butonu
+        const clearTerminalBtn = document.getElementById('clear-terminal-btn');
+        if (clearTerminalBtn) {
+            clearTerminalBtn.addEventListener('click', () => this.clearTerminal());
+        }
+        
         // Klavye: Ctrl+M / Cmd+M
         document.addEventListener('keydown', (e) => {
             if ((e.ctrlKey || e.metaKey) && e.key === 'm') {
@@ -132,10 +138,13 @@ class BeMyCodeApp {
                 const explanation = data.explanation || 'Kod eklendi';
                 this.speak(explanation);
                 
-                this.updateStatus('Kod eklendi ✓', 'success');
+                this.updateStatus('Kod yazıldı, çalıştırılıyor...', 'warning');
                 
-                // 4 saniye sonra tekrar sor
-                setTimeout(() => this.askForCode(), 4000);
+                // Kodu otomatik çalıştır
+                await this.runCode();
+                
+                // 3 saniye sonra tekrar sor
+                setTimeout(() => this.askForCode(), 3000);
             } else {
                 this.speak('Anlamadım, lütfen tekrar söyler misiniz?');
                 setTimeout(() => this.askForCode(), 3000);
@@ -144,6 +153,75 @@ class BeMyCodeApp {
             console.error('Hata:', error);
             this.speak('Bir hata oluştu. Tekrar deneyelim.');
             setTimeout(() => this.askForCode(), 3000);
+        }
+    }
+
+    async runCode() {
+        const code = this.editor.getValue();
+        
+        if (!code.trim()) {
+            return;
+        }
+        
+        try {
+            const response = await fetch('/api/run_code', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                if (data.output) {
+                    this.appendToTerminal('▶ Çıktı:', 'info');
+                    this.appendToTerminal(data.output, 'success');
+                    this.speak('Kod başarıyla çalıştı');
+                }
+                if (data.error) {
+                    this.appendToTerminal('⚠ Hata:', 'error');
+                    this.appendToTerminal(data.error, 'error');
+                    
+                    // Gemini'ye hatayı analiz ettir
+                    await this.analyzeError(code, data.error);
+                }
+                
+                this.updateStatus('Hazır', 'success');
+            } else {
+                this.appendToTerminal('❌ Hata:', 'error');
+                this.appendToTerminal(data.error, 'error');
+                
+                // Gemini'ye hatayı analiz ettir
+                await this.analyzeError(code, data.error);
+            }
+        } catch (error) {
+            console.error('Çalıştırma hatası:', error);
+            this.appendToTerminal('❌ İstek hatası: ' + error.message, 'error');
+        }
+    }
+
+    async analyzeError(code, errorMessage) {
+        this.updateStatus('Gemini hatayı analiz ediyor...', 'warning');
+        
+        try {
+            const response = await fetch('/api/analyze_error', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    code: code,
+                    error: errorMessage
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success && data.suggestion) {
+                this.appendToTerminal('\n💡 Gemini Önerisi:', 'info');
+                this.appendToTerminal(data.suggestion, 'info');
+                this.speak(data.suggestion);
+            }
+        } catch (error) {
+            console.error('Hata analizi başarısız:', error);
         }
     }
 
