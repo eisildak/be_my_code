@@ -182,7 +182,10 @@ body {
     border-top: 2px solid var(--primary-gold);
     display: flex;
     flex-direction: column;
-    max-height: 200px;
+    min-height: 150px;
+    max-height: 400px;
+    resize: vertical;
+    overflow: auto;
 }
 
 .terminal-header {

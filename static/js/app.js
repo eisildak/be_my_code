@@ -29,6 +29,10 @@ class BeMyCodeApp {
         this.setupEventListeners();
         this.setupVoiceCallbacks();
         
+        console.log('✅ Be My Code başlatıldı');
+        console.log('Mikrofon butonu:', this.micBtn);
+        console.log('Voice Recognition:', this.voice);
+        
         // Hoş geldin mesajı
         setTimeout(() => {
             this.speak('Merhaba! Ben Be My Code asistanınızım. Size Python kodu yazmakta yardımcı olacağım.');
@@ -37,28 +41,41 @@ class BeMyCodeApp {
     }
 
     setupEventListeners() {
+        console.log('🔧 Event listeners kuruluyor...');
+        
         // Mikrofon butonu
         this.micBtn.addEventListener('click', () => {
+            console.log('🎤 Mikrofon butonuna tıklandı');
+            console.log('Listening durumu:', this.voice.isListening);
+            
             if (this.voice.isListening) {
+                console.log('Durdurulacak...');
                 this.voice.stop();
             } else {
+                console.log('Başlatılacak...');
                 this.voice.start();
             }
         });
+        
+        console.log('✅ Mikrofon butonu event listener eklendi');
         
         // Terminal temizle butonu
         const clearTerminalBtn = document.getElementById('clear-terminal-btn');
         if (clearTerminalBtn) {
             clearTerminalBtn.addEventListener('click', () => this.clearTerminal());
+            console.log('✅ Terminal temizle butonu eklendi');
         }
         
         // Klavye: Ctrl+M / Cmd+M
         document.addEventListener('keydown', (e) => {
             if ((e.ctrlKey || e.metaKey) && e.key === 'm') {
                 e.preventDefault();
+                console.log('⌨️ Ctrl+M basıldı');
                 this.micBtn.click();
             }
         });
+        
+        console.log('✅ Tüm event listeners hazır');
     }
 
     setupVoiceCallbacks() {

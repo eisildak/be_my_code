@@ -7,15 +7,21 @@ class VoiceRecognition {
     }
 
     initialize() {
+        console.log('🎤 VoiceRecognition initialize başladı');
+        
         // Web Speech API desteği kontrolü
         if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-            console.error('Web Speech API desteklenmiyor!');
-            this.onError('not-supported');
+            console.error('❌ Web Speech API desteklenmiyor!');
+            this.onError('not-supported', 'Web Speech API desteklenmiyor');
             return;
         }
 
+        console.log('✅ Web Speech API destekleniyor');
+
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         this.recognition = new SpeechRecognition();
+        
+        console.log('✅ SpeechRecognition nesnesi oluşturuldu');
         
         // Türkçe dil ayarı
         this.recognition.lang = 'tr-TR';
@@ -23,19 +29,26 @@ class VoiceRecognition {
         this.recognition.interimResults = false;
         this.recognition.maxAlternatives = 1;
 
+        console.log('✅ SpeechRecognition ayarları yapıldı:', {
+            lang: this.recognition.lang,
+            continuous: this.recognition.continuous
+        });
+
         // Event listeners
         this.recognition.onstart = () => {
+            console.log('🎤 Dinleme BAŞLADI');
             this.isListening = true;
-            this.onStart();
+            if (this.onStart) this.onStart();
         };
 
         this.recognition.onresult = (event) => {
             const transcript = event.results[0][0].transcript;
-            this.onResult(transcript);
+            console.log('📝 Algılanan metin:', transcript);
+            if (this.onResult) this.onResult(transcript);
         };
 
         this.recognition.onerror = (event) => {
-            console.error('Ses tanıma hatası:', event.error);
+            console.error('❌ Ses tanıma hatası:', event.error);
             
             // Hata mesajlarını Türkçe'ye çevir
             const errorMessages = {
@@ -58,25 +71,40 @@ class VoiceRecognition {
     }
 
     start() {
+        console.log('🚀 Voice.start() çağrıldı');
+        console.log('Recognition nesnesi:', this.recognition);
+        console.log('isListening:', this.isListening);
+        
         if (!this.recognition) {
-            console.error('Speech Recognition başlatılamadı');
+            console.error('❌ Speech Recognition başlatılamadı');
+            if (this.onError) {
+                this.onError('not-initialized', 'Ses tanıma başlatılamadı');
+            }
             return;
         }
 
         if (this.isListening) {
+            console.log('⏹️ Zaten dinleniyor, durduruluyor...');
             this.stop();
             return;
         }
 
         try {
+            console.log('🎤 recognition.start() çağrılıyor...');
             this.recognition.start();
+            console.log('✅ recognition.start() başarılı');
         } catch (error) {
-            console.error('Mikrofon başlatma hatası:', error);
+            console.error('❌ Mikrofon başlatma hatası:', error);
+            if (this.onError) {
+                this.onError('start-failed', error.message);
+            }
         }
     }
 
     stop() {
+        console.log('⏹️ Voice.stop() çağrıldı');
         if (this.recognition && this.isListening) {
+            console.log('🛑 recognition.stop() çağrılıyor...');
             this.recognition.stop();
         }
     }
