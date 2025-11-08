@@ -617,14 +617,28 @@
 
                     state.recognition = new webkitSpeechRecognition();
                     state.recognition.continuous = false;
-                    state.recognition.interimResults = false;
+                    state.recognition.interimResults = true; // Ara sonuçları göster
                     state.recognition.lang = 'tr-TR';
+                    state.recognition.maxAlternatives = 3;
                     
                     state.recognition.onstart = () => {
                         state.isListening = true;
                         elements.voiceCommandBtn.classList.add('listening');
-                        UI.setStatus('🎤 Dinleniyor... Lütfen konuşun.', false);
-                        console.log('Mikrofon aktif - Dinleme başladı');
+                        UI.setStatus('🎤 DİNLENİYOR! Şimdi konuşun...', false);
+                        console.log('✅ Mikrofon AKTIF - Dinleme BAŞLADI');
+                        console.log('⏱️ Dinleme süresi: maksimum ~10 saniye');
+                        console.log('💡 İpucu: Net ve yavaş konuşun');
+                        
+                        // Sesli uyarı (opsiyonel)
+                        const beep = new AudioContext();
+                        const oscillator = beep.createOscillator();
+                        const gainNode = beep.createGain();
+                        oscillator.connect(gainNode);
+                        gainNode.connect(beep.destination);
+                        oscillator.frequency.value = 800;
+                        gainNode.gain.value = 0.1;
+                        oscillator.start();
+                        oscillator.stop(beep.currentTime + 0.1);
                     };
                     
                     state.recognition.onend = () => {
@@ -666,11 +680,23 @@
                     };
                     
                     state.recognition.onresult = async (event) => {
-                        const transcript = event.results[0][0].transcript;
-                        const confidence = event.results[0][0].confidence;
+                        const last = event.results.length - 1;
+                        const result = event.results[last];
+                        const transcript = result[0].transcript;
+                        const isFinal = result.isFinal;
+                        const confidence = result[0].confidence;
                         
-                        console.log('Tanınan metin:', transcript, '| Güven skoru:', confidence);
-                        UI.setStatus(`✓ Tanınan: "${transcript}"`, false);
+                        // Ara sonuç göster
+                        if (!isFinal) {
+                            console.log('📝 Ara sonuç:', transcript);
+                            UI.setStatus(`🎤 Dinleniyor: "${transcript}..."`, false);
+                            return;
+                        }
+                        
+                        // Final sonuç
+                        console.log('✅ FINAL SONUÇ:', transcript);
+                        console.log('📊 Güven skoru:', (confidence * 100).toFixed(1) + '%');
+                        UI.setStatus(`✓ Tanındı: "${transcript}" (${(confidence * 100).toFixed(0)}%)`, false);
                         
                         if (transcript.toLowerCase().includes("kodu sesli oku") || transcript.toLowerCase().includes("kodu oku")) {
                             CodeHandler.speakCode(state.editor.getValue());
@@ -691,20 +717,43 @@
 
                 toggle() {
                     if (!state.recognition) {
-                        UI.setStatus('Ses tanıma başlatılamadı.', false, true);
+                        UI.setStatus('❌ Ses tanıma başlatılamadı. Sayfayı yenileyin.', false, true);
+                        console.error('Recognition object bulunamadı');
                         return;
                     }
 
                     if (state.isListening) {
                         state.recognition.stop();
-                        console.log('Kullanıcı dinlemeyi durdurdu');
+                        console.log('👤 Kullanıcı dinlemeyi durdurdu');
                     } else {
                         try {
+                            console.log('🎤 Mikrofon başlatılıyor...');
+                            console.log('Tarayıcı:', navigator.userAgent);
+                            console.log('Mikrofon izni durumu kontrolü...');
+                            
+                            // Mikrofon izni kontrolü
+                            if (navigator.permissions && navigator.permissions.query) {
+                                navigator.permissions.query({ name: 'microphone' })
+                                    .then(permissionStatus => {
+                                        console.log('Mikrofon izin durumu:', permissionStatus.state);
+                                        if (permissionStatus.state === 'denied') {
+                                            UI.setStatus('❌ Mikrofon izni reddedildi! Tarayıcı ayarlarından izin verin.', false, true);
+                                        }
+                                    })
+                                    .catch(e => console.warn('İzin kontrolü yapılamadı:', e));
+                            }
+                            
                             state.recognition.start();
-                            console.log('Mikrofon başlatılıyor...');
+                            UI.setStatus('🎤 Mikrofon başlatılıyor... Lütfen izin verin.', false);
                         } catch (error) {
-                            console.error('Mikrofon başlatma hatası:', error);
-                            UI.setStatus('Mikrofon başlatılamadı. Sayfayı yenileyin ve tekrar deneyin.', false, true);
+                            console.error('❌ Mikrofon başlatma hatası:', error);
+                            console.error('Hata detayı:', error.name, error.message);
+                            
+                            if (error.name === 'InvalidStateError') {
+                                UI.setStatus('⚠️ Mikrofon zaten çalışıyor. Lütfen bekleyin veya sayfayı yenileyin.', false, true);
+                            } else {
+                                UI.setStatus('❌ Mikrofon başlatılamadı: ' + error.message, false, true);
+                            }
                         }
                     }
                 }
