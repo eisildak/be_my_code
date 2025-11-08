@@ -240,3 +240,11 @@ if __name__ == '__main__':
     
     # Development modda çalıştır
     socketio.run(app, debug=True, host='0.0.0.0', port=5001)
+
+# Vercel için WSGI export
+# Vercel serverless functions için
+try:
+    from werkzeug.middleware.proxy_fix import ProxyFix
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+except:
+    pass
