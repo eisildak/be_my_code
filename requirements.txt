@@ -1,49 +1,6 @@
-# GUI Framework
-PyQt5>=5.15.10
-PyQt5-sip>=12.13.0
-
-# Ses Tanıma
-SpeechRecognition>=3.10.0
-PyAudio>=0.2.11  # SpeechRecognition için gerekli
-pydub>=0.25.1
-pygame>=2.5.0  # Ses oynatma için
-
-# Text-to-Speech (Coqui-XTTS v2)
-# Not: Python 3.11 veya daha düşük gerektirir
-# TTS paketi henüz Python 3.14'ü desteklemiyor
-# Alternatif: pyttsx3 (offline TTS) veya gTTS (Google TTS)
-# TTS>=0.20.0  # Coqui-XTTS v2 için (Python 3.9-3.11)
-pyttsx3>=2.90  # Offline TTS alternatifi (tüm Python versiyonları)
-gTTS>=2.5.0    # Google TTS alternatifi
-torch>=2.0.0
-torchaudio>=2.0.0
-soundfile==0.12.1
-
-# AI Code Generation
-google-generativeai>=0.8.0  # Gemini AI
-python-dotenv>=1.0.0  # .env file support
-
-# Web Framework (Flask)
-Flask>=3.0.0
-Flask-SocketIO>=5.3.0
-python-socketio>=5.10.0
-numpy>=1.24.0
-
-# NLP ve AI
-transformers==4.36.0
-openai==1.6.1
-anthropic==0.8.1
-
-# Python Kod Analizi
-jedi==0.19.1
-autopep8==2.0.4
-black==23.12.1
-
-# Yardımcı Kütüphaneler
+Flask==3.1.2
+Flask-SocketIO==5.5.1
+python-socketio==5.14.3
+google-generativeai==0.8.5
 python-dotenv==1.0.0
-requests==2.31.0
-pyyaml==6.0.1
-rich==13.7.0
-
-# Terminal Emulator
-ptyprocess==0.7.0
+jedi==0.19.1

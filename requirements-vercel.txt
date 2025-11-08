@@ -1,6 +1,6 @@
-flask
-flask-socketio
-python-socketio
-google-generativeai
-python-dotenv
-jedi
+Flask==3.1.2
+Flask-SocketIO==5.5.1
+python-socketio==5.14.3
+google-generativeai==0.8.5
+python-dotenv==1.0.0
+jedi==0.19.1
