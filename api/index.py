@@ -104,55 +104,36 @@ def generate_conversation_code():
         if not user_input:
             return jsonify({'success': False, 'error': 'Kullanıcı girişi boş'})
         
-        # Gemini'ye özel prompt
-        conversation_prompt = f"""Kullanıcı sana şunu söyledi: "{user_input}"
-Sen ona şu soruyu sormuştun: "{prompt}"
-
-Şimdi:
-1. Kullanıcının isteğini anla
-2. Python kodu üret (sadece kod, yorum satırı yok)
-3. Kısa bir açıklama cümlesi oluştur (Türkçe, konuşma dilinde)
-
-Mevcut kod:
-{context}
-
-Yanıt formatı:
-CODE: [Python kodu buraya]
-EXPLANATION: [Türkçe açıklama buraya, örnek: "Tamam, değişken oluşturdum" veya "Döngü eklendi"]
-"""
-        
         # Gemini ile kod üret
-        if gemini:
+        if gemini and gemini.is_available():
             try:
-                response = gemini.generate_content(conversation_prompt)
-                response_text = response.text
+                # GeminiCodeGenerator.generate_code metodunu kullan
+                code = gemini.generate_code(user_input, context)
                 
-                # CODE ve EXPLANATION kısımlarını ayır
-                code_part = ''
-                explanation_part = ''
-                
-                if 'CODE:' in response_text and 'EXPLANATION:' in response_text:
-                    parts = response_text.split('EXPLANATION:')
-                    code_part = parts[0].replace('CODE:', '').strip()
-                    explanation_part = parts[1].strip()
+                if code:
+                    # Basit açıklama oluştur
+                    explanation = "Kod eklendi"
+                    if "=" in code and "def" not in code:
+                        explanation = "Değişken oluşturdum"
+                    elif "def " in code:
+                        explanation = "Fonksiyon tanımladım"
+                    elif "for " in code or "while " in code:
+                        explanation = "Döngü ekledim"
+                    elif "print(" in code:
+                        explanation = "Yazdırma komutu ekledim"
                     
-                    # Kod bloğu temizle
-                    if '```python' in code_part:
-                        code_part = code_part.split('```python')[1].split('```')[0].strip()
-                    elif '```' in code_part:
-                        code_part = code_part.split('```')[1].split('```')[0].strip()
+                    return jsonify({
+                        'success': True,
+                        'code': code,
+                        'explanation': explanation
+                    })
                 else:
-                    # Fallback: tüm yanıtı kod olarak al
-                    code_part = response_text.strip()
-                    explanation_part = "Kod eklendi"
-                
-                return jsonify({
-                    'success': True,
-                    'code': code_part,
-                    'explanation': explanation_part
-                })
+                    return jsonify({
+                        'success': False,
+                        'error': 'Gemini kod üretemedi'
+                    })
             except Exception as e:
-                print(f"Gemini hatası: {e}")
+                log_debug(f"❌ Gemini hatası: {e}")
                 return jsonify({
                     'success': False,
                     'error': f'Gemini hatası: {str(e)}'
@@ -178,8 +159,10 @@ def analyze_error():
         if not gemini or not code or not error:
             return jsonify({'success': False})
         
-        prompt = f"""Python kodunda hata var. Türkçe olarak:
-1. Hatanın ne olduğunu kısaca açıkla
+        # Gemini model'i kullan
+        try:
+            hata_prompt = f"""Python kodunda hata var. Türkçe olarak kısaca (2-3 cümle):
+1. Hatanın ne olduğunu açıkla
 2. Nasıl düzeltileceğini söyle
 
 Kod:
@@ -187,13 +170,8 @@ Kod:
 
 Hata:
 {error}
-
-Yanıt formatı (maksimum 2-3 cümle):
-[Kısa Türkçe açıklama ve öneri]
 """
-        
-        try:
-            response = gemini.generate_content(prompt)
+            response = gemini.model.generate_content(hata_prompt)
             suggestion = response.text.strip()
             
             return jsonify({
@@ -201,7 +179,7 @@ Yanıt formatı (maksimum 2-3 cümle):
                 'suggestion': suggestion
             })
         except Exception as e:
-            print(f"Gemini error analysis failed: {e}")
+            log_debug(f"❌ Gemini error analysis failed: {e}")
             return jsonify({'success': False})
             
     except Exception as e:
