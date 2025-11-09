@@ -1002,7 +1002,14 @@ Açıklama:`;
                     } catch (error) {
                         console.error("❌ TTS API Hatası:", error);
                         console.error("Hata detayı:", error.message);
-                        UI.setTTSStatus(`TTS Hatası: ${error.message}`);
+                        
+                        // Rate limit hatası için özel mesaj
+                        if (error.message.includes('429')) {
+                            UI.setTTSStatus("⚠️ Çok fazla istek. Lütfen 1 dakika bekleyin.", false);
+                            console.warn('💡 API rate limit aşıldı. Biraz bekleyip tekrar deneyin.');
+                        } else {
+                            UI.setTTSStatus(`TTS Hatası: ${error.message}`, false);
+                        }
                     } finally {
                         setTimeout(() => {
                             UI.setTTSStatus("Sesli geri bildirim hazır", false);
@@ -1418,54 +1425,52 @@ SyntaxError: unterminated string literal`;
                 // İNTERAKTİF SESLİ GERİ BİLDİRİM SİSTEMİ (Basitleştirilmiş)
                 // ============================================
                 
-                // Hoş geldin mesajı
-                setTimeout(async () => {
-                    await GeminiAPI.speak('Be My Code IDE hazır. Sesli komutlar için mikrofon butonuna tıklayın veya Control M tuşuna basın.');
-                }, 1000);
+                // Hoş geldin mesajı (await olmadan - blocking olmasın)
+                setTimeout(() => {
+                    GeminiAPI.speak('Be My Code IDE hazır. Mikrofon butonu ile sesli komut verebilirsiniz.');
+                }, 1500);
 
                 // Event Listeners
-                elements.voiceCommandBtn.addEventListener('click', async () => {
+                elements.voiceCommandBtn.addEventListener('click', () => {
                     console.log('🎤 Mikrofon butonu tıklandı');
-                    await GeminiAPI.speak('Mikrofon açılıyor.');
+                    GeminiAPI.speak('Dinliyorum'); // await yok - hemen çalışsın
                     VoiceRecognition.toggle();
                 });
                 
-                elements.runCodeBtn.addEventListener('click', async () => {
+                elements.runCodeBtn.addEventListener('click', () => {
                     console.log('▶️ Kod çalıştır butonu tıklandı');
-                    await GeminiAPI.speak('Kod çalıştırılıyor.');
-                    await CodeHandler.runSimulatedCode();
+                    GeminiAPI.speak('Çalıştırılıyor'); // await yok - hemen çalışsın
+                    CodeHandler.runSimulatedCode();
                 });
                 
                 // AI Explain Button
-                elements.aiExplainBtn.addEventListener('click', async () => {
+                elements.aiExplainBtn.addEventListener('click', () => {
                     const errorText = elements.syntaxError.textContent || elements.runtimeError.textContent;
                     if (errorText) {
-                        await GeminiAPI.speak('AI hata açıklaması hazırlanıyor.');
+                        GeminiAPI.speak('AI açıklama hazırlanıyor');
                         UI.setTTSStatus('AI açıklama oluşturuluyor...', true);
-                        const explanation = await GeminiAPI.explainError(errorText);
-                        await GeminiAPI.speak(`AI Açıklama: ${explanation}`);
-                        alert(`🤖 AI Açıklama:\n\n${explanation}`);
-                        UI.setTTSStatus('Sesli geri bildirim hazır', false);
+                        GeminiAPI.explainError(errorText).then(explanation => {
+                            GeminiAPI.speak(`Açıklama: ${explanation}`);
+                            alert(`🤖 AI Açıklama:\n\n${explanation}`);
+                            UI.setTTSStatus('Sesli geri bildirim hazır', false);
+                        });
                     }
                 });
 
                 // Visualize Code Button
-                elements.visualizeBtn.addEventListener('click', async () => {
+                elements.visualizeBtn.addEventListener('click', () => {
                     const code = state.editor.getValue();
                     if (code.trim()) {
-                        await GeminiAPI.speak('Kod görselleştirmesi yeni sekmede açılıyor.');
+                        GeminiAPI.speak('Görselleştirme açılıyor');
                         const encodedCode = encodeURIComponent(code);
                         window.open(`https://pythontutor.com/visualize.html#code=${encodedCode}&mode=edit&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D`, '_blank');
                     } else {
-                        await GeminiAPI.speak('Görselleştirmek için önce kod yazmanız gerekiyor.');
+                        GeminiAPI.speak('Önce kod yazın');
                         alert('Görselleştirmek için kod yazın!');
                     }
                 });
                 
                 VoiceRecognition.setup();
-
-                // Hoş geldin mesajı
-                await GeminiAPI.speak('Be My Code IDE hazır. Sesli komutlar için mikrofon butonuna tıklayın veya Control M tuşuna basın.');
 
                 // API anahtarı kontrolü ve uyarı
                 if (!CONFIG.GEMINI_API_KEY || CONFIG.GEMINI_API_KEY === "") {
