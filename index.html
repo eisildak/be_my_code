@@ -612,7 +612,9 @@ kareler = list(map(lambda x: x**2, sayilar))
                 editor: null,
                 recognition: null,
                 isListening: false,
-                lastCursorLine: 0
+                lastCursorLine: 0,
+                speechQueue: [],
+                isSpeaking: false
             };
 
             // DOM Elements
@@ -1413,84 +1415,23 @@ SyntaxError: unterminated string literal`;
                 globalThis.editor = state.editor;
 
                 // ============================================
-                // İNTERAKTİF SESLİ GERİ BİLDİRİM SİSTEMİ
+                // İNTERAKTİF SESLİ GERİ BİLDİRİM SİSTEMİ (Basitleştirilmiş)
                 // ============================================
-                let lastLineCount = state.editor.lineCount();
-                let isTyping = false;
-                let typingTimer = null;
                 
-                // Her değişiklikte sesli geri bildirim
-                state.editor.on('change', async (cm, change) => {
-                    const currentLineCount = cm.lineCount();
-                    
-                    // Kullanıcı yazdığında
-                    if (change.origin === '+input' || change.origin === 'paste') {
-                        const addedText = change.text.join(' ');
-                        
-                        // Typing feedback (debounced)
-                        clearTimeout(typingTimer);
-                        if (!isTyping) {
-                            isTyping = true;
-                            await GeminiAPI.speak('Kod yazıyorsunuz.');
-                        }
-                        
-                        typingTimer = setTimeout(() => {
-                            isTyping = false;
-                        }, 2000);
-                        
-                        // Özel anahtar kelimeler için anında geri bildirim
-                        if (addedText.includes('print')) {
-                            await GeminiAPI.speak('Print fonksiyonu eklendi.');
-                        } else if (addedText.includes('for')) {
-                            await GeminiAPI.speak('For döngüsü eklendi.');
-                        } else if (addedText.includes('if')) {
-                            await GeminiAPI.speak('If koşulu eklendi.');
-                        } else if (addedText.includes('def')) {
-                            await GeminiAPI.speak('Fonksiyon tanımı eklendi.');
-                        }
-                    }
-                    
-                    // Kullanıcı sildiğinde
-                    if (change.origin === '+delete' || (change.removed && change.removed.join('').length > 0)) {
-                        await GeminiAPI.speak('Kod silindi.');
-                    }
-                    
-                    // Yeni satır eklendiğinde
-                    if (currentLineCount > lastLineCount) {
-                        const diff = currentLineCount - lastLineCount;
-                        if (diff === 1) {
-                            await GeminiAPI.speak(`Yeni satır. Toplam ${currentLineCount} satır.`);
-                        }
-                    }
-                    
-                    // Satır silindiğinde
-                    if (currentLineCount < lastLineCount) {
-                        await GeminiAPI.speak(`Satır silindi. Toplam ${currentLineCount} satır.`);
-                    }
-                    
-                    lastLineCount = currentLineCount;
-                });
-                
-                // Cursor hareket ettiğinde
-                state.editor.on('cursorActivity', async () => {
-                    const cursor = state.editor.getCursor();
-                    const line = cursor.line + 1;
-                    
-                    // Sadece ok tuşları veya click ile hareket edildiğinde bildir
-                    // (Her karakter girişinde bildirim olmaması için)
-                    if (state.lastCursorLine !== line && !isTyping) {
-                        await GeminiAPI.speak(`Satır ${line}`);
-                        state.lastCursorLine = line;
-                    }
-                });
+                // Hoş geldin mesajı
+                setTimeout(async () => {
+                    await GeminiAPI.speak('Be My Code IDE hazır. Sesli komutlar için mikrofon butonuna tıklayın veya Control M tuşuna basın.');
+                }, 1000);
 
                 // Event Listeners
                 elements.voiceCommandBtn.addEventListener('click', async () => {
-                    await GeminiAPI.speak('Mikrofon açılıyor. Komutunuzu söyleyebilirsiniz.');
+                    console.log('🎤 Mikrofon butonu tıklandı');
+                    await GeminiAPI.speak('Mikrofon açılıyor.');
                     VoiceRecognition.toggle();
                 });
                 
                 elements.runCodeBtn.addEventListener('click', async () => {
+                    console.log('▶️ Kod çalıştır butonu tıklandı');
                     await GeminiAPI.speak('Kod çalıştırılıyor.');
                     await CodeHandler.runSimulatedCode();
                 });
