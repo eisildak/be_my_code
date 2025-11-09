@@ -853,9 +853,9 @@ kareler = list(map(lambda x: x**2, sayilar))
             // ==========================================
 
             const CodeHandler = {
-                speakCode(code) {
+                async speakCode(code) {
                     if (!code || code.trim() === "") {
-                        GeminiAPI.speak("Editörde okunacak kod bulunmamaktadır.");
+                        await GeminiAPI.speak("Editörde okunacak kod bulunmamaktadır.");
                         return;
                     }
                     
@@ -873,13 +873,32 @@ kareler = list(map(lambda x: x**2, sayilar))
                         .replaceAll(/'/g, " tırnak ")
                         .replaceAll(/"/g, " çift tırnak ");
 
-                    GeminiAPI.speak(`Şu anki kod: ${speakableCode}`);
+                    await GeminiAPI.speak(`Şu anki kod: ${speakableCode}`);
                 },
 
-                runSimulatedCode() {
+                async readTerminal() {
+                    const terminalContent = elements.terminalOutput.textContent.trim();
+                    
+                    if (!terminalContent || terminalContent === "") {
+                        await GeminiAPI.speak("Terminal çıktısı boş.");
+                        return;
+                    }
+                    
+                    // Son 500 karakteri al (çok uzun olmasın)
+                    const outputToRead = terminalContent.slice(-500);
+                    
+                    // Terminal çıktısını temizle (>>> ve ekstra boşlukları)
+                    let cleanOutput = outputToRead
+                        .replace(/>>>/g, "")
+                        .replace(/\n+/g, ". ")
+                        .trim();
+                    
+                    await GeminiAPI.speak(`Terminal çıktısı: ${cleanOutput}`);
+                },
+
+                async runSimulatedCode() {
                     const code = state.editor.getValue();
                     UI.updateTerminal(`>>> KOD ÇALIŞTIRILIYOR...\n`);
-                    GeminiAPI.speak("Kod çalıştırılıyor. Lütfen terminal çıktısını bekleyin.");
                     
                     try {
                         const printMatches = [...code.matchAll(/print\s*\((.*?)\)/g)];
@@ -893,15 +912,19 @@ kareler = list(map(lambda x: x**2, sayilar))
                                 if (content.length > 50) content = content.substring(0, 50) + "... (kesildi)";
                                 simulatedOutput += `${content}\n`;
                             });
+                            
+                            UI.appendTerminal(simulatedOutput);
+                            
+                            // Terminal çıktısını sesli oku
+                            await GeminiAPI.speak(`Kod çalıştırıldı. Çıktı: ${simulatedOutput.replace(/>>>/g, '').trim()}`);
                         } else {
                             simulatedOutput += ">>> Kodda 'print' ifadesi bulunamadı. Çıktı yok.\n";
+                            UI.appendTerminal(simulatedOutput);
+                            await GeminiAPI.speak("Kod çalıştırıldı ancak print ifadesi bulunamadı.");
                         }
-                        
-                        UI.appendTerminal(simulatedOutput);
-                        GeminiAPI.speak("Kod çalıştırma simülasyonu tamamlandı. Terminal çıktısı hazırdır.");
                     } catch (e) {
                         UI.appendTerminal(`HATA: Simülasyon sırasında hata oluştu. ${e.message}`);
-                        GeminiAPI.speak("Simülasyon hatası oluştu. Kodunuzda bir problem olabilir.");
+                        await GeminiAPI.speak("Simülasyon hatası oluştu. Kodunuzda bir problem olabilir.");
                     }
                 }
             };
@@ -1027,13 +1050,27 @@ kareler = list(map(lambda x: x**2, sayilar))
                         // Komut kontrolü
                         if (lowerTranscript.includes("kodu oku") || lowerTranscript.includes("sesli oku")) {
                             console.log('▶️ Komut: Kodu Oku');
-                            CodeHandler.speakCode(state.editor.getValue());
+                            await GeminiAPI.speak(`Kodu okuyorum: ${transcript}`);
+                            await CodeHandler.speakCode(state.editor.getValue());
                         } else if (lowerTranscript.includes("çalıştır") || lowerTranscript.includes("kodu çalıştır")) {
                             console.log('▶️ Komut: Kodu Çalıştır');
-                            CodeHandler.runSimulatedCode();
+                            await GeminiAPI.speak(`Kodu çalıştırıyorum: ${transcript}`);
+                            await CodeHandler.runSimulatedCode();
+                        } else if (lowerTranscript.includes("terminal oku") || lowerTranscript.includes("çıktı oku")) {
+                            console.log('▶️ Komut: Terminal Oku');
+                            await GeminiAPI.speak(`Terminal çıktısını okuyorum: ${transcript}`);
+                            await CodeHandler.readTerminal();
+                        } else if (lowerTranscript.includes("temizle") || lowerTranscript.includes("sil")) {
+                            console.log('▶️ Komut: Temizle');
+                            await GeminiAPI.speak(`Editörü temizliyorum: ${transcript}`);
+                            state.editor.setValue("");
+                            UI.setStatus('✓ Editör temizlendi', false);
                         } else {
                             console.log('▶️ Komut: Kod Üret');
                             console.log('📤 Gemini API\'ye gönderiliyor:', transcript);
+                            
+                            // Komutu tekrar et
+                            await GeminiAPI.speak(`Anlaşıldı: ${transcript}. Kod üretiyorum.`);
                             
                             UI.setStatus(`⏳ "${transcript}" için kod üretiliyor...`, true);
                             const code = await GeminiAPI.generateCode(transcript);
@@ -1046,13 +1083,14 @@ kareler = list(map(lambda x: x**2, sayilar))
                                 state.editor.refresh();
                                 UI.setStatus(`✓ Kod eklendi: "${transcript}"`, false);
                                 
-                                // Sesli geri bildirim - AWAIT ekledik!
+                                // Sesli geri bildirim
                                 console.log('🔊 Sesli geri bildirim veriliyor...');
                                 await GeminiAPI.speak(`Kodunuz başarıyla eklendi.`);
                                 console.log('✅ Sesli geri bildirim tamamlandı');
                             } else {
                                 console.error('❌ Kod üretilemedi');
                                 UI.setStatus(`❌ Kod üretilemedi`, false, true);
+                                await GeminiAPI.speak(`Üzgünüm, kod üretilemedi. Lütfen tekrar deneyin.`);
                             }
                         }
                     };
@@ -1174,14 +1212,23 @@ kareler = list(map(lambda x: x**2, sayilar))
                 setupKeyboardShortcuts,
                 simulateCommand: async (command) => {
                     if (command.toLowerCase().includes("kodu oku")) {
-                        CodeHandler.speakCode(state.editor.getValue());
+                        await CodeHandler.speakCode(state.editor.getValue());
+                    } else if (command.toLowerCase().includes("terminal oku")) {
+                        await CodeHandler.readTerminal();
+                    } else if (command.toLowerCase().includes("çalıştır")) {
+                        await CodeHandler.runSimulatedCode();
                     } else {
+                        // Komutu tekrar et
+                        await GeminiAPI.speak(`Anlaşıldı: ${command}. Kod üretiyorum.`);
+                        
                         UI.setStatus(`Simüle Komut: "${command}" - Kod üretiliyor...`, true);
                         const code = await GeminiAPI.generateCode(command);
                         if (code) {
                             state.editor.setValue(state.editor.getValue().trim() + "\n\n" + code);
                             state.editor.refresh();
-                            GeminiAPI.speak(`Kodunuz başarıyla eklendi.`);
+                            await GeminiAPI.speak(`Kodunuz başarıyla eklendi.`);
+                        } else {
+                            await GeminiAPI.speak(`Üzgünüm, kod üretilemedi.`);
                         }
                     }
                 }
