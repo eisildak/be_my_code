@@ -1,0 +1,123 @@
+=== Python RegEx ===
+Konu: regex
+Kaynak: https://www.w3schools.com/python/python_regex.asp
+
+📖 AÇIKLAMALAR:
+1. A RegEx, or Regular Expression, is a sequence of characters that forms a search pattern.
+2. RegEx can be used to check if a string contains the specified search pattern.
+3. Python has a built-in package called re, which can be used to work with 
+Regular Expressions.
+4. Import the re module:
+5. When you have imported the re module, you 
+can start using regular expressions:
+
+⚠️ ÖNEMLİ NOTLAR:
+- Note: If there is no match, the value None will be 
+returned, instead of the Match Object.
+- Note: If there is no match, the value None will be 
+returned, instead of the Match Object.
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+import re
+```
+
+Örnek 2:
+```python
+import 
+    retxt = "The rain in Spain"x = re.search("^The.*Spain$", txt)
+```
+
+Örnek 3:
+```python
+import retxt = "The rain in Spain"x = re.findall("ai", 
+  txt)
+  print(x)
+```
+
+Örnek 4:
+```python
+import retxt = "The rain in Spain"x = re.findall("Portugal", 
+  txt)
+  print(x)
+```
+
+Örnek 5:
+```python
+import retxt = "The rain in Spain"x = re.search("\s", 
+  txt)
+print("The first white-space character is located in 
+  position:", x.start())
+```
+
+Örnek 6:
+```python
+import retxt = "The rain in Spain"x = re.search("Portugal", 
+  txt)
+  print(x)
+```
+
+Örnek 7:
+```python
+import retxt = "The rain in Spain"x = re.split("\s", 
+  txt)
+  print(x)
+```
+
+Örnek 8:
+```python
+import retxt = "The rain in Spain"x = re.split("\s", 
+  txt, 
+  1)
+  print(x)
+```
+
+Örnek 9:
+```python
+import retxt = "The rain in Spain"x = re.sub("\s", 
+  "9", txt)
+  print(x)
+```
+
+Örnek 10:
+```python
+import retxt = "The rain in Spain"x = re.sub("\s", 
+  "9", txt, 2)
+  print(x)
+```
+
+Örnek 11:
+```python
+import retxt = "The rain in Spain"x = re.search("ai", 
+  txt)
+  print(x) #this will print an object
+```
+
+Örnek 12:
+```python
+import re
+    txt = "The rain in Spain"
+    x = re.search(r"\bS\w+", txt)
+    print(x.span())
+```
+
+Örnek 13:
+```python
+import re
+    txt = "The rain in Spain"
+    x = re.search(r"\bS\w+", txt)
+    print(x.string)
+```
+
+Örnek 14:
+```python
+import re
+    txt = "The rain in Spain"
+    x = re.search(r"\bS\w+", txt)
+    print(x.group())
+```
+
+================================================================================
+

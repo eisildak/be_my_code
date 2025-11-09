@@ -1,0 +1,64 @@
+=== Python Syntax ===
+Konu: syntax
+Kaynak: https://www.w3schools.com/python/python_syntax.asp
+
+📖 AÇIKLAMALAR:
+1. As we learned in the previous page, Python syntax can be executed by writing directly in the Command Line:
+2. Or by creating a python file on the server, using the .py file extension, and running it in the Command Line:
+3. Indentation refers to the spaces at the beginning of a code line.
+4. Where in other programming languages the indentation in code is for readability 
+only, the indentation in Python is very important.
+5. Python uses indentation to indicate a block of code.
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+>>> print("Hello, World!")
+    Hello, World!
+```
+
+Örnek 2:
+```python
+C:\Users\Your Name>python myfile.py
+```
+
+Örnek 3:
+```python
+if 5 > 2: 
+print("Five is greater than two!")
+```
+
+Örnek 4:
+```python
+if 5 > 2:
+print("Five is greater than two!")
+```
+
+Örnek 5:
+```python
+if 5 > 2: print("Five is greater than two!") 
+if 5 > 2:        print("Five is greater than two!")
+```
+
+Örnek 6:
+```python
+if 5 > 2:
+ print("Five is greater than two!")
+        print("Five is greater than 
+  two!")
+```
+
+Örnek 7:
+```python
+x = 5y = "Hello, World!"
+```
+
+Örnek 8:
+```python
+#This is a comment.
+print("Hello, World!")
+```
+
+================================================================================
+

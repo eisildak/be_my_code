@@ -1,0 +1,75 @@
+=== Python Booleans ===
+Konu: booleans
+Kaynak: https://www.w3schools.com/python/python_booleans.asp
+
+📖 AÇIKLAMALAR:
+1. Booleans represent one of two values: 
+True or False.
+2. In programming you often need to know if an expression is 
+True or False.
+3. You can evaluate any expression in Python, and get one of two 
+answers, 
+True or False.
+4. When you compare two values, the expression is evaluated and Python returns 
+the Boolean answer:
+5. When you run a condition in an if statement, Python returns 
+True or False:
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+print(10 > 9)print(10 == 9)print(10 < 9)
+```
+
+Örnek 2:
+```python
+a = 200b = 33if b > a:  print("b is greater than a")
+  else:  print("b is not greater than a")
+```
+
+Örnek 3:
+```python
+print(bool("Hello"))print(bool(15))
+```
+
+Örnek 4:
+```python
+x = "Hello"y = 15print(bool(x))print(bool(y))
+```
+
+Örnek 5:
+```python
+bool("abc")bool(123)bool(["apple", "cherry", "banana"])
+```
+
+Örnek 6:
+```python
+bool(False)bool(None)bool(0)bool("")bool(())bool([])
+  bool({})
+```
+
+Örnek 7:
+```python
+class myclass():  def __len__(self):    return 0
+myobj = myclass()print(bool(myobj))
+```
+
+Örnek 8:
+```python
+def myFunction() :  return Trueprint(myFunction())
+```
+
+Örnek 9:
+```python
+def myFunction() :  return Trueif myFunction():  
+  print("YES!")else:  print("NO!")
+```
+
+Örnek 10:
+```python
+x = 200print(isinstance(x, int))
+```
+
+================================================================================
+

@@ -1,0 +1,67 @@
+=== Python Numbers ===
+Konu: numbers
+Kaynak: https://www.w3schools.com/python/python_numbers.asp
+
+📖 AÇIKLAMALAR:
+1. There are three numeric types in Python:
+2. Variables of numeric types are created when you assign a value to them:
+3. To verify the type of any object in Python, use the type() function:
+4. Int, or integer, is a whole number, 
+positive or negative, without decimals, of unlimited length.
+5. Float, or "floating point number" is a number, positive or negative, containing one or more decimals.
+
+⚠️ ÖNEMLİ NOTLAR:
+- Note: You cannot convert complex numbers into another number type.
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+x = 1    
+  # inty = 2.8  # floatz = 1j   # complex
+```
+
+Örnek 2:
+```python
+print(type(x))print(type(y))print(type(z))
+```
+
+Örnek 3:
+```python
+x = 1y = 35656222554887711z = 
+  -3255522print(type(x))print(type(y))print(type(z))
+```
+
+Örnek 4:
+```python
+x = 1.10y = 1.0z = -35.59print(type(x))print(type(y))print(type(z))
+```
+
+Örnek 5:
+```python
+x = 35e3y = 12E4z = -87.7e100print(type(x))print(type(y))
+  print(type(z))
+```
+
+Örnek 6:
+```python
+x = 3+5jy = 5jz = -5jprint(type(x))print(type(y))
+  print(type(z))
+```
+
+Örnek 7:
+```python
+x = 1    # inty = 2.8  # floatz = 1j   # complex#convert from int to float:
+  a = float(x)#convert from float to int:
+  b = int(y)#convert from int to complex:c = complex(x)print(a)print(b)
+  print(c)print(type(a))print(type(b))
+  print(type(c))
+```
+
+Örnek 8:
+```python
+import randomprint(random.randrange(1, 10))
+```
+
+================================================================================
+

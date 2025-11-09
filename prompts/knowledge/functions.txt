@@ -1,0 +1,75 @@
+=== Python Functions ===
+Konu: functions
+Kaynak: https://www.w3schools.com/python/python_functions.asp
+
+📖 AÇIKLAMALAR:
+1. A function is a block of code which only runs when it is called.
+2. A function can return data as a result.
+3. A function helps avoiding code repetition.
+4. In Python, a function is defined using the def 
+keyword, followed by a function name and parentheses:
+5. This creates a function named my_function that prints "Hello!" when called.
+
+⚠️ ÖNEMLİ NOTLAR:
+- The code inside the function must be indented. Python uses indentation to define code blocks.
+- It's good practice to use descriptive names that explain what the function does.
+- If a function doesn't have a return statement, it returns None by default.
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+def greet():  print("Hello from a function")
+```
+
+Örnek 2:
+```python
+def my_function():  print("Hello from a function")
+my_function()
+```
+
+Örnek 3:
+```python
+def my_function():  print("Hello from a function")
+my_function()my_function()my_function()
+```
+
+Örnek 4:
+```python
+calculate_sum()
+_private_function()
+myFunction2()
+```
+
+Örnek 5:
+```python
+temp1 = 77celsius1 = (temp1 - 32) * 5 / 9print(celsius1)
+  temp2 = 95celsius2 = (temp2 - 32) * 5 / 9print(celsius2)
+  temp3 = 50celsius3 = (temp3 - 32) * 5 / 9print(celsius3)
+```
+
+Örnek 6:
+```python
+def fahrenheit_to_celsius(fahrenheit):  return (fahrenheit - 32) * 5 / 9
+  print(fahrenheit_to_celsius(77))print(fahrenheit_to_celsius(95))print(fahrenheit_to_celsius(50))
+```
+
+Örnek 7:
+```python
+def get_greeting():  return "Hello from a function"
+  message = get_greeting()print(message)
+```
+
+Örnek 8:
+```python
+def get_greeting():  return "Hello from a function"
+  print(get_greeting())
+```
+
+Örnek 9:
+```python
+def my_function():  pass
+```
+
+================================================================================
+

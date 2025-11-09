@@ -1,0 +1,88 @@
+=== Python Dictionaries ===
+Konu: dictionaries
+Kaynak: https://www.w3schools.com/python/python_dictionaries.asp
+
+📖 AÇIKLAMALAR:
+1. Dictionaries are used to store data values in key:value pairs.
+2. A dictionary is a collection which is ordered*, changeable and do not 
+allow duplicates.
+3. As of Python version 3.7, dictionaries are ordered. 
+  In Python 3.6 and earlier, dictionaries are unordered.
+4. Dictionaries are written with curly brackets, and have keys and values:
+5. Create and print a dictionary:
+
+⚠️ ÖNEMLİ NOTLAR:
+- As of Python version 3.7, dictionaries are ordered. 
+  In Python 3.6 and earlier, dictionaries are unordered.
+- As of Python version 3.7, dictionaries are ordered. 
+  In Python 3.6 and earlier, dictionaries are unordered.
+- *Set items are unchangeable, but you can remove and/or add items 
+  whenever you like.
+**As of Python version 3.7, dictionaries are ordered. 
+  In Python 3.6 and earlier, dictionaries are unordered.
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+thisdict =	{
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
+print(thisdict)
+```
+
+Örnek 2:
+```python
+thisdict =	{
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
+print(thisdict["brand"])
+```
+
+Örnek 3:
+```python
+thisdict =	{
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964,  "year": 2020
+}
+print(thisdict)
+```
+
+Örnek 4:
+```python
+print(len(thisdict))
+```
+
+Örnek 5:
+```python
+thisdict =	{
+  "brand": "Ford",
+  "electric": False,
+  "year": 1964,  "colors": ["red", "white", "blue"]
+}
+```
+
+Örnek 6:
+```python
+thisdict =	{
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
+print(type(thisdict))
+```
+
+Örnek 7:
+```python
+thisdict = 
+  dict(name = "John", age = 36, country = "Norway")
+print(thisdict)
+```
+
+================================================================================
+

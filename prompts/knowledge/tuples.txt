@@ -1,0 +1,72 @@
+=== Python Tuples ===
+Konu: tuples
+Kaynak: https://www.w3schools.com/python/python_tuples.asp
+
+📖 AÇIKLAMALAR:
+1. Tuples are used to store multiple items in a single variable.
+2. Tuple is one of 4 built-in data types in Python used to store collections of 
+data, the other 3 are List, 
+Set, and Dictionary, all with different qualities and usage.
+3. A tuple is a collection which is ordered and unchangeable.
+4. Tuples are written with round brackets.
+5. Create a Tuple:
+
+⚠️ ÖNEMLİ NOTLAR:
+- *Set items are unchangeable, but you can remove and/or add items 
+  whenever you like.
+**As of Python version 3.7, dictionaries are ordered. 
+  In Python 3.6 and earlier, dictionaries are unordered.
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+thistuple = ("apple", "banana", "cherry")
+print(thistuple)
+```
+
+Örnek 2:
+```python
+thistuple = ("apple", "banana", "cherry", "apple", "cherry")
+print(thistuple)
+```
+
+Örnek 3:
+```python
+thistuple = ("apple", "banana", "cherry")
+print(len(thistuple))
+```
+
+Örnek 4:
+```python
+thistuple = ("apple",)
+  print(type(thistuple))#NOT a tuplethistuple = ("apple")
+  print(type(thistuple))
+```
+
+Örnek 5:
+```python
+tuple1 = ("apple", "banana", "cherry")
+tuple2 = (1, 5, 7, 9, 3)
+tuple3 = (True, False, False)
+```
+
+Örnek 6:
+```python
+tuple1 = ("abc", 34, True, 40, "male")
+```
+
+Örnek 7:
+```python
+mytuple = ("apple", "banana", "cherry")
+print(type(mytuple))
+```
+
+Örnek 8:
+```python
+thistuple = tuple(("apple", "banana", "cherry")) # note the double round-brackets
+print(thistuple)
+```
+
+================================================================================
+

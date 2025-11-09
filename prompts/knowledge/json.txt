@@ -1,0 +1,71 @@
+=== Python JSON ===
+Konu: json
+Kaynak: https://www.w3schools.com/python/python_json.asp
+
+📖 AÇIKLAMALAR:
+1. JSON is a syntax for storing and exchanging data.
+2. JSON is text, written with JavaScript object notation.
+3. Python has a built-in package called json, which can be used to work with JSON data.
+4. Import the json module:
+5. If you have a JSON string, you can parse it by using the
+json.loads() method.
+
+⚠️ ÖNEMLİ NOTLAR:
+- The result will be a Python dictionary.
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+import json
+```
+
+Örnek 2:
+```python
+import json# some JSON:x =  '{ "name":"John", "age":30, "city":"New 
+  York"}'# parse x:y = json.loads(x)# the result is a 
+  Python dictionary:print(y["age"])
+```
+
+Örnek 3:
+```python
+import json# a Python object (dict):x = {  "name": 
+  "John",  "age": 30,  "city": "New York"}# 
+  convert into JSON:y = json.dumps(x)# the result is a JSON string:
+  print(y)
+```
+
+Örnek 4:
+```python
+import jsonprint(json.dumps({"name": "John", "age": 30}))print(json.dumps(["apple", 
+  "bananas"]))print(json.dumps(("apple", "bananas")))
+  print(json.dumps("hello"))print(json.dumps(42))print(json.dumps(31.76))print(json.dumps(True))print(json.dumps(False))print(json.dumps(None))
+```
+
+Örnek 5:
+```python
+import jsonx = {  "name": 
+  "John",  "age": 30,  "married": True,  
+  "divorced": False,  "children": ("Ann","Billy"),  "pets": 
+  None,  "cars": [    {"model": "BMW 230", "mpg": 
+  27.5},    {"model": "Ford Edge", "mpg": 24.1}  ]
+  }print(json.dumps(x))
+```
+
+Örnek 6:
+```python
+json.dumps(x, indent=4)
+```
+
+Örnek 7:
+```python
+json.dumps(x, indent=4, separators=(". ", " = "))
+```
+
+Örnek 8:
+```python
+json.dumps(x, indent=4, sort_keys=True)
+```
+
+================================================================================
+

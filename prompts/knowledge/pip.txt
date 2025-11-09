@@ -1,0 +1,62 @@
+=== Python PIP ===
+Konu: pip
+Kaynak: https://www.w3schools.com/python/python_pip.asp
+
+📖 AÇIKLAMALAR:
+1. PIP is a package manager for Python packages, or modules if you like.
+2. Note: If you have Python version 3.4 or later, PIP is included by default.
+3. A package contains all the files you need for a module.
+4. Modules are Python code libraries you can include in your project.
+5. Navigate your command line to the location of Python's script directory, and type the following:
+
+⚠️ ÖNEMLİ NOTLAR:
+- Note: If you have Python version 3.4 or later, PIP is included by default.
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+C:\Users\Your Name\AppData\Local\Programs\Python\Python36-32\Scripts>pip --version
+```
+
+Örnek 2:
+```python
+C:\Users\Your Name\AppData\Local\Programs\Python\Python36-32\Scripts>pip 
+  install camelcase
+```
+
+Örnek 3:
+```python
+import camelcasec = camelcase.CamelCase()txt = "hello world"
+print(c.hump(txt))
+```
+
+Örnek 4:
+```python
+C:\Users\Your Name\AppData\Local\Programs\Python\Python36-32\Scripts>pip 
+  uninstall camelcase
+```
+
+Örnek 5:
+```python
+Uninstalling camelcase-02.1:  Would remove:    c:\users\Your Name\appdata\local\programs\python\python36-32\lib\site-packages\camelcase-0.2-py3.6.egg-info    
+  c:\users\Your Name\appdata\local\programs\python\python36-32\lib\site-packages\camelcase\*
+  Proceed (y/n)?
+```
+
+Örnek 6:
+```python
+C:\Users\Your Name\AppData\Local\Programs\Python\Python36-32\Scripts>pip list
+```
+
+Örnek 7:
+```python
+Package         Version
+  -----------------------camelcase       0.2mysql-connector 2.1.6
+  pip             
+  18.1pymongo         3.6.1
+  setuptools      39.0.1
+```
+
+================================================================================
+

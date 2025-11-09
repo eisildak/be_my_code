@@ -1,0 +1,64 @@
+=== Python User Input ===
+Konu: user_input
+Kaynak: https://www.w3schools.com/python/python_user_input.asp
+
+📖 AÇIKLAMALAR:
+1. Python allows for user input.
+2. That means we are able to ask the user for input.
+3. The following example asks for your name, and when you enter a name, it gets printed on the screen:
+4. Ask for user input:
+5. Python stops executing when it comes to the input() function, and continues 
+when the user has given some input.
+
+⚠️ ÖNEMLİ NOTLAR:
+- Python stops executing when it comes to the input() function, and continues 
+when the user has given some input.
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+print("Enter your name:")
+name = input()
+print(f"Hello {name}")
+```
+
+Örnek 2:
+```python
+name = input("Enter your name:")
+print(f"Hello {name}")
+```
+
+Örnek 3:
+```python
+name = input("Enter your name:")
+print(f"Hello {name}")
+fav1 = input("What is your favorite animal:")
+fav2 = input("What is your favorite color:")
+fav3 = input("What is your favorite number:")
+print(f"Do you want a {fav2} {fav1} with {fav3} legs?")
+```
+
+Örnek 4:
+```python
+x = input("Enter a number:")
+
+#find the square root of the number:
+y = math.sqrt(float(x))
+
+print(f"The square root of {x} is {y}")
+```
+
+Örnek 5:
+```python
+y = True
+while y == True:
+  x = input("Enter a number:")
+  try:    x = float(x);    y = False  
+  except:    print("Wrong input, please try again.")
+
+print("Thank you!")
+```
+
+================================================================================
+

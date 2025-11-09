@@ -1,0 +1,66 @@
+=== Python Lists ===
+Konu: lists
+Kaynak: https://www.w3schools.com/python/python_lists.asp
+
+📖 AÇIKLAMALAR:
+1. Lists are used to store multiple items in a single variable.
+2. Lists are one of 4 built-in data types in Python used to store collections of 
+data, the other 3 are Tuple, 
+Set, and Dictionary, all with different qualities and usage.
+3. Lists are created using square brackets:
+4. Create a List:
+5. List items are ordered, changeable, and allow duplicate values.
+
+⚠️ ÖNEMLİ NOTLAR:
+- Note: There are some list methods that will change the order, but in general: the order of the items will not change.
+- *Set items are unchangeable, but you can remove and/or add items 
+  whenever you like.
+**As of Python version 3.7, dictionaries are ordered. 
+  In Python 3.6 and earlier, dictionaries are unordered.
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+thislist = ["apple", "banana", "cherry"]
+print(thislist)
+```
+
+Örnek 2:
+```python
+thislist = ["apple", "banana", "cherry", "apple", "cherry"]
+print(thislist)
+```
+
+Örnek 3:
+```python
+thislist = ["apple", "banana", "cherry"]
+print(len(thislist))
+```
+
+Örnek 4:
+```python
+list1 = ["apple", "banana", "cherry"]
+list2 = [1, 5, 7, 9, 3]
+list3 = [True, False, False]
+```
+
+Örnek 5:
+```python
+list1 = ["abc", 34, True, 40, "male"]
+```
+
+Örnek 6:
+```python
+mylist = ["apple", "banana", "cherry"]
+print(type(mylist))
+```
+
+Örnek 7:
+```python
+thislist = list(("apple", "banana", "cherry")) # note the double round-brackets
+print(thislist)
+```
+
+================================================================================
+

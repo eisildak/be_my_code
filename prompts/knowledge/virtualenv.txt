@@ -1,0 +1,161 @@
+=== Python Virtual Environment ===
+Konu: virtualenv
+Kaynak: https://www.w3schools.com/python/python_virtualenv.asp
+
+📖 AÇIKLAMALAR:
+1. A virtual environment in Python is an isolated environment on your computer, where you can run and test your Python projects.
+2. It allows you to manage project-specific dependencies without interfering with other projects or the original Python installation.
+3. Think of a virtual environment as a separate container for each Python project. Each container:
+4. Using virtual environments is important because:
+5. Python has the built-in venv module for creating virtual environments.
+
+⚠️ ÖNEMLİ NOTLAR:
+- Note: The virtual environment myfirstproject still exists, it is just not activated.
+  If you activate the virtual environment again, you can execute the test.py
+  file, and the diagram will be displayed.
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+C:\Users\Your Name> python -m venv myfirstproject
+```
+
+Örnek 2:
+```python
+$ python -m venv myfirstproject
+```
+
+Örnek 3:
+```python
+myfirstproject
+  Include
+  Lib
+  Scripts
+  .gitignore
+  pyvenv.cfg
+```
+
+Örnek 4:
+```python
+C:\Users\Your Name> myfirstproject\Scripts\activate
+```
+
+Örnek 5:
+```python
+$ source myfirstproject/bin/activate
+```
+
+Örnek 6:
+```python
+(myfirstproject) C:\Users\Your Name>
+```
+
+Örnek 7:
+```python
+(myfirstproject) ... $
+```
+
+Örnek 8:
+```python
+(myfirstproject) C:\Users\Your Name> pip install cowsay
+```
+
+Örnek 9:
+```python
+(myfirstproject) ... $ pip install cowsay
+```
+
+Örnek 10:
+```python
+Collecting cowsay
+  Downloading cowsay-6.1-py3-none-any.whl.metadata (5.6 kB)
+Downloading cowsay-6.1-py3-none-any.whl (25 kB)
+Installing collected packages: cowsay
+Successfully installed cowsay-6.1
+
+[notice] A new release of pip is available: 25.0.1 -> 25.1.1
+[notice] To update, run: python.exe -m pip install --upgrade pip
+```
+
+Örnek 11:
+```python
+import cowsay
+
+cowsay.cow("Good Mooooorning!")
+```
+
+Örnek 12:
+```python
+(myfirstproject) C:\Users\Your Name> python test.py
+```
+
+Örnek 13:
+```python
+(myfirstproject) ... $ python test.py
+```
+
+Örnek 14:
+```python
+_________________
+| Good Mooooorning! |
+  =================
+                 \
+                  \
+                    ^__^
+                    (oo)\_______
+                    (__)\       )\/\
+                        ||----w |
+                        ||     ||
+```
+
+Örnek 15:
+```python
+(myfirstproject) C:\Users\Your Name> deactivate
+```
+
+Örnek 16:
+```python
+(myfirstproject) ... $ deactivate
+```
+
+Örnek 17:
+```python
+C:\Users\Your Name>
+```
+
+Örnek 18:
+```python
+$
+```
+
+Örnek 19:
+```python
+C:\Users\Your Name> python test.py
+```
+
+Örnek 20:
+```python
+$ python test.py
+```
+
+Örnek 21:
+```python
+Traceback (most recent call last):
+  File "C:\Users\Your Name\test.py", line 1, in <module>
+    import cowsay
+ModuleNotFoundError: No module named 'cowsay'
+```
+
+Örnek 22:
+```python
+C:\Users\Your Name> rmdir /s /q myfirstproject
+```
+
+Örnek 23:
+```python
+$ rm -rf myfirstproject
+```
+
+================================================================================
+

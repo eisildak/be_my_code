@@ -1,0 +1,59 @@
+=== Python If Statement ===
+Konu: conditions
+Kaynak: https://www.w3schools.com/python/python_conditions.asp
+
+📖 AÇIKLAMALAR:
+1. Python supports the usual logical conditions from mathematics:
+2. These conditions can be used in several ways, most commonly in "if statements" and loops.
+3. An "if statement" is written by using the if keyword.
+4. If statement:
+5. In this example we use two variables, a and b,
+which are used as part of the if statement to test whether b is greater than a.
+As a is 33, and b is 200,
+we know that 200 is greater than 33, and so we print to screen that "b is greater than a".
+
+⚠️ ÖNEMLİ NOTLAR:
+- Note: You can use spaces or tabs for indentation, but you must use the same amount of indentation for all statements within the same code block.
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+a = 33
+b = 200
+if b > a:  print("b is greater than a")
+```
+
+Örnek 2:
+```python
+number = 15
+if number > 0:  print("The number is positive")
+```
+
+Örnek 3:
+```python
+a = 33
+b = 200
+if b > a:
+print("b is greater than a")
+# you will get an error
+```
+
+Örnek 4:
+```python
+age = 20
+if age >= 18:
+  print("You are an adult")
+  print("You can vote")
+  print("You have full legal rights")
+```
+
+Örnek 5:
+```python
+is_logged_in = True
+if is_logged_in:
+  print("Welcome back!")
+```
+
+================================================================================
+

@@ -1,0 +1,98 @@
+=== Python For Loops ===
+Konu: for_loops
+Kaynak: https://www.w3schools.com/python/python_for_loops.asp
+
+📖 AÇIKLAMALAR:
+1. A for loop is used for iterating over a sequence (that is either a list, a tuple, 
+a dictionary, a set, or a string).
+2. This is less like the for keyword in other programming languages, and works more like an iterator method as found in other object-orientated programming languages.
+3. With the for loop we can execute a set of statements, once for each item in a list, tuple, set etc.
+4. Print each fruit in a fruit list:
+5. The for loop does not require an indexing variable to set beforehand.
+
+⚠️ ÖNEMLİ NOTLAR:
+- Note that range(6) is not the values of 0 to 6, but the values 0 to 5.
+- Note: The else block will NOT be executed if the loop is stopped by a break statement.
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+fruits = ["apple", "banana", "cherry"]for 
+  x in fruits:
+	 
+	print(x)
+```
+
+Örnek 2:
+```python
+for x in "banana":  print(x)
+```
+
+Örnek 3:
+```python
+fruits = ["apple", "banana", "cherry"]for x in fruits:  print(x)
+    if x == 
+  "banana":    break
+```
+
+Örnek 4:
+```python
+fruits = ["apple", "banana", "cherry"]for x in fruits:  if x == 
+  "banana":    break  print(x)
+```
+
+Örnek 5:
+```python
+fruits = ["apple", "banana", "cherry"]for x in fruits:  if x == 
+  "banana":    continue  print(x)
+```
+
+Örnek 6:
+```python
+for x in range(6):
+	 
+	print(x)
+```
+
+Örnek 7:
+```python
+for x in range(2, 6):
+	 
+	print(x)
+```
+
+Örnek 8:
+```python
+for x in range(2, 30, 3):
+	 
+	print(x)
+```
+
+Örnek 9:
+```python
+for x in range(6): 
+	print(x)else: 
+	print("Finally finished!")
+```
+
+Örnek 10:
+```python
+for x in range(6):  if x == 3: break 
+	print(x)else: 
+	print("Finally finished!")
+```
+
+Örnek 11:
+```python
+adj = ["red", "big", "tasty"]fruits = ["apple", "banana", "cherry"]
+for x in adj:  for y in fruits:    print(x, y)
+```
+
+Örnek 12:
+```python
+for x in [0, 1, 2]:  pass
+```
+
+================================================================================
+

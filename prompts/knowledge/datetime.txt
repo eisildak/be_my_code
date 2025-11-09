@@ -1,0 +1,40 @@
+=== Python Datetime ===
+Konu: datetime
+Kaynak: https://www.w3schools.com/python/python_datetime.asp
+
+📖 AÇIKLAMALAR:
+1. A date in Python is not a data type of its own, but we can import a module 
+named datetime to work with dates as date 
+objects.
+2. Import the datetime module and display the current date:
+3. When we execute the code from the example above the result will be:
+4. The date contains year, month, day, hour, minute, second, and microsecond.
+5. The datetime module has many methods to return information about the date 
+object.
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+import datetimex = datetime.datetime.now()print(x)
+```
+
+Örnek 2:
+```python
+import datetimex = datetime.datetime.now()print(x.year)
+  print(x.strftime("%A"))
+```
+
+Örnek 3:
+```python
+import datetimex = datetime.datetime(2020, 5, 17)
+print(x)
+```
+
+Örnek 4:
+```python
+import datetimex = datetime.datetime(2018, 6, 1)print(x.strftime("%B"))
+```
+
+================================================================================
+

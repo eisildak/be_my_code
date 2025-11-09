@@ -1,0 +1,139 @@
+=== Python String Formatting ===
+Konu: string_formatting
+Kaynak: https://www.w3schools.com/python/python_string_formatting.asp
+
+📖 AÇIKLAMALAR:
+1. F-String was introduced in Python 3.6,
+and is now the preferred way of formatting strings.
+2. Before Python 3.6 we had to use the format() method.
+3. F-string allows you to format selected parts of a string.
+4. To specify a string as an f-string, simply put an f in front of the string 
+literal, like this:
+5. Create an f-string:
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+txt = f"The price is 49 dollars"
+
+print(txt)
+```
+
+Örnek 2:
+```python
+price = 59
+
+txt = f"The price is {price} dollars"
+
+print(txt)
+```
+
+Örnek 3:
+```python
+price = 59
+
+txt = f"The price is {price:.2f} dollars"
+
+print(txt)
+```
+
+Örnek 4:
+```python
+txt = f"The price is {95:.2f} dollars"
+
+print(txt)
+```
+
+Örnek 5:
+```python
+txt = f"The price is {20 * 59} dollars"
+
+print(txt)
+```
+
+Örnek 6:
+```python
+price = 59
+tax = 0.25
+txt = f"The price is {price + (price * tax)} dollars"
+
+print(txt)
+```
+
+Örnek 7:
+```python
+price = 49
+txt = f"It is very {'Expensive' if price>50 else 'Cheap'}"
+
+print(txt)
+```
+
+Örnek 8:
+```python
+fruit = "apples"
+txt = f"I love {fruit.upper()}"
+
+print(txt)
+```
+
+Örnek 9:
+```python
+def myconverter(x):
+  return x * 0.3048
+ 
+txt = f"The plane is flying at a {myconverter(30000)} meter altitude"
+
+print(txt)
+```
+
+Örnek 10:
+```python
+price = 59000
+
+txt = f"The price is {price:,} dollars"
+
+print(txt)
+```
+
+Örnek 11:
+```python
+price = 49txt = "The price is {} dollars"print(txt.format(price))
+```
+
+Örnek 12:
+```python
+txt = "The price is {:.2f} dollars"
+```
+
+Örnek 13:
+```python
+print(txt.format(price, itemno, count))
+```
+
+Örnek 14:
+```python
+quantity = 3itemno = 567price = 49myorder = "I want {} pieces of 
+  item number {} for {:.2f} dollars."print(myorder.format(quantity, itemno, price))
+```
+
+Örnek 15:
+```python
+quantity = 3itemno = 567price = 49myorder = "I want {0} pieces of 
+  item number {1} for {2:.2f} dollars."print(myorder.format(quantity, itemno, price))
+```
+
+Örnek 16:
+```python
+age = 36name = "John"txt = "His name is {1}. {1} is {0} years old."print(txt.format(age, 
+  name))
+```
+
+Örnek 17:
+```python
+myorder = "I have a {carname}, it is a {model}."print(myorder.format(carname 
+  = "Ford", model = "Mustang"))
+```
+
+================================================================================
+

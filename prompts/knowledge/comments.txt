@@ -1,0 +1,45 @@
+=== Python Comments ===
+Konu: comments
+Kaynak: https://www.w3schools.com/python/python_comments.asp
+
+📖 AÇIKLAMALAR:
+1. Comments can be used to explain Python code.
+2. Comments can be used to make the code more readable.
+3. Comments can be used to prevent execution when testing code.
+4. Comments starts with a #, and Python will 
+ignore them:
+5. Comments can be placed at the end of a line, and Python will ignore the rest 
+of the line:
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+#This is a comment
+print("Hello, World!")
+```
+
+Örnek 2:
+```python
+print("Hello, World!") #This is a comment
+```
+
+Örnek 3:
+```python
+#print("Hello, World!")print("Cheers, Mate!")
+```
+
+Örnek 4:
+```python
+#This is a comment#written in#more than just one lineprint("Hello, 
+  World!")
+```
+
+Örnek 5:
+```python
+"""This is a commentwritten in more than just 
+  one line"""print("Hello, World!")
+```
+
+================================================================================
+

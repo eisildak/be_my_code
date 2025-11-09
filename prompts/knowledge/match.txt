@@ -1,0 +1,82 @@
+=== Python Match ===
+Konu: match
+Kaynak: https://www.w3schools.com/python/python_match.asp
+
+📖 AÇIKLAMALAR:
+1. The match statement is used to perform different actions based on different conditions.
+2. Instead of writing many if..else statements, you can use the match statement.
+3. The match statement selects one of many code blocks to be executed.
+4. This is how it works:
+5. The example below uses the weekday number to print the weekday name:
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+match expression:
+  case x:
+    code block
+  case y:
+    code block
+  case z:
+    code block
+```
+
+Örnek 2:
+```python
+day = 4
+match day:
+  case 1:
+    print("Monday")
+  case 2:
+    print("Tuesday")
+  case 3:
+    print("Wednesday")
+  case 4:
+    print("Thursday")
+  case 5:
+    print("Friday")
+  case 6:
+    print("Saturday")
+  case 7:
+    print("Sunday")
+```
+
+Örnek 3:
+```python
+day = 4
+match day:
+  case 6:
+    print("Today is Saturday")
+  case 7:
+    print("Today is Sunday")
+  case _:
+    print("Looking forward to the Weekend")
+```
+
+Örnek 4:
+```python
+day = 4
+match day:
+  case 1 | 2 | 3 | 4 | 5:
+    print("Today is a weekday")
+  case 6 | 7:
+    print("I love 
+  weekends!")
+```
+
+Örnek 5:
+```python
+month = 5
+day = 4
+match day:
+  case 1 | 2 | 3 | 4 | 5 if month == 4:
+    print("A weekday in April")
+  case 1 | 2 | 3 | 4 | 5 if month == 5:
+    print("A weekday in May")
+  case _:
+    print("No match")
+```
+
+================================================================================
+

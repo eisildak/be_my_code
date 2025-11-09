@@ -1,0 +1,72 @@
+=== Python Modules ===
+Konu: modules
+Kaynak: https://www.w3schools.com/python/python_modules.asp
+
+📖 AÇIKLAMALAR:
+1. Consider a module to be the same as a code library.
+2. A file containing a set of functions you want to include in your application.
+3. To create a module just save the code you want in a file with the file extension .py:
+4. Save this code in a file named mymodule.py
+5. Now we can use the module we just created, by using the import statement:
+
+⚠️ ÖNEMLİ NOTLAR:
+- Note: When using a function from a module, use the syntax: module_name.function_name.
+- Note: The dir() function can be used on all 
+  modules, also the ones you create yourself.
+- Note: When importing using the from 
+  keyword, do not use the module name when referring to elements in the module. 
+  Example: person1["age"], not
+mymodule.person1["age"]
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+def greeting(name):  print("Hello, " + name)
+```
+
+Örnek 2:
+```python
+import mymodulemymodule.greeting("Jonathan")
+```
+
+Örnek 3:
+```python
+person1 = {  "name": "John",  "age": 36,  
+  "country": "Norway"}
+```
+
+Örnek 4:
+```python
+import mymodulea = mymodule.person1["age"]print(a)
+```
+
+Örnek 5:
+```python
+import mymodule as mxa = mx.person1["age"]print(a)
+```
+
+Örnek 6:
+```python
+import platformx = platform.system()print(x)
+```
+
+Örnek 7:
+```python
+import platformx = dir(platform)print(x)
+```
+
+Örnek 8:
+```python
+def greeting(name):  print("Hello, " + name)person1 
+  = {  "name": "John",  "age": 36,  "country": 
+  "Norway"}
+```
+
+Örnek 9:
+```python
+from mymodule import person1print (person1["age"])
+```
+
+================================================================================
+

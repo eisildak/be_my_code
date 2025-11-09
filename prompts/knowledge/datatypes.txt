@@ -1,0 +1,22 @@
+=== Python Data Types ===
+Konu: datatypes
+Kaynak: https://www.w3schools.com/python/python_datatypes.asp
+
+📖 AÇIKLAMALAR:
+1. In programming, data type is an important concept.
+2. Variables can store data of different types, and different types can do 
+different things.
+3. Python has the following data types built-in by default, in these categories:
+4. You can get the data type of any object by using the type() function:
+5. Print the data type of the variable x:
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+x = 5
+print(type(x))
+```
+
+================================================================================
+

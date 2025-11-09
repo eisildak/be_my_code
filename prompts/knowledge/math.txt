@@ -1,0 +1,54 @@
+=== Python Math ===
+Konu: math
+Kaynak: https://www.w3schools.com/python/python_math.asp
+
+📖 AÇIKLAMALAR:
+1. Python has a set of built-in math functions, including an extensive math module, that allows you to perform mathematical tasks on numbers.
+2. The min() and max() functions can be used to find the lowest or highest value in an iterable:
+3. The abs() function returns the absolute (positive) value of the specified number:
+4. The pow(x, y) function returns the value of x to the power of y (xy).
+5. Return the value of 4 to the power of 3 (same as 4 * 4 * 4):
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+x = min(5, 10, 25)y = max(5, 10, 25)print(x)print(y)
+```
+
+Örnek 2:
+```python
+x = abs(-7.25)print(x)
+```
+
+Örnek 3:
+```python
+x = pow(4, 3)print(x)
+```
+
+Örnek 4:
+```python
+import math
+```
+
+Örnek 5:
+```python
+import 
+    mathx = math.sqrt(64)print(x)
+```
+
+Örnek 6:
+```python
+import 
+    mathx = math.ceil(1.4)y = math.floor(1.4)print(x) # 
+    returns 2print(y) # returns 1
+```
+
+Örnek 7:
+```python
+import 
+    mathx = math.piprint(x)
+```
+
+================================================================================
+

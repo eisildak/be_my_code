@@ -1,0 +1,59 @@
+=== Python None ===
+Konu: none
+Kaynak: https://www.w3schools.com/python/python_none.asp
+
+📖 AÇIKLAMALAR:
+1. None is a special constant in Python that represents the absence of a value.
+2. Its data type is NoneType, and None is the only instance of a NoneType object.
+3. Variables can be assigned None to indicate "no value" or "not set".
+4. Assign and display a None value:
+5. Use type() to see the type of a None value.
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+x = None
+print(x)
+```
+
+Örnek 2:
+```python
+x = None
+print(type(x))
+```
+
+Örnek 3:
+```python
+result = None
+if result is None:
+  print("No result yet")
+else:
+  print("Result is ready")
+```
+
+Örnek 4:
+```python
+result = None
+if result is not None:
+  print("Result is ready")
+else:
+  print("No result yet")
+```
+
+Örnek 5:
+```python
+print(bool(None))
+```
+
+Örnek 6:
+```python
+def myfunc():
+  x = 5
+
+x = myfunc()
+print(x)
+```
+
+================================================================================
+

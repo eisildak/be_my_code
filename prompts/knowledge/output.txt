@@ -1,0 +1,44 @@
+=== Python Output / Print ===
+Konu: output
+Kaynak: https://www.w3schools.com/python/python_output.asp
+
+📖 AÇIKLAMALAR:
+1. You have already learned that you can use the print() function to display text or output values:
+2. Try it Yourself »
+3. You can use the print() function as many times as you want. Each call prints text on a new line by default:
+4. Try it Yourself »
+5. Text in Python must be inside quotes. You can use either " double quotes or ' single quotes:
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+print("Hello World!")
+```
+
+Örnek 2:
+```python
+print("Hello World!")
+    print("I am learning Python.")
+    print("It is awesome!")
+```
+
+Örnek 3:
+```python
+print("This will work!")
+    print('This will also work!')
+```
+
+Örnek 4:
+```python
+print(This will cause an error)
+```
+
+Örnek 5:
+```python
+print("Hello World!", end=" ")
+    print("I will print on the same line.")
+```
+
+================================================================================
+

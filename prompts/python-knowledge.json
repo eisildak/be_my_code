@@ -1,0 +1,804 @@
+[
+  {
+    "url": "https://www.w3schools.com/python/python_syntax.asp",
+    "title": "Python Syntax",
+    "code_examples": [
+      ">>> print(\"Hello, World!\")\n    Hello, World!",
+      "C:\\Users\\Your Name>python myfile.py",
+      "if 5 > 2: \nprint(\"Five is greater than two!\")",
+      "if 5 > 2:\nprint(\"Five is greater than two!\")",
+      "if 5 > 2: print(\"Five is greater than two!\") \nif 5 > 2:        print(\"Five is greater than two!\")",
+      "if 5 > 2:\n print(\"Five is greater than two!\")\n        print(\"Five is greater than \n  two!\")",
+      "x = 5y = \"Hello, World!\"",
+      "#This is a comment.\nprint(\"Hello, World!\")"
+    ],
+    "explanations": [
+      "As we learned in the previous page, Python syntax can be executed by writing directly in the Command Line:",
+      "Or by creating a python file on the server, using the .py file extension, and running it in the Command Line:",
+      "Indentation refers to the spaces at the beginning of a code line.",
+      "Where in other programming languages the indentation in code is for readability \nonly, the indentation in Python is very important.",
+      "Python uses indentation to indicate a block of code."
+    ],
+    "notes": [],
+    "topic": "syntax"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_output.asp",
+    "title": "Python Output / Print",
+    "code_examples": [
+      "print(\"Hello World!\")",
+      "print(\"Hello World!\")\n    print(\"I am learning Python.\")\n    print(\"It is awesome!\")",
+      "print(\"This will work!\")\n    print('This will also work!')",
+      "print(This will cause an error)",
+      "print(\"Hello World!\", end=\" \")\n    print(\"I will print on the same line.\")"
+    ],
+    "explanations": [
+      "You have already learned that you can use the print() function to display text or output values:",
+      "Try it Yourself »",
+      "You can use the print() function as many times as you want. Each call prints text on a new line by default:",
+      "Try it Yourself »",
+      "Text in Python must be inside quotes. You can use either \" double quotes or ' single quotes:"
+    ],
+    "notes": [],
+    "topic": "output"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_comments.asp",
+    "title": "Python Comments",
+    "code_examples": [
+      "#This is a comment\nprint(\"Hello, World!\")",
+      "print(\"Hello, World!\") #This is a comment",
+      "#print(\"Hello, World!\")print(\"Cheers, Mate!\")",
+      "#This is a comment#written in#more than just one lineprint(\"Hello, \n  World!\")",
+      "\"\"\"This is a commentwritten in more than just \n  one line\"\"\"print(\"Hello, World!\")"
+    ],
+    "explanations": [
+      "Comments can be used to explain Python code.",
+      "Comments can be used to make the code more readable.",
+      "Comments can be used to prevent execution when testing code.",
+      "Comments starts with a #, and Python will \nignore them:",
+      "Comments can be placed at the end of a line, and Python will ignore the rest \nof the line:"
+    ],
+    "notes": [],
+    "topic": "comments"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_variables.asp",
+    "title": "Python Variables",
+    "code_examples": [
+      "x = 5\ny = \"John\"\nprint(x)\nprint(y)",
+      "x = 4       # x is of type int\nx = \"Sally\" # x is now of type str\nprint(x)",
+      "x = \n  str(3)    # x will be '3'y = int(3)    # y \n  will be 3z = float(3)  # z will be 3.0",
+      "x = 5y = \"John\"print(type(x))print(type(y))",
+      "x = \"John\"# is the same asx = \n  'John'",
+      "a = 4A = \n  \"Sally\"#A will not overwrite a"
+    ],
+    "explanations": [
+      "Variables are containers for storing data values.",
+      "Python has no command for declaring a variable.",
+      "A variable is created the moment you first assign a value to it.",
+      "Variables do not need to be declared with any particular type, and can even change type after they have been set.",
+      "If you want to specify the data type of a variable, this can be done with casting."
+    ],
+    "notes": [
+      "You will learn more about \n  data types and\n  casting later in this tutorial."
+    ],
+    "topic": "variables"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_datatypes.asp",
+    "title": "Python Data Types",
+    "code_examples": [
+      "x = 5\nprint(type(x))"
+    ],
+    "explanations": [
+      "In programming, data type is an important concept.",
+      "Variables can store data of different types, and different types can do \ndifferent things.",
+      "Python has the following data types built-in by default, in these categories:",
+      "You can get the data type of any object by using the type() function:",
+      "Print the data type of the variable x:"
+    ],
+    "notes": [],
+    "topic": "datatypes"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_numbers.asp",
+    "title": "Python Numbers",
+    "code_examples": [
+      "x = 1    \n  # inty = 2.8  # floatz = 1j   # complex",
+      "print(type(x))print(type(y))print(type(z))",
+      "x = 1y = 35656222554887711z = \n  -3255522print(type(x))print(type(y))print(type(z))",
+      "x = 1.10y = 1.0z = -35.59print(type(x))print(type(y))print(type(z))",
+      "x = 35e3y = 12E4z = -87.7e100print(type(x))print(type(y))\n  print(type(z))",
+      "x = 3+5jy = 5jz = -5jprint(type(x))print(type(y))\n  print(type(z))",
+      "x = 1    # inty = 2.8  # floatz = 1j   # complex#convert from int to float:\n  a = float(x)#convert from float to int:\n  b = int(y)#convert from int to complex:c = complex(x)print(a)print(b)\n  print(c)print(type(a))print(type(b))\n  print(type(c))",
+      "import randomprint(random.randrange(1, 10))"
+    ],
+    "explanations": [
+      "There are three numeric types in Python:",
+      "Variables of numeric types are created when you assign a value to them:",
+      "To verify the type of any object in Python, use the type() function:",
+      "Int, or integer, is a whole number, \npositive or negative, without decimals, of unlimited length.",
+      "Float, or \"floating point number\" is a number, positive or negative, containing one or more decimals."
+    ],
+    "notes": [
+      "Note: You cannot convert complex numbers into another number type."
+    ],
+    "topic": "numbers"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_casting.asp",
+    "title": "Python Casting",
+    "code_examples": [
+      "x = int(1)   # x will be 1\ny = int(2.8) # y will be 2\nz = int(\"3\") # z will be 3",
+      "x = float(1)     # x will be 1.0\ny = float(2.8)   # y will be 2.8\nz = float(\"3\")   # z will be 3.0\nw = float(\"4.2\") # w will be 4.2",
+      "x = str(\"s1\") # x will be 's1'\ny = str(2)    # y will be '2'\nz = str(3.0)  # z will be '3.0'"
+    ],
+    "explanations": [
+      "There may be times when you want to specify a type on to a variable. This can be done with casting. Python is an object-orientated language, and as such it uses classes to define data types, including its primitive types.",
+      "Casting in python is therefore done using constructor functions:"
+    ],
+    "notes": [],
+    "topic": "casting"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_strings.asp",
+    "title": "Python Strings",
+    "code_examples": [
+      "print(\"Hello\")\nprint('Hello')",
+      "print(\"It's alright\")\nprint(\"He is called 'Johnny'\")\nprint('He is called \"Johnny\"')",
+      "a = \"Hello\"print(a)",
+      "a = \"\"\"Lorem ipsum dolor sit amet,consectetur adipiscing elit,sed do \n  eiusmod tempor incididuntut labore et dolore magna aliqua.\"\"\"print(a)",
+      "a = '''Lorem ipsum dolor sit amet,consectetur adipiscing elit,sed do \n  eiusmod tempor incididuntut labore et dolore magna aliqua.'''print(a)",
+      "a = \"Hello, World!\"\nprint(a[1])",
+      "for x in \"banana\":  print(x)",
+      "a = \"Hello, World!\"\nprint(len(a))",
+      "txt = \"The best things in life are free!\"print(\"free\" in txt)",
+      "txt = \"The best things in life are free!\"if \"free\" in txt: \nprint(\"Yes, 'free' is present.\")",
+      "txt = \"The best things in life are free!\"print(\"expensive\" not in txt)",
+      "txt = \"The best things in life are free!\"if \"expensive\" not in txt: \nprint(\"No, 'expensive' is NOT present.\")"
+    ],
+    "explanations": [
+      "Strings in python are surrounded by either single quotation marks, or double quotation marks.",
+      "'hello' is the same as \"hello\".",
+      "You can display a string literal with the print() function:",
+      "You can use quotes inside a string, as long as they don't match the quotes surrounding the string:",
+      "Assigning a string to a variable is done with the variable name followed by \nan equal sign and the string:"
+    ],
+    "notes": [
+      "Note: in the result, the line breaks are inserted at the same position as in the code."
+    ],
+    "topic": "strings"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_booleans.asp",
+    "title": "Python Booleans",
+    "code_examples": [
+      "print(10 > 9)print(10 == 9)print(10 < 9)",
+      "a = 200b = 33if b > a:  print(\"b is greater than a\")\n  else:  print(\"b is not greater than a\")",
+      "print(bool(\"Hello\"))print(bool(15))",
+      "x = \"Hello\"y = 15print(bool(x))print(bool(y))",
+      "bool(\"abc\")bool(123)bool([\"apple\", \"cherry\", \"banana\"])",
+      "bool(False)bool(None)bool(0)bool(\"\")bool(())bool([])\n  bool({})",
+      "class myclass():  def __len__(self):    return 0\nmyobj = myclass()print(bool(myobj))",
+      "def myFunction() :  return Trueprint(myFunction())",
+      "def myFunction() :  return Trueif myFunction():  \n  print(\"YES!\")else:  print(\"NO!\")",
+      "x = 200print(isinstance(x, int))"
+    ],
+    "explanations": [
+      "Booleans represent one of two values: \nTrue or False.",
+      "In programming you often need to know if an expression is \nTrue or False.",
+      "You can evaluate any expression in Python, and get one of two \nanswers, \nTrue or False.",
+      "When you compare two values, the expression is evaluated and Python returns \nthe Boolean answer:",
+      "When you run a condition in an if statement, Python returns \nTrue or False:"
+    ],
+    "notes": [],
+    "topic": "booleans"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_operators.asp",
+    "title": "Python Operators",
+    "code_examples": [
+      "print(10 + 5)",
+      "sum1 = 100 + 50      # 150 (100 + 50)\nsum2 = sum1 + 250    # 400 (150 + 250)\nsum3 = sum2 + sum2   # 800 (400 + 400)"
+    ],
+    "explanations": [
+      "Operators are used to perform operations on variables and values.",
+      "In the example below, we use the + operator to add together two values:",
+      "Although the + operator is often used to add together two values, like in the example above, it can also be used to add together a variable and a value, or two variables:",
+      "Python divides the operators in the following groups:"
+    ],
+    "notes": [],
+    "topic": "operators"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_lists.asp",
+    "title": "Python Lists",
+    "code_examples": [
+      "thislist = [\"apple\", \"banana\", \"cherry\"]\nprint(thislist)",
+      "thislist = [\"apple\", \"banana\", \"cherry\", \"apple\", \"cherry\"]\nprint(thislist)",
+      "thislist = [\"apple\", \"banana\", \"cherry\"]\nprint(len(thislist))",
+      "list1 = [\"apple\", \"banana\", \"cherry\"]\nlist2 = [1, 5, 7, 9, 3]\nlist3 = [True, False, False]",
+      "list1 = [\"abc\", 34, True, 40, \"male\"]",
+      "mylist = [\"apple\", \"banana\", \"cherry\"]\nprint(type(mylist))",
+      "thislist = list((\"apple\", \"banana\", \"cherry\")) # note the double round-brackets\nprint(thislist)"
+    ],
+    "explanations": [
+      "Lists are used to store multiple items in a single variable.",
+      "Lists are one of 4 built-in data types in Python used to store collections of \ndata, the other 3 are Tuple, \nSet, and Dictionary, all with different qualities and usage.",
+      "Lists are created using square brackets:",
+      "Create a List:",
+      "List items are ordered, changeable, and allow duplicate values."
+    ],
+    "notes": [
+      "Note: There are some list methods that will change the order, but in general: the order of the items will not change.",
+      "*Set items are unchangeable, but you can remove and/or add items \n  whenever you like.\n**As of Python version 3.7, dictionaries are ordered. \n  In Python 3.6 and earlier, dictionaries are unordered."
+    ],
+    "topic": "lists"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_tuples.asp",
+    "title": "Python Tuples",
+    "code_examples": [
+      "thistuple = (\"apple\", \"banana\", \"cherry\")\nprint(thistuple)",
+      "thistuple = (\"apple\", \"banana\", \"cherry\", \"apple\", \"cherry\")\nprint(thistuple)",
+      "thistuple = (\"apple\", \"banana\", \"cherry\")\nprint(len(thistuple))",
+      "thistuple = (\"apple\",)\n  print(type(thistuple))#NOT a tuplethistuple = (\"apple\")\n  print(type(thistuple))",
+      "tuple1 = (\"apple\", \"banana\", \"cherry\")\ntuple2 = (1, 5, 7, 9, 3)\ntuple3 = (True, False, False)",
+      "tuple1 = (\"abc\", 34, True, 40, \"male\")",
+      "mytuple = (\"apple\", \"banana\", \"cherry\")\nprint(type(mytuple))",
+      "thistuple = tuple((\"apple\", \"banana\", \"cherry\")) # note the double round-brackets\nprint(thistuple)"
+    ],
+    "explanations": [
+      "Tuples are used to store multiple items in a single variable.",
+      "Tuple is one of 4 built-in data types in Python used to store collections of \ndata, the other 3 are List, \nSet, and Dictionary, all with different qualities and usage.",
+      "A tuple is a collection which is ordered and unchangeable.",
+      "Tuples are written with round brackets.",
+      "Create a Tuple:"
+    ],
+    "notes": [
+      "*Set items are unchangeable, but you can remove and/or add items \n  whenever you like.\n**As of Python version 3.7, dictionaries are ordered. \n  In Python 3.6 and earlier, dictionaries are unordered."
+    ],
+    "topic": "tuples"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_sets.asp",
+    "title": "Python Sets",
+    "code_examples": [
+      "thisset = {\"apple\", \"banana\", \"cherry\"}print(thisset)",
+      "thisset = {\"apple\", \"banana\", \"cherry\", \"apple\"}\n  print(thisset)",
+      "thisset = {\"apple\", \"banana\", \"cherry\", True, 1, 2}\n  print(thisset)",
+      "thisset = {\"apple\", \"banana\", \"cherry\", False, True, 0}\n  print(thisset)",
+      "thisset = {\"apple\", \"banana\", \"cherry\"}\n  print(len(thisset))",
+      "set1 = {\"apple\", \"banana\", \"cherry\"}\n  set2 = {1, 5, 7, 9, 3}\n  set3 = {True, False, False}",
+      "set1 = {\"abc\", 34, True, 40, \"male\"}",
+      "myset = {\"apple\", \"banana\", \"cherry\"}\nprint(type(myset))",
+      "thisset = set((\"apple\", \"banana\", \"cherry\")) # note the double round-brackets\nprint(thisset)"
+    ],
+    "explanations": [
+      "Sets are used to store multiple items in a single variable.",
+      "Set is one of 4 built-in data types in Python used to store collections of \ndata, the other 3 are List, \nTuple, and Dictionary, all with different qualities and usage.",
+      "A set is a collection which is unordered, unchangeable*, and unindexed.",
+      "* Note: Set items are unchangeable, but you can remove \n  items and add new items.",
+      "Sets are written with curly brackets."
+    ],
+    "notes": [
+      "* Note: Set items are unchangeable, but you can remove \n  items and add new items.",
+      "Note: Sets are unordered, so you cannot be sure in which \n  order the items will appear.",
+      "Once a set is created, you cannot change its items, but you can remove items \nand add new items.",
+      "Note: The values True\n  and 1 are considered the same value in sets, \n  and are treated as duplicates:",
+      "Note: The values False\n  and 0 are considered the same value in sets, \n  and are treated as duplicates:",
+      "*Set items are unchangeable, but you can remove items and add new \n  items.\n**As of Python version 3.7, dictionaries are ordered. \n  In Python 3.6 and earlier, dictionaries are unordered."
+    ],
+    "topic": "sets"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_dictionaries.asp",
+    "title": "Python Dictionaries",
+    "code_examples": [
+      "thisdict =\t{\n  \"brand\": \"Ford\",\n  \"model\": \"Mustang\",\n  \"year\": 1964\n}\nprint(thisdict)",
+      "thisdict =\t{\n  \"brand\": \"Ford\",\n  \"model\": \"Mustang\",\n  \"year\": 1964\n}\nprint(thisdict[\"brand\"])",
+      "thisdict =\t{\n  \"brand\": \"Ford\",\n  \"model\": \"Mustang\",\n  \"year\": 1964,  \"year\": 2020\n}\nprint(thisdict)",
+      "print(len(thisdict))",
+      "thisdict =\t{\n  \"brand\": \"Ford\",\n  \"electric\": False,\n  \"year\": 1964,  \"colors\": [\"red\", \"white\", \"blue\"]\n}",
+      "thisdict =\t{\n  \"brand\": \"Ford\",\n  \"model\": \"Mustang\",\n  \"year\": 1964\n}\nprint(type(thisdict))",
+      "thisdict = \n  dict(name = \"John\", age = 36, country = \"Norway\")\nprint(thisdict)"
+    ],
+    "explanations": [
+      "Dictionaries are used to store data values in key:value pairs.",
+      "A dictionary is a collection which is ordered*, changeable and do not \nallow duplicates.",
+      "As of Python version 3.7, dictionaries are ordered. \n  In Python 3.6 and earlier, dictionaries are unordered.",
+      "Dictionaries are written with curly brackets, and have keys and values:",
+      "Create and print a dictionary:"
+    ],
+    "notes": [
+      "As of Python version 3.7, dictionaries are ordered. \n  In Python 3.6 and earlier, dictionaries are unordered.",
+      "As of Python version 3.7, dictionaries are ordered. \n  In Python 3.6 and earlier, dictionaries are unordered.",
+      "*Set items are unchangeable, but you can remove and/or add items \n  whenever you like.\n**As of Python version 3.7, dictionaries are ordered. \n  In Python 3.6 and earlier, dictionaries are unordered."
+    ],
+    "topic": "dictionaries"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_conditions.asp",
+    "title": "Python If Statement",
+    "code_examples": [
+      "a = 33\nb = 200\nif b > a:  print(\"b is greater than a\")",
+      "number = 15\nif number > 0:  print(\"The number is positive\")",
+      "a = 33\nb = 200\nif b > a:\nprint(\"b is greater than a\")\n# you will get an error",
+      "age = 20\nif age >= 18:\n  print(\"You are an adult\")\n  print(\"You can vote\")\n  print(\"You have full legal rights\")",
+      "is_logged_in = True\nif is_logged_in:\n  print(\"Welcome back!\")"
+    ],
+    "explanations": [
+      "Python supports the usual logical conditions from mathematics:",
+      "These conditions can be used in several ways, most commonly in \"if statements\" and loops.",
+      "An \"if statement\" is written by using the if keyword.",
+      "If statement:",
+      "In this example we use two variables, a and b,\nwhich are used as part of the if statement to test whether b is greater than a.\nAs a is 33, and b is 200,\nwe know that 200 is greater than 33, and so we print to screen that \"b is greater than a\"."
+    ],
+    "notes": [
+      "Note: You can use spaces or tabs for indentation, but you must use the same amount of indentation for all statements within the same code block."
+    ],
+    "topic": "conditions"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_match.asp",
+    "title": "Python Match",
+    "code_examples": [
+      "match expression:\n  case x:\n    code block\n  case y:\n    code block\n  case z:\n    code block",
+      "day = 4\nmatch day:\n  case 1:\n    print(\"Monday\")\n  case 2:\n    print(\"Tuesday\")\n  case 3:\n    print(\"Wednesday\")\n  case 4:\n    print(\"Thursday\")\n  case 5:\n    print(\"Friday\")\n  case 6:\n    print(\"Saturday\")\n  case 7:\n    print(\"Sunday\")",
+      "day = 4\nmatch day:\n  case 6:\n    print(\"Today is Saturday\")\n  case 7:\n    print(\"Today is Sunday\")\n  case _:\n    print(\"Looking forward to the Weekend\")",
+      "day = 4\nmatch day:\n  case 1 | 2 | 3 | 4 | 5:\n    print(\"Today is a weekday\")\n  case 6 | 7:\n    print(\"I love \n  weekends!\")",
+      "month = 5\nday = 4\nmatch day:\n  case 1 | 2 | 3 | 4 | 5 if month == 4:\n    print(\"A weekday in April\")\n  case 1 | 2 | 3 | 4 | 5 if month == 5:\n    print(\"A weekday in May\")\n  case _:\n    print(\"No match\")"
+    ],
+    "explanations": [
+      "The match statement is used to perform different actions based on different conditions.",
+      "Instead of writing many if..else statements, you can use the match statement.",
+      "The match statement selects one of many code blocks to be executed.",
+      "This is how it works:",
+      "The example below uses the weekday number to print the weekday name:"
+    ],
+    "notes": [],
+    "topic": "match"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_while_loops.asp",
+    "title": "Python While Loops",
+    "code_examples": [
+      "i = 1\nwhile i < 6:\n  print(i)\n  i += 1",
+      "i = 1\nwhile i < 6:\n  print(i)\n    if i == 3:    break  i += 1",
+      "i = 0\nwhile i < 6:\n    i += 1\n  if i == 3:    continue  print(i)",
+      "i = 1\nwhile i < 6:\n  print(i)\n  i += 1else:  print(\"i is no longer less than 6\")"
+    ],
+    "explanations": [
+      "Python has two primitive loop commands:",
+      "With the while loop we can execute a set of statements as long as a condition is true.",
+      "Print i as long as i is less than 6:",
+      "Note: remember to increment i, or else the loop will continue forever.",
+      "The while loop requires relevant variables to be ready, in this example we need to define an indexing variable, i, \nwhich we set to 1."
+    ],
+    "notes": [
+      "Note: remember to increment i, or else the loop will continue forever."
+    ],
+    "topic": "while_loops"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_for_loops.asp",
+    "title": "Python For Loops",
+    "code_examples": [
+      "fruits = [\"apple\", \"banana\", \"cherry\"]for \n  x in fruits:\n\t \n\tprint(x)",
+      "for x in \"banana\":  print(x)",
+      "fruits = [\"apple\", \"banana\", \"cherry\"]for x in fruits:  print(x)\n    if x == \n  \"banana\":    break",
+      "fruits = [\"apple\", \"banana\", \"cherry\"]for x in fruits:  if x == \n  \"banana\":    break  print(x)",
+      "fruits = [\"apple\", \"banana\", \"cherry\"]for x in fruits:  if x == \n  \"banana\":    continue  print(x)",
+      "for x in range(6):\n\t \n\tprint(x)",
+      "for x in range(2, 6):\n\t \n\tprint(x)",
+      "for x in range(2, 30, 3):\n\t \n\tprint(x)",
+      "for x in range(6): \n\tprint(x)else: \n\tprint(\"Finally finished!\")",
+      "for x in range(6):  if x == 3: break \n\tprint(x)else: \n\tprint(\"Finally finished!\")",
+      "adj = [\"red\", \"big\", \"tasty\"]fruits = [\"apple\", \"banana\", \"cherry\"]\nfor x in adj:  for y in fruits:    print(x, y)",
+      "for x in [0, 1, 2]:  pass"
+    ],
+    "explanations": [
+      "A for loop is used for iterating over a sequence (that is either a list, a tuple, \na dictionary, a set, or a string).",
+      "This is less like the for keyword in other programming languages, and works more like an iterator method as found in other object-orientated programming languages.",
+      "With the for loop we can execute a set of statements, once for each item in a list, tuple, set etc.",
+      "Print each fruit in a fruit list:",
+      "The for loop does not require an indexing variable to set beforehand."
+    ],
+    "notes": [
+      "Note that range(6) is not the values of 0 to 6, but the values 0 to 5.",
+      "Note: The else block will NOT be executed if the loop is stopped by a break statement."
+    ],
+    "topic": "for_loops"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_functions.asp",
+    "title": "Python Functions",
+    "code_examples": [
+      "def greet():  print(\"Hello from a function\")",
+      "def my_function():  print(\"Hello from a function\")\nmy_function()",
+      "def my_function():  print(\"Hello from a function\")\nmy_function()my_function()my_function()",
+      "calculate_sum()\n_private_function()\nmyFunction2()",
+      "temp1 = 77celsius1 = (temp1 - 32) * 5 / 9print(celsius1)\n  temp2 = 95celsius2 = (temp2 - 32) * 5 / 9print(celsius2)\n  temp3 = 50celsius3 = (temp3 - 32) * 5 / 9print(celsius3)",
+      "def fahrenheit_to_celsius(fahrenheit):  return (fahrenheit - 32) * 5 / 9\n  print(fahrenheit_to_celsius(77))print(fahrenheit_to_celsius(95))print(fahrenheit_to_celsius(50))",
+      "def get_greeting():  return \"Hello from a function\"\n  message = get_greeting()print(message)",
+      "def get_greeting():  return \"Hello from a function\"\n  print(get_greeting())",
+      "def my_function():  pass"
+    ],
+    "explanations": [
+      "A function is a block of code which only runs when it is called.",
+      "A function can return data as a result.",
+      "A function helps avoiding code repetition.",
+      "In Python, a function is defined using the def \nkeyword, followed by a function name and parentheses:",
+      "This creates a function named my_function that prints \"Hello!\" when called."
+    ],
+    "notes": [
+      "The code inside the function must be indented. Python uses indentation to define code blocks.",
+      "It's good practice to use descriptive names that explain what the function does.",
+      "If a function doesn't have a return statement, it returns None by default."
+    ],
+    "topic": "functions"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_range.asp",
+    "title": "Python range",
+    "code_examples": [
+      "x = range(10)",
+      "x = range(3, 10)",
+      "x = range(3, 10, 2)",
+      "for i in range(10):\n  print(i)",
+      "print(list(range(5)))\nprint(list(range(1, 6)))\nprint(list(range(5, 20, 3)))",
+      "r = range(10)\nprint(r[2])\nprint(r[:3])",
+      "r = range(0, 10, 2)\nprint(6 in r)\nprint(7 in r)",
+      "r = range(0, 10, 2)\nprint(len(r))"
+    ],
+    "explanations": [
+      "The built-in range() function returns an immutable sequence of numbers, commonly used for looping a specific number of times.",
+      "This set of numbers has its own data type called range.",
+      "The range() function can be called with 1, 2, or 3 arguments, using this syntax:",
+      "range(start, stop, step)",
+      "If the range function is called with only one argument, the argument represents the stop value.\nThe start argument is optional, and if not provided, it defaults to 0.\nrange(10) returns a sequence of each number from 0 to 9. (The start argument, 0 is inclusive, and the stop argument, 10 is exclusive).\n\nExample\nCreate a range of numbers from 0 to 9:\n\nx = range(10)\n\nTry it Yourself »\n\n\nCall range() With Two Arguments\nIf the range function is called with two arguments,\n    the first argument represents the start value,\n    and the second argument represents the stop value.\nrange(3, 10) returns a sequence of each number from 3 to 9:\n\nExample\nCreate a range of numbers from 3 to 9:\n\nx = range(3, 10)\n\nTry it Yourself »\n\n\nCall range() With Three Arguments\nIf the range function is called with three arguments, the third argument represents the step value.\nThe step value means the difference between each number in the sequence. It is optional, and if not provided, it defaults to 1.\nrange(3, 10, 2) returns a sequence of each number from 3 to 9, with a step of 2:\n\nExample\nCreate a range of numbers from 3 to 9:\n\nx = range(3, 10, 2)\n\nTry it Yourself »\n\n\nUsing ranges\nRanges are often used in for loops to iterate over a sequence of numbers.\n\nExample\nIterate over each value in a range:\n\nfor i in range(10):\n  print(i)\n\nTry it Yourself »\n\n\nUsing List to Display Ranges\nThe range object is a data type that represents an immutable sequence of numbers, and it is not directly displayable.\nTherefore, ranges are often converted to lists for display.\n\nExample\nConvert different ranges to lists:\n\nprint(list(range(5)))\nprint(list(range(1, 6)))\nprint(list(range(5, 20, 3)))\n\nTry it Yourself »\n\n\nSlicing Ranges\nLike other sequences, ranges can be sliced to extract a subsequence.\n\nExample\nExtract a subsequence from a range:\n\nr = range(10)\nprint(r[2])\nprint(r[:3])\n\nTry it Yourself »\n\nNote: The first print statement returns the value at index 2, and the second print statement returns a new range object, from index 0 to 3.\n\nMembership Testing\nRanges support membership testing with the in operator.\n\nExample\nTest if the numbers 6 and 7 are present in a range:\n\nr = range(0, 10, 2)\nprint(6 in r)\nprint(7 in r)\n\nTry it Yourself »\n\nThe return value is True when the number is present in the range, and False when it is not.\n\nLength\nRanges support the len() function to get the number of elements in the range.\n\nExample\nGet the length of a range:\n\nr = range(0, 10, 2)\nprint(len(r))\n\nTry it Yourself »\n\n\n\n\n\n❮ Previous\nNext ❯\n\n\n\n\n\n\n\n\n\n\n\n\n★\n+1\n\n\n\n\n\n    Sign in to track progress"
+    ],
+    "notes": [],
+    "topic": "range"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_arrays.asp",
+    "title": "Python Arrays",
+    "code_examples": [
+      "cars = [\"Ford\", \"Volvo\", \"BMW\"]",
+      "car1 = \"Ford\"\n  car2 = \"Volvo\"\n  car3 = \"BMW\"",
+      "x = cars[0]",
+      "cars[0] = \"Toyota\"",
+      "x = len(cars)",
+      "for x in cars:  print(x)",
+      "cars.append(\"Honda\")",
+      "cars.pop(1)",
+      "cars.remove(\"Volvo\")"
+    ],
+    "explanations": [
+      "Note: Python does not have built-in support for Arrays, \n  but Python Lists can be used instead.",
+      "Note: This page shows you how to use LISTS as ARRAYS, however, to work with arrays in Python you will have to import\n  a library, like the NumPy library.",
+      "Arrays are used to store multiple values in one single variable:",
+      "Create an array containing car names:",
+      "An array is a special variable, which can hold more than one value at a time."
+    ],
+    "notes": [
+      "Note: Python does not have built-in support for Arrays, \n  but Python Lists can be used instead.",
+      "Note: This page shows you how to use LISTS as ARRAYS, however, to work with arrays in Python you will have to import\n  a library, like the NumPy library.",
+      "Note: The length of an array is always one more than the highest array index.",
+      "Note: The list's remove() method \n  only removes the first occurrence of the specified value.",
+      "Note: Python does not have built-in support for Arrays, \n  but Python Lists can be used instead."
+    ],
+    "topic": "arrays"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_iterators.asp",
+    "title": "Python Iterators",
+    "code_examples": [
+      "mytuple = (\"apple\", \"banana\", \"cherry\")myit = iter(mytuple)\n    print(next(myit))print(next(myit))print(next(myit))",
+      "mystr = \"banana\"myit = iter(mystr)\n    print(next(myit))print(next(myit))print(next(myit))\n    print(next(myit))print(next(myit))print(next(myit))",
+      "mytuple = (\"apple\", \"banana\", \"cherry\")\nfor x in mytuple:\n      print(x)",
+      "mystr = \"banana\"\nfor x in mystr:\n      print(x)",
+      "class MyNumbers:  def __iter__(self):    self.a = \n  1    return self  def __next__(self):    \n  x = self.a    self.a += 1    return x\nmyclass = MyNumbers()myiter =\n   iter(myclass)print(next(myiter))\n  print(next(myiter))print(next(myiter))print(next(myiter))\n  print(next(myiter))",
+      "class MyNumbers:  def __iter__(self):    self.a = \n  1    return self  def __next__(self):    \n  if self.a <= 20:      x = self.a      \n  self.a += 1      return x    \n  else:      raise StopIterationmyclass = \n  MyNumbers()myiter =\n   iter(myclass)for x in myiter:  \n  print(x)"
+    ],
+    "explanations": [
+      "An iterator is an object that contains a countable number of values.",
+      "An iterator is an object that can be iterated upon, meaning that you can \ntraverse through all the values.",
+      "Technically, in Python, an iterator is an object which implements the \niterator protocol, which consist of the methods __iter__() \nand __next__().",
+      "Lists, tuples, dictionaries, and sets are all iterable objects. They are iterable\ncontainers which you can get an iterator from.",
+      "All these objects have a iter() method which is used to get an iterator:"
+    ],
+    "notes": [],
+    "topic": "iterators"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_modules.asp",
+    "title": "Python Modules",
+    "code_examples": [
+      "def greeting(name):  print(\"Hello, \" + name)",
+      "import mymodulemymodule.greeting(\"Jonathan\")",
+      "person1 = {  \"name\": \"John\",  \"age\": 36,  \n  \"country\": \"Norway\"}",
+      "import mymodulea = mymodule.person1[\"age\"]print(a)",
+      "import mymodule as mxa = mx.person1[\"age\"]print(a)",
+      "import platformx = platform.system()print(x)",
+      "import platformx = dir(platform)print(x)",
+      "def greeting(name):  print(\"Hello, \" + name)person1 \n  = {  \"name\": \"John\",  \"age\": 36,  \"country\": \n  \"Norway\"}",
+      "from mymodule import person1print (person1[\"age\"])"
+    ],
+    "explanations": [
+      "Consider a module to be the same as a code library.",
+      "A file containing a set of functions you want to include in your application.",
+      "To create a module just save the code you want in a file with the file extension .py:",
+      "Save this code in a file named mymodule.py",
+      "Now we can use the module we just created, by using the import statement:"
+    ],
+    "notes": [
+      "Note: When using a function from a module, use the syntax: module_name.function_name.",
+      "Note: The dir() function can be used on all \n  modules, also the ones you create yourself.",
+      "Note: When importing using the from \n  keyword, do not use the module name when referring to elements in the module. \n  Example: person1[\"age\"], not\nmymodule.person1[\"age\"]"
+    ],
+    "topic": "modules"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_datetime.asp",
+    "title": "Python Datetime",
+    "code_examples": [
+      "import datetimex = datetime.datetime.now()print(x)",
+      "import datetimex = datetime.datetime.now()print(x.year)\n  print(x.strftime(\"%A\"))",
+      "import datetimex = datetime.datetime(2020, 5, 17)\nprint(x)",
+      "import datetimex = datetime.datetime(2018, 6, 1)print(x.strftime(\"%B\"))"
+    ],
+    "explanations": [
+      "A date in Python is not a data type of its own, but we can import a module \nnamed datetime to work with dates as date \nobjects.",
+      "Import the datetime module and display the current date:",
+      "When we execute the code from the example above the result will be:",
+      "The date contains year, month, day, hour, minute, second, and microsecond.",
+      "The datetime module has many methods to return information about the date \nobject."
+    ],
+    "notes": [],
+    "topic": "datetime"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_math.asp",
+    "title": "Python Math",
+    "code_examples": [
+      "x = min(5, 10, 25)y = max(5, 10, 25)print(x)print(y)",
+      "x = abs(-7.25)print(x)",
+      "x = pow(4, 3)print(x)",
+      "import math",
+      "import \n    mathx = math.sqrt(64)print(x)",
+      "import \n    mathx = math.ceil(1.4)y = math.floor(1.4)print(x) # \n    returns 2print(y) # returns 1",
+      "import \n    mathx = math.piprint(x)"
+    ],
+    "explanations": [
+      "Python has a set of built-in math functions, including an extensive math module, that allows you to perform mathematical tasks on numbers.",
+      "The min() and max() functions can be used to find the lowest or highest value in an iterable:",
+      "The abs() function returns the absolute (positive) value of the specified number:",
+      "The pow(x, y) function returns the value of x to the power of y (xy).",
+      "Return the value of 4 to the power of 3 (same as 4 * 4 * 4):"
+    ],
+    "notes": [],
+    "topic": "math"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_json.asp",
+    "title": "Python JSON",
+    "code_examples": [
+      "import json",
+      "import json# some JSON:x =  '{ \"name\":\"John\", \"age\":30, \"city\":\"New \n  York\"}'# parse x:y = json.loads(x)# the result is a \n  Python dictionary:print(y[\"age\"])",
+      "import json# a Python object (dict):x = {  \"name\": \n  \"John\",  \"age\": 30,  \"city\": \"New York\"}# \n  convert into JSON:y = json.dumps(x)# the result is a JSON string:\n  print(y)",
+      "import jsonprint(json.dumps({\"name\": \"John\", \"age\": 30}))print(json.dumps([\"apple\", \n  \"bananas\"]))print(json.dumps((\"apple\", \"bananas\")))\n  print(json.dumps(\"hello\"))print(json.dumps(42))print(json.dumps(31.76))print(json.dumps(True))print(json.dumps(False))print(json.dumps(None))",
+      "import jsonx = {  \"name\": \n  \"John\",  \"age\": 30,  \"married\": True,  \n  \"divorced\": False,  \"children\": (\"Ann\",\"Billy\"),  \"pets\": \n  None,  \"cars\": [    {\"model\": \"BMW 230\", \"mpg\": \n  27.5},    {\"model\": \"Ford Edge\", \"mpg\": 24.1}  ]\n  }print(json.dumps(x))",
+      "json.dumps(x, indent=4)",
+      "json.dumps(x, indent=4, separators=(\". \", \" = \"))",
+      "json.dumps(x, indent=4, sort_keys=True)"
+    ],
+    "explanations": [
+      "JSON is a syntax for storing and exchanging data.",
+      "JSON is text, written with JavaScript object notation.",
+      "Python has a built-in package called json, which can be used to work with JSON data.",
+      "Import the json module:",
+      "If you have a JSON string, you can parse it by using the\njson.loads() method."
+    ],
+    "notes": [
+      "The result will be a Python dictionary."
+    ],
+    "topic": "json"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_regex.asp",
+    "title": "Python RegEx",
+    "code_examples": [
+      "import re",
+      "import \n    retxt = \"The rain in Spain\"x = re.search(\"^The.*Spain$\", txt)",
+      "import retxt = \"The rain in Spain\"x = re.findall(\"ai\", \n  txt)\n  print(x)",
+      "import retxt = \"The rain in Spain\"x = re.findall(\"Portugal\", \n  txt)\n  print(x)",
+      "import retxt = \"The rain in Spain\"x = re.search(\"\\s\", \n  txt)\nprint(\"The first white-space character is located in \n  position:\", x.start())",
+      "import retxt = \"The rain in Spain\"x = re.search(\"Portugal\", \n  txt)\n  print(x)",
+      "import retxt = \"The rain in Spain\"x = re.split(\"\\s\", \n  txt)\n  print(x)",
+      "import retxt = \"The rain in Spain\"x = re.split(\"\\s\", \n  txt, \n  1)\n  print(x)",
+      "import retxt = \"The rain in Spain\"x = re.sub(\"\\s\", \n  \"9\", txt)\n  print(x)",
+      "import retxt = \"The rain in Spain\"x = re.sub(\"\\s\", \n  \"9\", txt, 2)\n  print(x)",
+      "import retxt = \"The rain in Spain\"x = re.search(\"ai\", \n  txt)\n  print(x) #this will print an object",
+      "import re\n    txt = \"The rain in Spain\"\n    x = re.search(r\"\\bS\\w+\", txt)\n    print(x.span())",
+      "import re\n    txt = \"The rain in Spain\"\n    x = re.search(r\"\\bS\\w+\", txt)\n    print(x.string)",
+      "import re\n    txt = \"The rain in Spain\"\n    x = re.search(r\"\\bS\\w+\", txt)\n    print(x.group())"
+    ],
+    "explanations": [
+      "A RegEx, or Regular Expression, is a sequence of characters that forms a search pattern.",
+      "RegEx can be used to check if a string contains the specified search pattern.",
+      "Python has a built-in package called re, which can be used to work with \nRegular Expressions.",
+      "Import the re module:",
+      "When you have imported the re module, you \ncan start using regular expressions:"
+    ],
+    "notes": [
+      "Note: If there is no match, the value None will be \nreturned, instead of the Match Object.",
+      "Note: If there is no match, the value None will be \nreturned, instead of the Match Object."
+    ],
+    "topic": "regex"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_pip.asp",
+    "title": "Python PIP",
+    "code_examples": [
+      "C:\\Users\\Your Name\\AppData\\Local\\Programs\\Python\\Python36-32\\Scripts>pip --version",
+      "C:\\Users\\Your Name\\AppData\\Local\\Programs\\Python\\Python36-32\\Scripts>pip \n  install camelcase",
+      "import camelcasec = camelcase.CamelCase()txt = \"hello world\"\nprint(c.hump(txt))",
+      "C:\\Users\\Your Name\\AppData\\Local\\Programs\\Python\\Python36-32\\Scripts>pip \n  uninstall camelcase",
+      "Uninstalling camelcase-02.1:  Would remove:    c:\\users\\Your Name\\appdata\\local\\programs\\python\\python36-32\\lib\\site-packages\\camelcase-0.2-py3.6.egg-info    \n  c:\\users\\Your Name\\appdata\\local\\programs\\python\\python36-32\\lib\\site-packages\\camelcase\\*\n  Proceed (y/n)?",
+      "C:\\Users\\Your Name\\AppData\\Local\\Programs\\Python\\Python36-32\\Scripts>pip list",
+      "Package         Version\n  -----------------------camelcase       0.2mysql-connector 2.1.6\n  pip             \n  18.1pymongo         3.6.1\n  setuptools      39.0.1"
+    ],
+    "explanations": [
+      "PIP is a package manager for Python packages, or modules if you like.",
+      "Note: If you have Python version 3.4 or later, PIP is included by default.",
+      "A package contains all the files you need for a module.",
+      "Modules are Python code libraries you can include in your project.",
+      "Navigate your command line to the location of Python's script directory, and type the following:"
+    ],
+    "notes": [
+      "Note: If you have Python version 3.4 or later, PIP is included by default."
+    ],
+    "topic": "pip"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_try_except.asp",
+    "title": "Python Try Except",
+    "code_examples": [
+      "try:  print(x)except:  print(\"An exception occurred\")",
+      "print(x)",
+      "try:  print(x)except NameError:  print(\"Variable x \n  is not defined\")except:  print(\"Something else went \n  wrong\")",
+      "try:  print(\"Hello\")except:  print(\"Something went \n  wrong\")else:  print(\"Nothing went wrong\")",
+      "try:  print(x)except:  print(\"Something went \n  wrong\")finally:  print(\"The 'try except' is finished\")",
+      "try:  f = open(\"demofile.txt\")  try:    \n  f.write(\"Lorum Ipsum\")  except:    \n  print(\"Something went wrong when writing to the file\")  finally:    \n  f.close()except:  print(\"Something went wrong when opening the \n  file\")",
+      "x = -1if x < 0:  raise Exception(\"Sorry, no numbers below \n    zero\")",
+      "x = \"hello\"if not type(x) is int:  raise TypeError(\"Only \n    integers are allowed\")"
+    ],
+    "explanations": [
+      "The try block lets you test a \nblock of code for errors.",
+      "The except block lets you \nhandle the error.",
+      "The else block lets you \nexecute code when there is no error.",
+      "The finally block lets you \nexecute code, regardless of the result of the try- and except blocks.",
+      "When an error occurs, or exception as we call it, Python will normally stop and \ngenerate an error message."
+    ],
+    "notes": [],
+    "topic": "try_except"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_string_formatting.asp",
+    "title": "Python String Formatting",
+    "code_examples": [
+      "txt = f\"The price is 49 dollars\"\n\nprint(txt)",
+      "price = 59\n\ntxt = f\"The price is {price} dollars\"\n\nprint(txt)",
+      "price = 59\n\ntxt = f\"The price is {price:.2f} dollars\"\n\nprint(txt)",
+      "txt = f\"The price is {95:.2f} dollars\"\n\nprint(txt)",
+      "txt = f\"The price is {20 * 59} dollars\"\n\nprint(txt)",
+      "price = 59\ntax = 0.25\ntxt = f\"The price is {price + (price * tax)} dollars\"\n\nprint(txt)",
+      "price = 49\ntxt = f\"It is very {'Expensive' if price>50 else 'Cheap'}\"\n\nprint(txt)",
+      "fruit = \"apples\"\ntxt = f\"I love {fruit.upper()}\"\n\nprint(txt)",
+      "def myconverter(x):\n  return x * 0.3048\n \ntxt = f\"The plane is flying at a {myconverter(30000)} meter altitude\"\n\nprint(txt)",
+      "price = 59000\n\ntxt = f\"The price is {price:,} dollars\"\n\nprint(txt)",
+      "price = 49txt = \"The price is {} dollars\"print(txt.format(price))",
+      "txt = \"The price is {:.2f} dollars\"",
+      "print(txt.format(price, itemno, count))",
+      "quantity = 3itemno = 567price = 49myorder = \"I want {} pieces of \n  item number {} for {:.2f} dollars.\"print(myorder.format(quantity, itemno, price))",
+      "quantity = 3itemno = 567price = 49myorder = \"I want {0} pieces of \n  item number {1} for {2:.2f} dollars.\"print(myorder.format(quantity, itemno, price))",
+      "age = 36name = \"John\"txt = \"His name is {1}. {1} is {0} years old.\"print(txt.format(age, \n  name))",
+      "myorder = \"I have a {carname}, it is a {model}.\"print(myorder.format(carname \n  = \"Ford\", model = \"Mustang\"))"
+    ],
+    "explanations": [
+      "F-String was introduced in Python 3.6,\nand is now the preferred way of formatting strings.",
+      "Before Python 3.6 we had to use the format() method.",
+      "F-string allows you to format selected parts of a string.",
+      "To specify a string as an f-string, simply put an f in front of the string \nliteral, like this:",
+      "Create an f-string:"
+    ],
+    "notes": [],
+    "topic": "string_formatting"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_none.asp",
+    "title": "Python None",
+    "code_examples": [
+      "x = None\nprint(x)",
+      "x = None\nprint(type(x))",
+      "result = None\nif result is None:\n  print(\"No result yet\")\nelse:\n  print(\"Result is ready\")",
+      "result = None\nif result is not None:\n  print(\"Result is ready\")\nelse:\n  print(\"No result yet\")",
+      "print(bool(None))",
+      "def myfunc():\n  x = 5\n\nx = myfunc()\nprint(x)"
+    ],
+    "explanations": [
+      "None is a special constant in Python that represents the absence of a value.",
+      "Its data type is NoneType, and None is the only instance of a NoneType object.",
+      "Variables can be assigned None to indicate \"no value\" or \"not set\".",
+      "Assign and display a None value:",
+      "Use type() to see the type of a None value."
+    ],
+    "notes": [],
+    "topic": "none"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_user_input.asp",
+    "title": "Python User Input",
+    "code_examples": [
+      "print(\"Enter your name:\")\nname = input()\nprint(f\"Hello {name}\")",
+      "name = input(\"Enter your name:\")\nprint(f\"Hello {name}\")",
+      "name = input(\"Enter your name:\")\nprint(f\"Hello {name}\")\nfav1 = input(\"What is your favorite animal:\")\nfav2 = input(\"What is your favorite color:\")\nfav3 = input(\"What is your favorite number:\")\nprint(f\"Do you want a {fav2} {fav1} with {fav3} legs?\")",
+      "x = input(\"Enter a number:\")\n\n#find the square root of the number:\ny = math.sqrt(float(x))\n\nprint(f\"The square root of {x} is {y}\")",
+      "y = True\nwhile y == True:\n  x = input(\"Enter a number:\")\n  try:    x = float(x);    y = False  \n  except:    print(\"Wrong input, please try again.\")\n\nprint(\"Thank you!\")"
+    ],
+    "explanations": [
+      "Python allows for user input.",
+      "That means we are able to ask the user for input.",
+      "The following example asks for your name, and when you enter a name, it gets printed on the screen:",
+      "Ask for user input:",
+      "Python stops executing when it comes to the input() function, and continues \nwhen the user has given some input."
+    ],
+    "notes": [
+      "Python stops executing when it comes to the input() function, and continues \nwhen the user has given some input."
+    ],
+    "topic": "user_input"
+  },
+  {
+    "url": "https://www.w3schools.com/python/python_virtualenv.asp",
+    "title": "Python Virtual Environment",
+    "code_examples": [
+      "C:\\Users\\Your Name> python -m venv myfirstproject",
+      "$ python -m venv myfirstproject",
+      "myfirstproject\n  Include\n  Lib\n  Scripts\n  .gitignore\n  pyvenv.cfg",
+      "C:\\Users\\Your Name> myfirstproject\\Scripts\\activate",
+      "$ source myfirstproject/bin/activate",
+      "(myfirstproject) C:\\Users\\Your Name>",
+      "(myfirstproject) ... $",
+      "(myfirstproject) C:\\Users\\Your Name> pip install cowsay",
+      "(myfirstproject) ... $ pip install cowsay",
+      "Collecting cowsay\n  Downloading cowsay-6.1-py3-none-any.whl.metadata (5.6 kB)\nDownloading cowsay-6.1-py3-none-any.whl (25 kB)\nInstalling collected packages: cowsay\nSuccessfully installed cowsay-6.1\n\n[notice] A new release of pip is available: 25.0.1 -> 25.1.1\n[notice] To update, run: python.exe -m pip install --upgrade pip",
+      "import cowsay\n\ncowsay.cow(\"Good Mooooorning!\")",
+      "(myfirstproject) C:\\Users\\Your Name> python test.py",
+      "(myfirstproject) ... $ python test.py",
+      "_________________\n| Good Mooooorning! |\n  =================\n                 \\\n                  \\\n                    ^__^\n                    (oo)\\_______\n                    (__)\\       )\\/\\\n                        ||----w |\n                        ||     ||",
+      "(myfirstproject) C:\\Users\\Your Name> deactivate",
+      "(myfirstproject) ... $ deactivate",
+      "C:\\Users\\Your Name>",
+      "$",
+      "C:\\Users\\Your Name> python test.py",
+      "$ python test.py",
+      "Traceback (most recent call last):\n  File \"C:\\Users\\Your Name\\test.py\", line 1, in <module>\n    import cowsay\nModuleNotFoundError: No module named 'cowsay'",
+      "C:\\Users\\Your Name> rmdir /s /q myfirstproject",
+      "$ rm -rf myfirstproject"
+    ],
+    "explanations": [
+      "A virtual environment in Python is an isolated environment on your computer, where you can run and test your Python projects.",
+      "It allows you to manage project-specific dependencies without interfering with other projects or the original Python installation.",
+      "Think of a virtual environment as a separate container for each Python project. Each container:",
+      "Using virtual environments is important because:",
+      "Python has the built-in venv module for creating virtual environments."
+    ],
+    "notes": [
+      "Note: The virtual environment myfirstproject still exists, it is just not activated.\n  If you activate the virtual environment again, you can execute the test.py\n  file, and the diagram will be displayed."
+    ],
+    "topic": "virtualenv"
+  }
+]

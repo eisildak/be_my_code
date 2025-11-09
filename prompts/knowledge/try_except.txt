@@ -1,0 +1,70 @@
+=== Python Try Except ===
+Konu: try_except
+Kaynak: https://www.w3schools.com/python/python_try_except.asp
+
+📖 AÇIKLAMALAR:
+1. The try block lets you test a 
+block of code for errors.
+2. The except block lets you 
+handle the error.
+3. The else block lets you 
+execute code when there is no error.
+4. The finally block lets you 
+execute code, regardless of the result of the try- and except blocks.
+5. When an error occurs, or exception as we call it, Python will normally stop and 
+generate an error message.
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+try:  print(x)except:  print("An exception occurred")
+```
+
+Örnek 2:
+```python
+print(x)
+```
+
+Örnek 3:
+```python
+try:  print(x)except NameError:  print("Variable x 
+  is not defined")except:  print("Something else went 
+  wrong")
+```
+
+Örnek 4:
+```python
+try:  print("Hello")except:  print("Something went 
+  wrong")else:  print("Nothing went wrong")
+```
+
+Örnek 5:
+```python
+try:  print(x)except:  print("Something went 
+  wrong")finally:  print("The 'try except' is finished")
+```
+
+Örnek 6:
+```python
+try:  f = open("demofile.txt")  try:    
+  f.write("Lorum Ipsum")  except:    
+  print("Something went wrong when writing to the file")  finally:    
+  f.close()except:  print("Something went wrong when opening the 
+  file")
+```
+
+Örnek 7:
+```python
+x = -1if x < 0:  raise Exception("Sorry, no numbers below 
+    zero")
+```
+
+Örnek 8:
+```python
+x = "hello"if not type(x) is int:  raise TypeError("Only 
+    integers are allowed")
+```
+
+================================================================================
+

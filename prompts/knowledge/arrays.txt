@@ -1,0 +1,75 @@
+=== Python Arrays ===
+Konu: arrays
+Kaynak: https://www.w3schools.com/python/python_arrays.asp
+
+📖 AÇIKLAMALAR:
+1. Note: Python does not have built-in support for Arrays, 
+  but Python Lists can be used instead.
+2. Note: This page shows you how to use LISTS as ARRAYS, however, to work with arrays in Python you will have to import
+  a library, like the NumPy library.
+3. Arrays are used to store multiple values in one single variable:
+4. Create an array containing car names:
+5. An array is a special variable, which can hold more than one value at a time.
+
+⚠️ ÖNEMLİ NOTLAR:
+- Note: Python does not have built-in support for Arrays, 
+  but Python Lists can be used instead.
+- Note: This page shows you how to use LISTS as ARRAYS, however, to work with arrays in Python you will have to import
+  a library, like the NumPy library.
+- Note: The length of an array is always one more than the highest array index.
+- Note: The list's remove() method 
+  only removes the first occurrence of the specified value.
+- Note: Python does not have built-in support for Arrays, 
+  but Python Lists can be used instead.
+
+💻 KOD ÖRNEKLERİ:
+
+Örnek 1:
+```python
+cars = ["Ford", "Volvo", "BMW"]
+```
+
+Örnek 2:
+```python
+car1 = "Ford"
+  car2 = "Volvo"
+  car3 = "BMW"
+```
+
+Örnek 3:
+```python
+x = cars[0]
+```
+
+Örnek 4:
+```python
+cars[0] = "Toyota"
+```
+
+Örnek 5:
+```python
+x = len(cars)
+```
+
+Örnek 6:
+```python
+for x in cars:  print(x)
+```
+
+Örnek 7:
+```python
+cars.append("Honda")
+```
+
+Örnek 8:
+```python
+cars.pop(1)
+```
+
+Örnek 9:
+```python
+cars.remove("Volvo")
+```
+
+================================================================================
+
